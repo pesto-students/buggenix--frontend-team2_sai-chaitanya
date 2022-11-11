@@ -1,5 +1,8 @@
+import { Button } from "antd";
 import { useState } from "react";
-
+import { Link } from "react-router-dom";
+import Logo from "../Logo/Logo";
+import styles from "./Login.module.css";
 
 const Login = () => {
 
@@ -52,21 +55,32 @@ const Login = () => {
             setEmail("");
             setPassword("");
         } else {
-            console.log("Login failure")
+            console.log("Login failure");
         }
-        // console.log(email, " ", password);
     }
 
+
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input name = "email" placeholder="Enter your email" value = {email} onChange = {handleChange}/>
-                <span>{emailError}</span>
-                <input name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
-                <span>{passwordError}</span>
-                <button type = "submit">Login</button>
-            </form>
-        </>
+        <div className= {styles.container}>
+            <div className= {styles.formContainer}>
+                <Logo className = {styles.logo}/>
+                <form className= {styles.form} onSubmit={handleSubmit}>
+                    <span>Sign in</span>    
+                    <div>
+                        <label for = "email">Email</label>
+                        <input id = "email" name = "email" placeholder="Enter your email" value = {email} onChange = {handleChange}/>
+                        <span>{emailError}</span>
+                    </div>
+                    <div>
+                        <label for = "password">Password</label>
+                        <input id = "password" name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
+                        <span>{passwordError}</span>
+                    </div>
+                    <Button className= {styles.btn}>Sign in</Button>
+                    <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
+                </form>
+            </div>
+        </div>
     )
 }
 

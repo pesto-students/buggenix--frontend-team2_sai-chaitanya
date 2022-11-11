@@ -1,4 +1,10 @@
+import { Button } from "antd";
+import { Header } from "antd/lib/layout/layout";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { HeaderComponent } from "../LandingPage/LandingPage";
+import Logo from "../Logo/Logo";
+import styles from "./Signup.module.css";
 
 const Signup = () => {
 
@@ -71,17 +77,29 @@ const Signup = () => {
     }
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <input name = "email" placeholder="Enter your email" value = {email} onChange = {handleChange}/>
-                <span>{emailError}</span>
-                <input name = "name" placeholder="Full name" value = {name} onChange = {handleChange} />
-                <span>{nameError}</span>
-                <input name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
-                <span>{passwordError}</span>
-                <button type = "submit">Signup</button>
-            </form>
-        </>
+        <div className= {styles.container}>
+            <HeaderComponent />
+            <div className= {styles.formContainer}>
+                <form className= {styles.form} onSubmit={handleSubmit}>
+                    <span>Create your free account and start collecting user feedback</span>    
+                    <span>No credit card needed, 15-days free.</span>    
+                    <div>
+                        <input id = "email" name = "email" placeholder="Work email" value = {email} onChange = {handleChange}/>
+                        <span>{emailError}</span>
+                    </div>
+                    <div>
+                        <input id = "name" name = "name" placeholder="Full name" value = {name} onChange = {handleChange}/>
+                        <span>{nameError}</span>
+                    </div>
+                    <div>
+                        <input id = "password" name = "password" placeholder="Password" value = {password} onChange = {handleChange} />
+                        <span>{passwordError}</span>
+                    </div>
+                    <Button className= {styles.btn}>Sign in</Button>
+                    <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
+                </form>
+            </div>
+        </div>
     )
 }
 
