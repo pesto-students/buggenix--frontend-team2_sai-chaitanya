@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-
 const Signup = () => {
 
     const [email, setEmail] = useState("");
@@ -65,6 +64,7 @@ const Signup = () => {
             setEmailError("");
             setNameError("");
             setPasswordError("");
+            
         } else {
             console.log("Signup failure")
         }
