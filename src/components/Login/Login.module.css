@@ -55,6 +55,7 @@
     border: none;
     color: white;
     font-size: smaller;
+    height: 2rem;
 }
 
 .btn:hover {
@@ -68,4 +69,9 @@
     font-size: smaller;
     color: #545454;
     font-weight: 300;
+}
+
+.errorMessage {
+    color: red;
+    font-size: smaller;
 }

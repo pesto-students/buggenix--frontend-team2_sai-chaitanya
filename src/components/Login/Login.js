@@ -59,7 +59,6 @@ const Login = () => {
         }
     }
 
-
     return (
         <div className= {styles.container}>
             <div className= {styles.formContainer}>
@@ -69,14 +68,14 @@ const Login = () => {
                     <div>
                         <label for = "email">Email</label>
                         <input id = "email" name = "email" placeholder="Enter your email" value = {email} onChange = {handleChange}/>
-                        <span>{emailError}</span>
+                        <span className= {styles.errorMessage}>{emailError}</span>
                     </div>
                     <div>
                         <label for = "password">Password</label>
-                        <input id = "password" name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
-                        <span>{passwordError}</span>
+                        <input type = "password"  id = "password" name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
+                        <span className= {styles.errorMessage}>{passwordError}</span>
                     </div>
-                    <Button className= {styles.btn}>Sign in</Button>
+                    <button className= {styles.btn}>Sign in</button>
                     <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
                 </form>
             </div>
