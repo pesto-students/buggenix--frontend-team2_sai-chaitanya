@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import Logo from "../Logo/Logo";
 import styles from "./Signup.module.css";
+import axios from "axios";
 
 const Signup = () => {
 
@@ -14,6 +15,7 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const baseUrl = "http://localhost:8800/api"
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -65,6 +67,15 @@ const Signup = () => {
         console.log(email, password, name, "submitted")
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             console.log("Signup successful");
+            axios
+            .post(`${baseUrl}/auth/register` , {
+              "email":email,
+              "name":name,
+              "password": password
+            })
+            .then((response) => {
+              console.log("response",response);
+            });
             setEmail("");
             setName("");
             setPassword("");

@@ -1,8 +1,11 @@
 import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { oktaConfig } from "../../config/oktaConfig";
 import Logo from "../Logo/Logo";
 import styles from "./Login.module.css";
+import {OktaAuth}  from '@okta/okta-auth-js';
+
 
 const Login = () => {
 
@@ -52,6 +55,24 @@ const Login = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
             console.log("Login successful");
+            const authClient = new OktaAuth(oktaConfig)
+            authClient.signInWithCredentials({
+                username: email,
+                password: password
+            })
+            .then(function(transaction) {
+                if (transaction.status === 'SUCCESS') {
+                authClient.token.getWithRedirect({
+                    sessionToken: transaction.sessionToken,
+                    responseType: 'id_token'
+                });
+                } else {
+                throw 'We cannot handle the ' + transaction.status + ' status';
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+            });
             setEmail("");
             setPassword("");
         } else {
