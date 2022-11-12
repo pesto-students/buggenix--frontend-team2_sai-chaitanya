@@ -63,11 +63,17 @@
     border: none;
     color: white;
     font-size: smaller;
+    height: 2rem;
 }
 
 .btn:hover {
     color: white;
     background-color: #6752f0;
+}
+
+.errorMessage {
+    color: red;
+    font-size: smaller;
 }
 
 .createAccLabel{

@@ -64,6 +64,7 @@ const Signup = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(email, password, name, "submitted")
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             console.log("Signup successful");
             axios
@@ -96,18 +97,18 @@ const Signup = () => {
                     <span>No credit card needed, 15-days free.</span>    
                     <div>
                         <input id = "email" name = "email" placeholder="Work email" value = {email} onChange = {handleChange}/>
-                        <span>{emailError}</span>
+                        <span className= {styles.errorMessage}>{emailError}</span>
                     </div>
                     <div>
                         <input id = "name" name = "name" placeholder="Full name" value = {name} onChange = {handleChange}/>
-                        <span>{nameError}</span>
+                        <span className= {styles.errorMessage}>{nameError}</span>
                     </div>
                     <div>
-                        <input id = "password" name = "password" placeholder="Password" value = {password} onChange = {handleChange} />
-                        <span>{passwordError}</span>
+                        <input type = "password" id = "password" name = "password" placeholder="Password" value = {password} onChange = {handleChange} />
+                        <span className= {styles.errorMessage}>{passwordError}</span>
                     </div>
-                    <button type='submit' className= {styles.btn}>Sign in</button>
-                    <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
+                    <button type = "submit" className= {styles.btn}>Sign up</button>
+                    <Link to = "/login"><span className={styles.createAccLabel}>Have an account already? Login</span></Link>
                 </form>
             </div>
         </div>
