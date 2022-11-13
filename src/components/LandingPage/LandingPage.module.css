@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 
-.header {
+#header {
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -12,7 +12,6 @@
 
 .logo {
     display: flex;
-    /* background-color: red; */
     height: 100%;
     align-items: center;
 }
@@ -40,15 +39,15 @@
     font-weight:500;
 }
 
-.loginBtn {
+.authBtns .loginBtn { 
     color: black;
 }
 
-.signupBtn {
+.authBtns .signupBtn {
     background-color: #EF5996;
     border-radius: 5px;
     color: white;
-    font-weight:500;
+    font-weight:400;
 }
 
 .tag {
@@ -74,24 +73,24 @@
 }
 
 .content {
-    padding:4rem  0;
+    padding:2rem  0;
     width: 60%;
     margin: 20px 0;
     border: none;
 }
 
-.ctaBtn {
+.content .ctaBtn {
     background-color: #3921CE;
     color: white;
-    font-weight: 500;
-    padding: 12px 18px;
-    border-radius: 2px;
+    font-weight: 300;
+    /* padding: 12px 18px; */
+    /* border-radius: 2px;
     transition: 250ms cubic-bezier(.25, .46, .45, .94);
     font-size: 1rem;
     line-height: 1.46rem;
-    font-weight: 600;
+    font-weight: 400;
     text-align: center;
-    border: none;
+    border: none;  */
 }
 
 .tagLine {
@@ -113,12 +112,10 @@
 }
 
 .tabs > *.selected {
-    /* border: 1px solid #3921CE; */
     background-color: #F0F4FF;
 }
 
 .tabInfo {
-    /* background-color: rebeccapurple; */
     height: 15rem;
     margin: 1rem auto 3rem auto;
     width: 40rem;
@@ -163,13 +160,12 @@
 .whySection {
     display: flex;
     flex-direction: row;
-    height: 30rem;
-    margin: 3rem 0;
-    /* background-color: red; */
+    height: 24rem;
+    margin: 2rem 0;
+    margin-bottom: 3rem;
 }
 
 .whySection .item {
-    /* background-color: red; */
     display: flex;
     flex-direction: column;
     margin: 2rem;
@@ -205,10 +201,10 @@
 }
 
 .blogSection {
+    position: relative;
     display: flex;
     flex-direction: row;
     background-color: #15114E;
-    position: absolute;
     left: 0;
     width: 100vw;
     height: 30rem;
@@ -224,11 +220,31 @@
     height: 100%;
 }
 
+.blogSection .peopleContent {
+    position: absolute;
+    width: 40%;
+    transform: translateX(130%) translateY(50%)
+
+}
+
 .blogSection .peopleContent > * {
     color: white;
+    margin-bottom: 2rem;
 }
 
 
+.creditCard {
+    width: 60%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 3rem 1rem;
+}
+
+.creditCard  > * {
+    margin: 10px 0;
+}
  
 
 

@@ -1,4 +1,4 @@
-import { Layout, Button} from 'antd';
+import { Layout, Button, Input} from 'antd';
 import styles from "./LandingPage.module.css";
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import betterDecisionsImg from "../../assets/landingPage/better-decisions.png";
 import iterations from "../../assets/landingPage/iterations.png";
 import peopleImg from "../../assets/landingPage/people.png";
+import Footer from '../Footer/Footer';
 
 const {Header}  = Layout;
 
@@ -14,14 +15,13 @@ export const HeaderComponent = (props) => {
   const {showBtns} = props;
 
   return (
-      <Header showBtns = {false} className= {styles.header}>
-      <Logo/>
-      {showBtns && <div className= {styles.authBtns}>
-        <Link to = "/login"><Button type = "link" className= {styles.loginBtn}>Login</Button></Link>
-        <Link to = "/signup"><Button className= {styles.signupBtn}>Get started</Button></Link>
-      </div> }
-      
-    </Header>
+      <Header showBtns = {false} id = {styles.header}>
+        <Logo/>
+        {showBtns && <div className= {styles.authBtns}>
+          <Link to = "/login"><Button type = "link" className= {styles.loginBtn}>Login</Button></Link>
+          <Link to = "/signup"><Button className= {styles.signupBtn}>Get started</Button></Link>
+        </div> }
+      </Header>
   )
 }
 
@@ -63,7 +63,9 @@ const LandingPage = () => {
             <div className = {styles.tag}>Customer Feedback Software for SaaS </div>
             <div className= {styles.mainContent}>Navigate product decisions with customer feedback</div>
             <div className= {styles.message}>Buggenix helps collect product insights by scraping customer grievances and feature ideas from social media.</div>
-            <button className= {styles.ctaBtn}>Get started now</button>
+            <Link to = "/signup"><Button size='large' className= {styles.ctaBtn}>Get started now</Button></Link>
+
+            {/* <button className= {styles.ctaBtn}>Get started now</button> */}
           </div>
           <h1 className= {styles.tagLine}>All-in-one customer feedback and ticket management platform</h1>
           <div className= {styles.tabs}>
@@ -93,7 +95,7 @@ const LandingPage = () => {
           <div className= {styles.whySection}> 
             <div className = {styles.item}> 
               <div className={styles.title}>Better decisions via concrete evidence</div>
-              <hr></hr>
+              <hr/>
               <div className= {styles.card}> 
                 <div className= {styles.img}>
                   <img src = {betterDecisionsImg} />
@@ -114,19 +116,34 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
+
           {/* Blog section */}
 
+        </div>
           <div className= {styles.blogSection}>
             <div className= {styles.peopleImg}>
               <img src = {peopleImg}/>
             </div>
             <div className= {styles.peopleContent}>
-                <h1>How will product satisfaction increase when you act on feedback?</h1> 
-                <h3>Do read the blog written by one of our lead developers on #MakeFeedbackMatter where he shares his insights generously. </h3>
-                <button>Read now</button>
+                <h1 style = {{lineHeight: "2rem"}}>How will product satisfaction increase when you act on feedback?</h1> 
+                <h3 style={{fontSize: "smaller"}}>Do read the blog written by one of our lead developers on #MakeFeedbackMatter where he shares his insights generously. </h3>
+                <button style = {{padding: "5px 25px", color: "#3921CE"}}>Read now</button>
             </div>
           </div>
-        </div>
+          
+          {/* Enter work email section */}
+
+          <div className= {styles.container}>
+            <div className= {styles.creditCard}>
+              <h1>Customer feedback is the fuel for improvement.</h1>
+              <h3>Try it today. No credit card needed. </h3>
+              <div style = {{display: 'flex'}}>
+                <Input placeholder='Enter your work email' style = {{width: "100%"}}/>
+                <Button style = {{borderRadius: "0px", backgroundColor: "#4238F2", fontSize: "smaller"}} type='primary'>Start free trial</Button>
+              </div>
+            </div>
+          </div>
+          <Footer/>
       </>
     )
   }

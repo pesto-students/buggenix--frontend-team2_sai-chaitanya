@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import Logo from "../Logo/Logo";
 import styles from "./Signup.module.css";
@@ -15,6 +15,7 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const {Navigate} = useNavigate();
     const baseUrl = "http://localhost:8800/api"
 
     const handleChange = (e) => {
@@ -74,6 +75,7 @@ const Signup = () => {
               "password": password
             })
             .then((response) => {
+                Navigate("/dashboard");
               console.log("response",response);
             });
             setEmail("");
