@@ -1,6 +1,5 @@
 import styles from "./Logo.module.css";
-import mainLogo from "../../assets/ladybug.png";
-import { Link, NavLink } from "react-router-dom";
+import mainLogo from "../../../assets/ladybug.png";
 
 
 const Logo = () => {

@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { oktaConfig } from "../../config/oktaConfig";
-import Logo from "../Logo/Logo";
+import Logo from "../../UI/Molecules/Logo/Logo"
 import styles from "./Login.module.css";
 import {OktaAuth}  from '@okta/okta-auth-js';
 import { Header } from "antd/lib/layout/layout";

@@ -1,9 +1,6 @@
-import { Button } from "antd";
-import { Header } from "antd/lib/layout/layout";
 import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
-import Logo from "../Logo/Logo";
 import styles from "./Signup.module.css";
 import axios from "axios";
 import Footer from "../Footer/Footer";
