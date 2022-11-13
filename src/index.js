@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from "@auth0/auth0-react";
 import 'antd/dist/antd.css';
@@ -10,11 +10,11 @@ import 'antd/dist/antd.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Auth0Provider domain = "dev-sd1saebyup2pwl0w.us.auth0.com" clientId='dLYCZEjbhVid4W4KulF6QToqblkOQJjJ'  redirectUri='https://localhost:3001/dashboard'>
-      <BrowserRouter>
+    {/* <Auth0Provider domain = "dev-sd1saebyup2pwl0w.us.auth0.com" clientId='dLYCZEjbhVid4W4KulF6QToqblkOQJjJ'  redirectUri='https://localhost:3001/dashboard'> */}
+      <Router>
         <App />
-      </BrowserRouter>
-    </Auth0Provider>
+      </Router>
+    {/* </Auth0Provider> */}
   </React.StrictMode>
 );
 

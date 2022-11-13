@@ -1,11 +1,11 @@
 import { Button } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import { oktaConfig } from "../../config/oktaConfig";
 import Logo from "../Logo/Logo";
 import styles from "./Login.module.css";
 import {OktaAuth}  from '@okta/okta-auth-js';
-
+import { useOktaAuth } from "@okta/okta-react";
 
 const Login = () => {
 
@@ -13,6 +13,9 @@ const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const { oktaAuth } = useOktaAuth();
+    const [sessionToken, setSessionToken] = useState(null);
+    const history =useHistory()
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -55,31 +58,54 @@ const Login = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
             console.log("Login successful");
-            const authClient = new OktaAuth(oktaConfig)
-            authClient.signInWithCredentials({
-                username: email,
-                password: password
+            // const authClient = new OktaAuth(oktaConfig)
+            // authClient.signInWithCredentials({
+            //     username: email,
+            //     password: password
+            // })
+            // .then(function(transaction) {
+            //     if (transaction.status === 'SUCCESS') {
+            //     authClient.token.getWithRedirect({
+            //         sessionToken: transaction.sessionToken,
+            //         responseType: 'id_token'
+            //     });
+            //     } else {
+            //     throw 'We cannot handle the ' + transaction.status + ' status';
+            //     }
+            // })
+            // .catch(function(err) {
+            //     console.error(err);
+            // });
+            oktaAuth
+            .signInWithCredentials({
+                    username: email,
+                    password: password
             })
-            .then(function(transaction) {
-                if (transaction.status === 'SUCCESS') {
-                authClient.token.getWithRedirect({
-                    sessionToken: transaction.sessionToken,
-                    responseType: 'id_token'
-                });
-                } else {
-                throw 'We cannot handle the ' + transaction.status + ' status';
+            .then((res) => {
+                const sessionToken = res.sessionToken;
+                if (!sessionToken) {
+                    throw new Error("authentication process failed");
                 }
+                setSessionToken(sessionToken);
+                // oktaAuth.token.getWithRedirect({
+                //             sessionToken: sessionToken,
+                //             responseType: 'id_token'
+                // });
+                oktaAuth.signInWithRedirect({
+                    originalUri: "/dashboard",
+                    sessionToken: sessionToken
+                });
+                // history.push('/dashboard');
+
             })
-            .catch(function(err) {
-                console.error(err);
-            });
+            .catch((err) => console.log("handle error here", err));
             setEmail("");
             setPassword("");
         } else {
             console.log("Login failure");
         }
     }
-
+    if (sessionToken) return <div />;
     return (
         <div className= {styles.container}>
             <div className= {styles.formContainer}>
