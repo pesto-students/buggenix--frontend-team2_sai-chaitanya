@@ -6,6 +6,7 @@ import { HeaderComponent } from "../LandingPage/LandingPage";
 import Logo from "../Logo/Logo";
 import styles from "./Signup.module.css";
 import axios from "axios";
+import Footer from "../Footer/Footer";
 
 const Signup = () => {
 
@@ -92,7 +93,7 @@ const Signup = () => {
 
     return (
         <div className= {styles.container}>
-            <HeaderComponent />
+            <HeaderComponent showBtns = {true} />
             <div className= {styles.formContainer}>
                 <form className= {styles.form} onSubmit={handleSubmit}>
                     <span>Create your free account and start collecting user feedback</span>    
@@ -113,6 +114,7 @@ const Signup = () => {
                     <Link to = "/login"><span className={styles.createAccLabel}>Have an account already? Login</span></Link>
                 </form>
             </div>
+            <Footer/>
         </div>
     )
 }

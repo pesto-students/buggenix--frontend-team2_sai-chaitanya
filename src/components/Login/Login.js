@@ -5,6 +5,9 @@ import { oktaConfig } from "../../config/oktaConfig";
 import Logo from "../Logo/Logo";
 import styles from "./Login.module.css";
 import {OktaAuth}  from '@okta/okta-auth-js';
+import { Header } from "antd/lib/layout/layout";
+import Footer from "../Footer/Footer";
+import { HeaderComponent } from "../LandingPage/LandingPage";
 
 
 const Login = () => {
@@ -81,7 +84,9 @@ const Login = () => {
     }
 
     return (
+    <>
         <div className= {styles.container}>
+            <HeaderComponent showBtns = {true}/>
             <div className= {styles.formContainer}>
                 <Logo className = {styles.logo}/>
                 <form className= {styles.form} onSubmit={handleSubmit}>
@@ -101,6 +106,8 @@ const Login = () => {
                 </form>
             </div>
         </div>
+        <Footer/>
+    </>
     )
 }
 
