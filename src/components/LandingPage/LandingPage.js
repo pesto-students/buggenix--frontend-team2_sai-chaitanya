@@ -3,6 +3,10 @@ import styles from "./LandingPage.module.css";
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import { useState } from 'react';
+import betterDecisionsImg from "../../assets/landingPage/better-decisions.png";
+import iterations from "../../assets/landingPage/iterations.png";
+import peopleImg from "../../assets/landingPage/people.png";
+
 const {Header}  = Layout;
 
 export const HeaderComponent = (props) => {
@@ -83,13 +87,18 @@ const LandingPage = () => {
               </div>   
           </div>
           <h1 className= {styles.tagLine}>Why you need a customer feedback software</h1>
-          <div className= {styles.whySection}>
-            <div className = {styles.item}>
+
+          {/* why */}
+
+          <div className= {styles.whySection}> 
+            <div className = {styles.item}> 
               <div className={styles.title}>Better decisions via concrete evidence</div>
               <hr></hr>
-              <div className= {styles.card}>
-                <img src = "img1"/>
-                <span>User research</span>
+              <div className= {styles.card}> 
+                <div className= {styles.img}>
+                  <img src = {betterDecisionsImg} />
+                </div>
+                <span style = {{fontWeight: "bold"}}>User research</span>
                 <span>Cater to exactly what the market is asking for and make strides confidently and reliably. </span>
               </div>
             </div>
@@ -97,10 +106,24 @@ const LandingPage = () => {
               <div className={styles.title}>Consistent iterations to stay ahead of the game</div>
               <hr/>
               <div className= {styles.card}>
-                <img src = "img2" />
-                <span>Measure CX</span>
+                <div className= {styles.img}>
+                  <img src = {iterations} />
+                </div>
+                <span style = {{fontWeight: "bold"}}>Measure CX</span>
                 <span>Cater to exactly what the market is asking for and make strides confidently and reliably. </span>
               </div>
+            </div>
+          </div>
+          {/* Blog section */}
+
+          <div className= {styles.blogSection}>
+            <div className= {styles.peopleImg}>
+              <img src = {peopleImg}/>
+            </div>
+            <div className= {styles.peopleContent}>
+                <h1>How will product satisfaction increase when you act on feedback?</h1> 
+                <h3>Do read the blog written by one of our lead developers on #MakeFeedbackMatter where he shares his insights generously. </h3>
+                <button>Read now</button>
             </div>
           </div>
         </div>
