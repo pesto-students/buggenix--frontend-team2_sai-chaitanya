@@ -13,7 +13,7 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const {Navigate} = useNavigate();
+    const Navigate = useNavigate();
     const baseUrl = "http://localhost:8800/api"
 
     const handleChange = (e) => {
@@ -63,19 +63,19 @@ const Signup = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email, password, name, "submitted")
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
-            console.log("Signup successful");
             axios
-            .post(`${baseUrl}/auth/register` , {
-              "email":email,
-              "name":name,
-              "password": password
+            .post(`${baseUrl}/auth/register`, {
+               email,
+               username: name,
+               password
             })
             .then((response) => {
+                console.log("success")
                 Navigate("/dashboard");
-              console.log("response",response);
-            });
+            }).catch(err => {
+                console.log(err, "error occured")
+            })
             setEmail("");
             setName("");
             setPassword("");
