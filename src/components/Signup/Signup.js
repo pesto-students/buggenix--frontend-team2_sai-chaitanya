@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import styles from "./Signup.module.css";
-import axios from "axios";
 import Footer from "../Footer/Footer";
+import axios from "../../api/axios";
 
 const Signup = () => {
 
@@ -67,14 +67,13 @@ const Signup = () => {
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             console.log("Signup successful");
             axios
-            .post(`${baseUrl}/auth/register` , {
+            .post(`api/auth/register` , {
               "email":email,
-              "name":name,
+              "username":name,
               "password": password
             })
             .then((response) => {
                 Navigate("/dashboard");
-              console.log("response",response);
             });
             setEmail("");
             setName("");

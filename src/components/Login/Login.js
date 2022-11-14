@@ -8,14 +8,15 @@ import {OktaAuth}  from '@okta/okta-auth-js';
 import { Header } from "antd/lib/layout/layout";
 import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";
-
-
+import axios from "../../api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const axiosPrivate = useAxiosPrivate();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -57,30 +58,31 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
-            console.log("Login successful");
-            const authClient = new OktaAuth(oktaConfig)
-            authClient.signInWithCredentials({
-                username: email,
-                password: password
+            axios
+            .post("api/auth/login" , {
+              "email":email,
+              "password": password
+            },  {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             })
-            .then(function(transaction) {
-                if (transaction.status === 'SUCCESS') {
-                authClient.token.getWithRedirect({
-                    sessionToken: transaction.sessionToken,
-                    responseType: 'id_token'
-                });
-                } else {
-                throw 'We cannot handle the ' + transaction.status + ' status';
-                }
-            })
-            .catch(function(err) {
-                console.error(err);
+            .then((response) => {
+                // Navigate("/dashboard");
+              localStorage.setItem("access_token",response.data.accessToken)
             });
             setEmail("");
             setPassword("");
         } else {
             console.log("Login failure");
         }
+    }
+    const test =()=>{
+        // axiosPrivate.get("api/auth/check").then((res)=>{
+        //     console.log("response",res);
+        // })
+        axiosPrivate.get("api/auth/check").then((res)=>{
+            console.log("83",res)
+        })
     }
 
     return (
@@ -104,6 +106,7 @@ const Login = () => {
                     <button className= {styles.btn}>Sign in</button>
                     <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
                 </form>
+                <button className= {styles.btn} onClick={test}>check</button>
             </div>
         </div>
         <Footer/>
