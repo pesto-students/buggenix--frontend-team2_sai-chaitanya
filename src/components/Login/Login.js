@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { oktaConfig } from "../../config/oktaConfig";
 import Logo from "../../UI/Molecules/Logo/Logo"
 import styles from "./Login.module.css";
@@ -10,6 +10,7 @@ import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import axios from "../../api/axios";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+
 const Login = () => {
 
     const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -62,13 +64,14 @@ const Login = () => {
             .post("api/auth/login" , {
               "email":email,
               "password": password
-            },  {
+            }, {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             })
             .then((response) => {
                 // Navigate("/dashboard");
               localStorage.setItem("access_token",response.data.accessToken)
+              navigate("/dashboard");
             });
             setEmail("");
             setPassword("");
@@ -76,14 +79,11 @@ const Login = () => {
             console.log("Login failure");
         }
     }
-    const test =()=>{
-        // axiosPrivate.get("api/auth/check").then((res)=>{
-        //     console.log("response",res);
-        // })
-        axiosPrivate.get("api/auth/check").then((res)=>{
-            console.log("83",res)
-        })
-    }
+    // const logOut =()=>{
+    //     axiosPrivate.get("api/auth/logout").then((res)=>{
+    //         console.log("83",res)
+    //     })
+    // }
 
     return (
     <>
@@ -106,7 +106,7 @@ const Login = () => {
                     <button className= {styles.btn}>Sign in</button>
                     <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
                 </form>
-                <button className= {styles.btn} onClick={test}>check</button>
+                {/* <button className= {styles.btn} onClick={logOut}>logout</button> */}
             </div>
         </div>
         <Footer/>

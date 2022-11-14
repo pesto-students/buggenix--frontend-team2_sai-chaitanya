@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import styles from "./Signup.module.css";
 import Footer from "../Footer/Footer";
@@ -13,7 +13,7 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const {Navigate} = useNavigate();
+    const navigate = useNavigate();
     const baseUrl = "http://localhost:8800/api"
 
     const handleChange = (e) => {
@@ -73,7 +73,7 @@ const Signup = () => {
               "password": password
             })
             .then((response) => {
-                Navigate("/dashboard");
+                navigate("/dashboard");
             });
             setEmail("");
             setName("");
