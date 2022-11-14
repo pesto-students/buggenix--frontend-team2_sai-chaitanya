@@ -13,6 +13,7 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [authError, setAuthError] = useState("");
     const Navigate = useNavigate();
     const baseUrl = "http://localhost:8800/api"
 
@@ -74,6 +75,11 @@ const Signup = () => {
                 console.log("success")
                 Navigate("/dashboard");
             }).catch(err => {
+
+                //if user exists already, 
+                //update the authError with "A user with the same username (email) already exists"
+
+
                 console.log(err, "error occured")
             })
             setEmail("");
@@ -84,7 +90,7 @@ const Signup = () => {
             setPasswordError("");
             
         } else {
-            console.log("Signup failure")
+            // setAuthError("Please set valid username and password");
         }
     }
 
@@ -109,6 +115,9 @@ const Signup = () => {
                     </div>
                     <button type = "submit" className= {styles.btn}>Sign up</button>
                     <Link to = "/login"><span className={styles.createAccLabel}>Have an account already? Login</span></Link>
+                    {authError ? <div className= {styles.loginError}>
+                        {authError}
+                    </div>: null}
                 </form>
             </div>
             <Footer/>
