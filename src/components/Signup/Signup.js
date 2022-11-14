@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import styles from "./Signup.module.css";
-import axios from "axios";
 import Footer from "../Footer/Footer";
+import axios from "../../api/axios";
 
 const Signup = () => {
 
@@ -66,22 +66,14 @@ const Signup = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             axios
-            .post(`${baseUrl}/auth/register`, {
-               email,
-               username: name,
-               password
+            .post(`api/auth/register` , {
+              "email":email,
+              "username":name,
+              "password": password
             })
             .then((response) => {
-                console.log("success")
                 Navigate("/dashboard");
-            }).catch(err => {
-
-                //if user exists already, 
-                //update the authError with "A user with the same username (email) already exists"
-
-
-                console.log(err, "error occured")
-            })
+            });
             setEmail("");
             setName("");
             setPassword("");

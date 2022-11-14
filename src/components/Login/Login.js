@@ -1,16 +1,14 @@
 import { Button } from "antd";
 import { useState } from "react";
+import { Link,useNavigate } from "react-router-dom";
 import Logo from "../../UI/Molecules/Logo/Logo"
 import styles from "./Login.module.css";
 import {OktaAuth}  from '@okta/okta-auth-js';
 import { Header } from "antd/lib/layout/layout";
 import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-
-
-
+import axios from "../../api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Login = () => {
 
@@ -18,8 +16,9 @@ const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const [authError, setAuthError] = useState("");
-    const Navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const {name, value} = e.target;
 
@@ -60,43 +59,30 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
-
-            axios.post("http://localhost:8800/api/auth/login", {email, password}).then(res => {
-                Navigate("/dashboard");
-            }).catch(err => {
-                const {status, errorMessage} = err || {};
-                if(status == "400" || status == "402") {
-                    setAuthError("User already present");
-                    setTimeout(() => {
-                        setAuthError("")
-                    }, 2000);
-                } 
+            axios
+            .post("api/auth/login" , {
+              "email":email,
+              "password": password
+            }, {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             })
-
-            // const authClient = new OktaAuth(oktaConfig)
-            // authClient.signInWithCredentials({
-            //     username: email,
-            //     password: password
-            // })
-            // .then(function(transaction) {
-            //     if (transaction.status === 'SUCCESS') {
-            //     authClient.token.getWithRedirect({
-            //         sessionToken: transaction.sessionToken,
-            //         responseType: 'id_token'
-            //     });
-            //     } else {
-            //     throw 'We cannot handle the ' + transaction.status + ' status';
-            //     }
-            // })
-            // .catch(function(err) {
-            //     console.error(err);
-            // });
+            .then((response) => {
+                // Navigate("/dashboard");
+              localStorage.setItem("access_token",response.data.accessToken)
+              navigate("/dashboard");
+            });
             setEmail("");
             setPassword("");
         } else {
             console.log("Login failure");
         }
     }
+    // const logOut =()=>{
+    //     axiosPrivate.get("api/auth/logout").then((res)=>{
+    //         console.log("83",res)
+    //     })
+    // }
 
     return (
     <>
@@ -119,6 +105,7 @@ const Login = () => {
                     <button className= {styles.btn}>Sign in</button>
                     <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
                 </form>
+                {/* <button className= {styles.btn} onClick={logOut}>logout</button> */}
             </div>
         </div>
         <Footer/>
