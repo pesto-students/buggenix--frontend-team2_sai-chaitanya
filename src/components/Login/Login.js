@@ -1,7 +1,6 @@
 import { Button } from "antd";
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import { oktaConfig } from "../../config/oktaConfig";
 import Logo from "../../UI/Molecules/Logo/Logo"
 import styles from "./Login.module.css";
 import {OktaAuth}  from '@okta/okta-auth-js';

@@ -1,0 +1,99 @@
+#API definitions
+
+##Entity definitions
+
+### User: 
+
+- id: uuid
+- email: string
+- password: string
+- name: string 
+- role: enum ["super admin", "admin", "team member"]
+- saId: uuid 
+- channels: ["facebook", "twitter"] 
+
+### Project: 
+
+- id: uuid
+- name: string
+- description: string
+- ticketIds: array
+- ticketCount: number 
+- openTicketCount: number
+- creator: creatorId
+- createdTime: date
+
+
+
+### Ticket:
+
+- id: uuid 
+- timestamp: date 
+- creatorInfo: {
+    name: string/null 
+    id: null 
+    type: enum[customer, member] 
+    channel: string
+}
+- status: bool
+- upvoteCount: number
+- assignee: array
+- label: enum ["feedback", "bug", "improvement"]
+- title: string
+- subject: string
+- conversations: [enum["ticketUpdate", "note", "reply"]]   // refer below for each conversation object
+
+
+
+## Endpoint definitions
+
+Signup(user: User)
+    => User 
+
+Login(user: User)
+    => User 
+
+GetDashboardInfo(user: User)
+    => User
+
+CreateProject(user: User, project: Project)
+    => Project
+
+GetProjects()
+    => Project[]
+
+GetProject(id: uuid)
+    => Project (with full ticket info)
+ 
+GetScrapedTickets() //add pagination functionality
+    => Tickets[]
+
+UpdateTicket(ticketId: uuid, payload) 
+
+DeleteTicket(ticketId: uuid)
+
+CreateTicket(ticket: Ticket)
+
+UpdateProfile(name: string, imageUrl: string)
+
+ChangePassword(oldpassword: string, newpassword: string)
+
+UpdateSubscription(id: enum[1, 2])
+
+GetPeople()
+
+RemoveUser(id: uuid)
+
+InviteUser(email: string)
+
+
+
+
+//conversation object 
+
+{
+    type:  enum["ticketUpdate", "note", "reply"]
+    description: "Clyde assigned feedback to @Harish B"
+    timestamp: date
+}
+
