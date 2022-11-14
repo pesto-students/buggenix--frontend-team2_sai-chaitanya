@@ -64,8 +64,6 @@ const LandingPage = () => {
             <div className= {styles.mainContent}>Navigate product decisions with customer feedback</div>
             <div className= {styles.message}>Buggenix helps collect product insights by scraping customer grievances and feature ideas from social media.</div>
             <Link to = "/signup"><Button size='large' className= {styles.ctaBtn}>Get started now</Button></Link>
-
-            {/* <button className= {styles.ctaBtn}>Get started now</button> */}
           </div>
           <h1 className= {styles.tagLine}>All-in-one customer feedback and ticket management platform</h1>
           <div className= {styles.tabs}>
