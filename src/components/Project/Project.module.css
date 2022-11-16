@@ -1,0 +1,25 @@
+.project {
+    display: flex;
+    height: 100vh;
+    background-color: #F7F7F9;
+}
+.dashboard{
+    flex: 3;
+    padding: 20px;
+    /* background-color: blue; */
+}
+
+.cards{
+    display: flex;
+    gap:2rem;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+/* .cards:hover  .hoverCard{
+  display: block;
+}
+
+.cards:hover  .cardContent > span{
+    display: none;
+  } */
+
