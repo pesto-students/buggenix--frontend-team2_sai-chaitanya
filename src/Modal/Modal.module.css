@@ -1,0 +1,35 @@
+.modal{
+    display: flex;
+    /* align-items: center;
+    justify-items: center; */
+}
+
+.modalInput{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    margin-top: 60px;
+}
+
+.modalInput > h2{
+    margin: 8px 25px;
+}
+
+.modalInput > input {
+    margin-bottom: 10px;
+    margin: 8px 25px;
+}
+
+.modalInfo {
+    flex: 1;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.modalInfo > p {
+    margin: 20px 0;
+}
+
+.modalInfo > p > span {
+    color: #3921CE;
+}
