@@ -1,0 +1,51 @@
+
+.card{
+    cursor: pointer;
+}
+.cardHeading{
+    font-weight: 600;
+}
+
+.cardContent{
+    display: flex;
+    align-items: center;
+    gap:5px;
+}
+
+.cardContent > span{
+    color: rgba(211, 211, 211, 0.859);
+    font-size: 12px;
+}
+
+.ellipse{
+    width: 10px;
+    height: 10px;
+    background: #d9d9d96c;
+    border-radius: 50%;
+}
+
+.hoverCard{
+    display: none;
+}
+
+.card:hover .hoverCard{
+    display: flex;
+    color: rgba(211, 211, 211, 0.859);
+    gap:7px;
+    align-items: center;
+}
+
+.card:hover .hoverCard > .avatar{
+    width: 22px;
+    height: 23px;
+    background: #d9d9d96c;
+    border-radius: 50%;
+}
+
+.card:hover  .cardContent > .ellipse{
+    display: none;
+} 
+.card:hover  .cardContent > .itemStatus{
+    display: none;
+} 
+
