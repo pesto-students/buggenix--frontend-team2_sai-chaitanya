@@ -1,0 +1,48 @@
+.nav {
+    flex: 0.4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+.nav > * { 
+    margin: 10px;
+}
+.nav img {
+    height: 40px;
+    width: fit-content;
+}
+.navItems {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 90%;
+}
+
+.firstNavItem > * {
+    padding: 6px 0;
+}
+
+.firstNavItem > div{
+    display: flex;
+    align-items: center;
+    gap:5px;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.itemName{
+    color:rgba(0, 0, 0, 0.85);
+}
+
+.secondNavItem > * {
+    padding: 6px 0;
+}
+
+.secondNavItem > div{
+    display: flex;
+    align-items: center;
+    gap:5px;
+    font-size: medium;
+    cursor: pointer;
+}
