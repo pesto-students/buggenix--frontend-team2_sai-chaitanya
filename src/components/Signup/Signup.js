@@ -81,6 +81,7 @@ const Signup = () => {
                     email, 
                     id: _id
                 }
+                console.log(response, "response?")
                 login(user);
                 navigate("/dashboard", {replace: true});
             }).catch(err => {
