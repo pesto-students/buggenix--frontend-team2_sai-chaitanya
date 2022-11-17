@@ -5,7 +5,6 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import {BrowserRouter} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
-import { Auth0Provider } from "@auth0/auth0-react";
 import 'antd/dist/antd.css';
 
 Sentry.init({
@@ -21,11 +20,9 @@ Sentry.init({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Auth0Provider domain = "dev-sd1saebyup2pwl0w.us.auth0.com" clientId='dLYCZEjbhVid4W4KulF6QToqblkOQJjJ'  redirectUri='https://localhost:3001/dashboard'>
       <BrowserRouter>
-        <App />
+          <App />
       </BrowserRouter>
-    </Auth0Provider>
   </React.StrictMode>
 );
 

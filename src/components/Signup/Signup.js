@@ -4,6 +4,7 @@ import { HeaderComponent } from "../LandingPage/LandingPage";
 import styles from "./Signup.module.css";
 import Footer from "../Footer/Footer";
 import axios from "../../api/axios";
+import { useAuth } from "../../context/authContext";
 
 const Signup = () => {
 
@@ -14,7 +15,9 @@ const Signup = () => {
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [authError, setAuthError] = useState("");
-    const Navigate = useNavigate();
+    const {login}  = useAuth();
+    const navigate = useNavigate();
+
     const baseUrl = "http://localhost:8800/api"
 
     const handleChange = (e) => {
@@ -72,8 +75,22 @@ const Signup = () => {
               "password": password
             })
             .then((response) => {
-                Navigate("/dashboard");
-            });
+                const {_id, username, email, accessToken} = response.data || {};
+                const user = {
+                    username, 
+                    email, 
+                    id: _id
+                }
+                login(user);
+                navigate("/dashboard", {replace: true});
+            }).catch(err => {
+                const {status} = err.response || {};
+                if(status == "500") { //have to change
+                    setAuthError("A user with the same email already exists");
+                } else {
+                    console.log("Sign up failed; other reason")
+                }
+            }) 
             setEmail("");
             setName("");
             setPassword("");

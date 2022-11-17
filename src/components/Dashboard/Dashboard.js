@@ -1,23 +1,25 @@
-import {OktaAuth}  from '@okta/okta-auth-js';
-import { oktaConfig } from "../../config/oktaConfig";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../context/authContext';
 
 
 const Dashboard = () => {
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const {logout}  = useAuth();
 
-    const logOut =()=>{
+
+    const handleLogin = () => {
         axiosPrivate.get("api/auth/logout").then((res)=>{
-            console.log("83",res)
-            localStorage.removeItem("access_token")
-            navigate("/");
+            localStorage.removeItem("access_token");
+            logout();
+            navigate("/login");
         })
     }
+
     return (
         <div>
-            <button  onClick={logOut}>logout</button>
+            <button onClick={handleLogin}>logout</button>
         </div>
     )
 }

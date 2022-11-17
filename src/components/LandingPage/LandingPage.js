@@ -15,7 +15,7 @@ export const HeaderComponent = (props) => {
   const {showBtns} = props;
 
   return (
-      <Header showBtns = {false} id = {styles.header}>
+      <Header id = {styles.header}>
         <Logo/>
         {showBtns && <div className= {styles.authBtns}>
           <Link to = "/login"><Button type = "link" className= {styles.loginBtn}>Login</Button></Link>
@@ -68,10 +68,10 @@ const LandingPage = () => {
           <h1 className= {styles.tagLine}>All-in-one customer feedback and ticket management platform</h1>
           <div className= {styles.tabs}>
             {
-              tabsList.map(tab => {
+              tabsList.map((tab, index) => {
                 const {value, label} = tab;
                 return (
-                  <button className= {selectedTab.value  === tab.value && styles.selected} name = {value} onClick ={() => TabSwitch(tab)}> {label}</button>
+                  <button key = {index} className= {selectedTab.value  === tab.value && styles.selected} name = {value} onClick ={() => TabSwitch(tab)}> {label}</button>
                 )
               })
             }
