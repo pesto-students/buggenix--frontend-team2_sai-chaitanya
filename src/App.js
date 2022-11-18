@@ -7,6 +7,7 @@ import { AuthProvider } from './context/authContext';
 import RequireAuth from './components/Dashboard/RequireAuth/RequireAuth';
 import AuthRedirect from './components/AuthRedirect/AuthRedirect';
 import DashboardContainer from './containers/DashboardContainer/DashboardContainer';
+import TeamInvite from './components/TeamInvite/TeamInvite';
 
 class App extends React.Component {
 
@@ -19,6 +20,7 @@ class App extends React.Component {
           <Route path = "signup" element = {<Signup/>} /> {/* //AuthRedirect should be added*/}
           {/* <Route path = "dashboard" element = {<RequireAuth><DashboardContainer/></RequireAuth>} /> */}
           <Route path = "dashboard" element = {<DashboardContainer/>} /> 
+          <Route path = "team-invite" element = {<TeamInvite/>} />
         </Routes>
       </AuthProvider> 
     )
