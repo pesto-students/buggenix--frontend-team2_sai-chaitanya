@@ -4,8 +4,36 @@
 }
 
 .container .nav {
-    width: 15%;
+    width: 13%;
     height: 100vh;
-    background-color: red;
+    background-color: #B9C9FE;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
 }
+
+.container nav a.active {
+    background-color: green;
+}
+
+.navTop, .navBottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.navTop span, .navBottom span {
+    font-size: smaller;
+}
+
+.navTop > *, .navBottom > * {
+    padding: 10px 0;
+    color: black;
+}
+
+.navItem > *{
+    padding: 0 5px;
+}
+
 

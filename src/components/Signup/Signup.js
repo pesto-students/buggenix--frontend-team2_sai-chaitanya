@@ -5,6 +5,8 @@ import styles from "./Signup.module.css";
 import Footer from "../Footer/Footer";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext";
+import { message } from "antd";
+
 
 const Signup = () => {
 
@@ -14,9 +16,15 @@ const Signup = () => {
     const [nameError, setNameError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const [authError, setAuthError] = useState("");
     const {login}  = useAuth();
     const navigate = useNavigate();
+    const [messageApi, contextHolder] = message.useMessage();
+    const error = () => {
+        messageApi.open({
+          type: 'error',
+          content: 'User with this email already exists',
+        });
+      };
 
     const baseUrl = "http://localhost:8800/api"
 
@@ -69,7 +77,7 @@ const Signup = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             axios
-            .post(`api/auth/register` , {
+            .post(`api/auth/register`, {
               "email":email,
               "username":name,
               "password": password
@@ -81,13 +89,13 @@ const Signup = () => {
                     email, 
                     id: _id
                 }
-                console.log(response, "response?")
+                localStorage.setItem("access_token", accessToken);
                 login(user);
-                navigate("/dashboard", {replace: true});
+                navigate("/input-socials", {replace: true});
             }).catch(err => {
                 const {status} = err.response || {};
-                if(status == "500") { //have to change
-                    setAuthError("A user with the same email already exists");
+                if(status == "500") { 
+                    error();
                 } else {
                     console.log("Sign up failed; other reason")
                 }
@@ -106,6 +114,7 @@ const Signup = () => {
 
     return (
         <div className= {styles.container}>
+            {contextHolder}
             <HeaderComponent showBtns = {true} />
             <div className= {styles.formContainer}>
                 <form className= {styles.form} onSubmit={handleSubmit}>
@@ -124,10 +133,6 @@ const Signup = () => {
                         <span className= {styles.errorMessage}>{passwordError}</span>
                     </div>
                     <button type = "submit" className= {styles.btn}>Sign up</button>
-                    <Link to = "/login"><span className={styles.createAccLabel}>Have an account already? Login</span></Link>
-                    {authError ? <div className= {styles.loginError}>
-                        {authError}
-                    </div>: null}
                 </form>
             </div>
             <Footer/>

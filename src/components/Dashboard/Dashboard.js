@@ -13,7 +13,7 @@ const Dashboard = () => {
         axiosPrivate.get("api/auth/logout").then((res)=>{
             localStorage.removeItem("access_token");
             logout();
-            navigate("/login");
+            navigate("login");
         })
     }
 

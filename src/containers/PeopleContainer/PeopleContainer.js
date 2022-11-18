@@ -10,8 +10,13 @@ class PeopleContainer extends React.Component {
         super(props);
         this.openModel = this.openModel.bind(this);
         this.state = {
-            isModalOpen: false
+            isModalOpen: false, 
+            email: "", 
+            emailError: ""
         }
+        // this.handleOk = this.handleOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     openModel() {
@@ -20,9 +25,26 @@ class PeopleContainer extends React.Component {
         })
     }
 
-    handleOk(value) {
-        console.log(value, "value");
-        console.log("Email submitted");
+
+    handleOk(email) {
+        const valid = String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+
+        if(!valid) {
+            this.setState({
+                emailError: "Please enter valid email"
+            })
+        } else {
+            //make api call
+            this.setState({
+                isModalOpen: false, 
+                emailError: ""
+            })
+        }
+
     }
 
     handleCancel() {
@@ -31,10 +53,18 @@ class PeopleContainer extends React.Component {
         })
     }
 
+    handleChange(e) {
+        const {value} = e.target;
+        
+        this.setState({
+            email: value
+        })
+    }
+
     render() {
 
         const {memberCount = 2} = this.props;
-        const {isModalOpen} = this.state;
+        const {isModalOpen, emailError, email} = this.state;
 
         return (
             <div className= {styles.container}>
@@ -72,31 +102,32 @@ class PeopleContainer extends React.Component {
                             <td>Aditya</td>
                             <td>contact@aditya.com</td>
                             <td>Super admin</td>
-                            <td><DeleteFilled style = {{color: "#1D5BD4"}}/></td>
+                            <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
                         </tr>
                         <tr>
                             <td>Tarun</td>
                             <td>contact@tarun.com</td>
                             <td>Admin</td>
-                            <td><DeleteFilled style = {{color: "#1D5BD4"}}/></td>
+                            <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
                         </tr>
                         <tr>
                             <td>Anj</td>
                             <td>contact@anj.com</td>
                             <td>Admin</td>
-                            <td><DeleteFilled style = {{color: "#1D5BD4"}}/></td>
+                            <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
                         </tr>
                         <tr>
                             <td>Harsha</td>
                             <td>contact@harsha.com</td>
                             <td>Admin</td>
-                            <td><DeleteFilled style = {{color: "#1D5BD4"}}/></td>
+                            <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
                         </tr>
                     </table>
                 </div>
-                <Modal title="Invite team members" open={isModalOpen} onOk={this.handleOk} onCancel={this.handleCancel}>
+                <Modal title="Invite team members" open={isModalOpen} onOk={this.handleOk.bind(this, email)} onCancel={this.handleCancel}>
                     <div style = {{padding: "1rem 0"}}>Email address</div>
-                    <Input placeholder='Add the email of the person you want to invite'/>
+                    <Input onChange={this.handleChange} placeholder='Add the email of the person you want to invite'/>
+                    {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
                 </Modal>
             </div>
         )

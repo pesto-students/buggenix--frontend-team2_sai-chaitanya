@@ -77,7 +77,7 @@ const Login = () => {
 
                 localStorage.setItem("access_token", accessToken);
                 login(user);
-                navigate("/dashboard", {replace: true, state: {}});
+                navigate("/dashboard/metrics", {replace: true, state: {}});
 
             }).catch(err => {
                 const {status} = err.response || {};
