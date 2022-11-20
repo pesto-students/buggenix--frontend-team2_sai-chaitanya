@@ -1,7 +1,7 @@
 import { Layout, Button, Input} from 'antd';
 import styles from "./LandingPage.module.css";
 import { Link } from 'react-router-dom';
-import Logo from '../../UI/Molecules/Logo/Logo';
+import Logo from '../UI/Molecules/Logo';
 import { useState } from 'react';
 import betterDecisionsImg from "../../assets/landingPage/better-decisions.png";
 import iterations from "../../assets/landingPage/iterations.png";

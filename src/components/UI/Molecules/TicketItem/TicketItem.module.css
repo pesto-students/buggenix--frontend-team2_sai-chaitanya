@@ -1,0 +1,48 @@
+.cardContainer {
+    cursor: pointer;
+    max-width: 20rem;
+}
+
+.cardContainer .card {
+    display: flex;
+    flex-direction: row;
+}
+
+.cardContainer .card.active {
+    background-color: #E7EBFA;
+}
+
+.cardContainer .card.selected {
+    background-color: #B9C9FE;
+}
+
+.cardContainer .card .cardContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card .cardContent > * {
+    padding: 0 5px;
+}
+
+.topTextContent {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    position: relative;
+
+}
+
+.topTextContent > div {
+    padding: 0 5px;
+    font-size: smaller;
+}
+
+.topTextContent span {
+    position: absolute;
+    justify-self: flex-end;
+    right: 0;
+    /* font-weight: bold; */
+    font-size: x-small;
+}

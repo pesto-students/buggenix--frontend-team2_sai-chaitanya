@@ -9,7 +9,7 @@ import TeamInvite from './components/TeamInvite/TeamInvite';
 import NoMatch from './components/NoMatch/NoMatch';
 import { MetricsContainer } from './containers/MetricsContainer/MetricsContainer';
 import { ProjectsContainer } from "./containers/ProjectsContainer/ProjectsContainer";
-import { TicketsContainer } from './containers/TicketsContainer/TicketsContainer';
+import TicketsContainer from './containers/TicketsContainer';
 import PeopleContainer from './containers/PeopleContainer/PeopleContainer';
 import InputSocials from './components/InputSocials/InputSocials';
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import Logo from "../../UI/Molecules/Logo/Logo"
+import Logo from "../UI/Molecules/Logo"
 import styles from "./Login.module.css";
 import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";

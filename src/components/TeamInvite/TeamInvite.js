@@ -1,5 +1,5 @@
 import styles from './TeamInvite.module.css';
-import Logo from "../../UI/Molecules/Logo/Logo"
+import Logo from "../UI/Molecules/Logo"
 import { Button, Input, message } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
