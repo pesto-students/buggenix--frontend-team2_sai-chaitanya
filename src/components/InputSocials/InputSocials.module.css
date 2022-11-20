@@ -1,0 +1,25 @@
+.container {
+    width: 30rem;
+    height: 25rem; 
+    background: white;
+    margin: 0 auto;
+    position: relative;
+    top: 5rem;
+    border-radius: 5px;
+    padding: 2rem;
+}
+
+.container .input {
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.container .btn {
+    width: 100%;
+    background-color: #3921CE;
+    color: white;
+    height: 2.5rem;
+    margin: 10px 0;
+
+}
+

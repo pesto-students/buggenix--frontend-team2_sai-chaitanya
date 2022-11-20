@@ -1,14 +1,12 @@
-import { Button } from "antd";
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import Logo from "../../UI/Molecules/Logo/Logo"
 import styles from "./Login.module.css";
-import {OktaAuth}  from '@okta/okta-auth-js';
-import { Header } from "antd/lib/layout/layout";
 import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import axios from "../../api/axios";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useAuth } from "../../context/authContext";
+
 
 const Login = () => {
 
@@ -16,7 +14,9 @@ const Login = () => {
     const [emailError, setEmailError] = useState("");
     const [password, setPassword] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    const axiosPrivate = useAxiosPrivate();
+    const [authError, setAuthError] = useState("");
+    const {login}  = useAuth();
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -60,29 +60,37 @@ const Login = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
             axios
-            .post("api/auth/login" , {
-              "email":email,
-              "password": password
+            .post("api/auth/login", {
+              email,
+              password
             }, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json'},
                 withCredentials: true
             })
             .then((response) => {
-                // Navigate("/dashboard");
-              localStorage.setItem("access_token",response.data.accessToken)
-              navigate("/dashboard");
-            });
-            setEmail("");
-            setPassword("");
+                const {_id, username, email, accessToken} = response.data || {};
+                const user = {
+                    username, 
+                    email, 
+                    id: _id
+                }
+
+                localStorage.setItem("access_token", accessToken);
+                login(user);
+                navigate("/dashboard/metrics", {replace: true, state: {}});
+
+            }).catch(err => {
+                const {status} = err.response || {};
+                if(status == "404") {
+                    setAuthError("Please enter valid username and password")
+                } else {
+                    console.log("Other");
+                }
+            })
         } else {
             console.log("Login failure");
         }
     }
-    // const logOut =()=>{
-    //     axiosPrivate.get("api/auth/logout").then((res)=>{
-    //         console.log("83",res)
-    //     })
-    // }
 
     return (
     <>
@@ -93,18 +101,21 @@ const Login = () => {
                 <form className= {styles.form} onSubmit={handleSubmit}>
                     <span>Sign in</span>    
                     <div>
-                        <label for = "email">Email</label>
+                        <label htmlFor = "email">Email</label>
                         <input id = "email" name = "email" placeholder="Enter your email" value = {email} onChange = {handleChange}/>
                         <span className= {styles.errorMessage}>{emailError}</span>
                     </div>
                     <div>
-                        <label for = "password">Password</label>
+                        <label htmlFor = "password">Password</label>
                         <input type = "password"  id = "password" name = "password" placeholder="Enter your password" value = {password} onChange = {handleChange} />
                         <span className= {styles.errorMessage}>{passwordError}</span>
                     </div>
                     <button className= {styles.btn}>Sign in</button>
                     <Link to = "/signup"><span className={styles.createAccLabel}>Create new account</span></Link>
                 </form>
+                {authError ? <div className= {styles.loginError}>
+                        {authError}
+                    </div>: null}
                 {/* <button className= {styles.btn} onClick={logOut}>logout</button> */}
             </div>
         </div>
