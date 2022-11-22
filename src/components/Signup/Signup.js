@@ -79,8 +79,8 @@ const Signup = () => {
             axios
             .post(`auth/register`, {
               email,
-              name,
-            password
+              username: name,
+              password
             })
             .then((response) => {
                 const {_id, username, email, accessToken} = response.data || {};
