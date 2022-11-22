@@ -1,0 +1,9 @@
+#projectsListContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#projectsListContainer > * {
+    margin: 1rem;
+}

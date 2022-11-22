@@ -1,0 +1,31 @@
+.cardContainer {
+    width: 16rem; 
+    min-height: 7rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}   
+
+.cardContainer .cardTop  {
+    font-size: small;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.cardContainer .cardTop > * {
+    margin: 0 5px;
+}
+ 
+
+.cardContainer .cardBottom {
+    font-size: small;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.circle {
+    padding: 5px;
+    border-radius: 100%;
+    background-color: grey;
+}
