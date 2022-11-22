@@ -3,7 +3,7 @@ import { Header } from "antd/lib/layout/layout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import Logo from "../../UI/Molecules/Logo/Logo";
+import Logo from "../UI/Molecules/Logo";
 import Footer from "../Footer/Footer";
 import styles from "./InputSocials.module.css";
 
@@ -60,7 +60,7 @@ const InputSocials = () => {
             {contextHolder}
             <div style = {{
                 backgroundColor: "#F7F7F9", 
-                minHeight: "40rem", 
+                minHeight: "40rem",  
             }}>
                 <form className= {styles.container}>
                     <Logo />
@@ -76,21 +76,3 @@ const InputSocials = () => {
 }
 
 export default InputSocials;
-
-// return (
-//     <div style = {{
-//         backgroundColor: "#DFE3FF", 
-//         height: "50rem"
-//     }}>
-//         {contextHolder}
-//         <form className= {styles.container}>
-//             <Logo />
-//             <h3 style = {{margin: "1rem 0"}}>You've been invited to join {invitor}'s team</h3>
-//             <Input className= {styles.input} value = {inviteeEmail} disabled />
-//             <Input className= {styles.input} placeholder = {"Full name"} name = "fullname" value = {fullName} onChange = {handleChange}/>
-//             <Input className= {styles.input} placeholder= {"Password (min. 8 char)"} name = "password" value = {password} onChange = {handleChange} />
-//             <h3 style = {{margin: "1rem 0", fontSize: "small", lineHeight: "1rem"}}>By signing up, you're agreeing to our <Link style = {{textDecoration:"underline", fontStyle: "italic" }}>Terms of service</Link> and to our <Link style = {{textDecoration:"underline", fontStyle: "italic" }}>Privacy policy</Link></h3>
-//             <Button onClick ={handleSubmit} className= {styles.btn}>Join the team</Button>
-//         </form>
-//     </div>
-// )

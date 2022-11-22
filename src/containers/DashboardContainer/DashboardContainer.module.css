@@ -4,7 +4,7 @@
 }
 
 .container .nav {
-    width: 13%;
+    min-width: 13%;
     height: 100vh;
     background-color: #B9C9FE;
     display: flex;
@@ -12,6 +12,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 2rem 0;
+}
+
+.container .outlet {
+    height: 100vh;
+    min-width: 80%;
 }
 
 .container nav a.active {
