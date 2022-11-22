@@ -4,7 +4,7 @@ import styles from "./ProjectCard.module.css";
 
 const ProjectCard = ({projectInfo}) => {
 
-    const [isHovered, setIsHovered] = useState(true);
+    const [isHovered, setIsHovered] = useState(false);
 
     const {name: projectName, description, ticketCount, openTicketCount, creator, createdTime} = projectInfo || {};
     const {name: creatorName, role, id: userId} = creator || {};

@@ -17,7 +17,7 @@
 
 .conversations {
     overflow: auto;
-    max-height: 32rem;
+    max-height: 28rem;
 }
 
 .replyInput {
