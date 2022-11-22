@@ -1,8 +1,9 @@
 import styles from './TeamInvite.module.css';
 import Logo from "../UI/Molecules/Logo"
 import { Button, Input, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 
 const TeamInvite = ({invitor = "harish", inviteeEmail = "aditya@gmail.com"}) => {
@@ -10,6 +11,16 @@ const TeamInvite = ({invitor = "harish", inviteeEmail = "aditya@gmail.com"}) => 
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        const href = window.location.href;
+        console.log(href, "href");
+        const result = href.split("?")[1];
+        const email = result.split("=")[1];
+        setEmail(email);
+    }, [])
+
 
     const warning = () => { //ask Sai
         messageApi.open({
@@ -32,7 +43,21 @@ const TeamInvite = ({invitor = "harish", inviteeEmail = "aditya@gmail.com"}) => 
             warning();
         } else {
             // register member in the database by making an API call
-            // Once done, navigate to the dashboard
+
+            const payload = {
+                email, 
+                username: fullName, 
+                password, 
+                member: 1
+            }
+
+            axiosPrivate.post("auth/register", payload).then(res => {
+                navigate("/dashboard/metrics");
+            }).catch(err => {
+                //twitter is mandatory if success 200. If handle is not there? 403                
+                console.log("Member invite failed");
+                
+            })
         }
     }
 

@@ -4,6 +4,7 @@ import {
     DeleteFilled
 } from '@ant-design/icons';
 import { axiosPrivate } from '../../api/axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const { Button, Input, Modal } = require("antd");
 
 
@@ -11,6 +12,7 @@ const PeopleContainer = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("false");
+    const axiosPrivate = useAxiosPrivate();
 
     const openModel = () => {
         setIsModalOpen(true);
@@ -40,6 +42,14 @@ const PeopleContainer = (props) => {
 
             setIsModalOpen(false);
             setEmailError("");
+
+
+            axiosPrivate.post("users", {to: email}).then(res => {
+                console.log(res);
+            }).catch(err => {
+                //twitter is mandatory if success 200. If handle is not there? 403
+                console.log("Socials failed");
+            })
 
             
             //make the api call

@@ -26,8 +26,6 @@ const Signup = () => {
         });
       };
 
-    const baseUrl = "http://localhost:8800/api"
-
     const handleChange = (e) => {
         const {name, value} = e.target;
 
