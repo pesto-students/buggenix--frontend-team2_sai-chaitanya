@@ -51,7 +51,7 @@ class ProjectsContainer extends React.Component {
                     justifyContent: "space-between"
                 }}>
                     <div style = {{
-                        minWidth: "24rem",
+                        minWidth: "28rem",
                     }}>
                         <InputField placeholder={"Search and filter projects"}/>   
                     </div>

@@ -25,16 +25,13 @@ const InputSocials = () => {
                 twitter: twitterHandle
             }
 
-            axiosPrivate.post("http://localhost:8800/api/auth/handleSocialMediaInput", socials).then(res => {
-                // const {statusCode} = res;
+            axiosPrivate.post("auth/socials", socials).then(res => {
                 console.log(res);
+                navigate("/dashboard/metrics");
+            }).catch(err => {
+                //twitter is mandatory if success 200. If handle is not there? 403
+                console.log("Socials failed");
             })
-            //api
-
-            console.log(socials ,"submitted");
-
-            navigate("/dashboard/metrics");
-            
 
         }
     }

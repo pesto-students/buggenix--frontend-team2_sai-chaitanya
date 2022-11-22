@@ -60,7 +60,7 @@ const Login = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password")) {
             axios
-            .post("api/auth/login", {
+            .post("auth/login", {
               email,
               password
             }, {
@@ -75,7 +75,7 @@ const Login = () => {
                     id: _id
                 }
 
-                localStorage.setItem("access_token", accessToken);
+            localStorage.setItem("access_token", accessToken);
                 login(user);
                 navigate("/dashboard/metrics", {replace: true, state: {}});
 

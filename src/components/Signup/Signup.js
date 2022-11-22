@@ -77,10 +77,10 @@ const Signup = () => {
         e.preventDefault();
         if(validate(email, "email") && validate(password, "password") && validate(name, "name")) {
             axios
-            .post(`api/auth/register`, {
-              "email":email,
-              "username":name,
-              "password": password
+            .post(`auth/register`, {
+              email,
+              name,
+            password
             })
             .then((response) => {
                 const {_id, username, email, accessToken} = response.data || {};
