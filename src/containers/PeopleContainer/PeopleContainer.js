@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./PeopleContainer.module.css";
 import {
     DeleteFilled
@@ -13,6 +13,15 @@ const PeopleContainer = (props) => {
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("false");
     const axiosPrivate = useAxiosPrivate();
+    const [people, setPeople] = useState([]);
+ 
+    useEffect(() => {
+        axiosPrivate.get("users").then(res => {
+            const {data} = res || {};
+            const {team} = data || {};
+            setPeople(team);
+        })
+    }, [])
 
     const openModel = () => {
         setIsModalOpen(true);
