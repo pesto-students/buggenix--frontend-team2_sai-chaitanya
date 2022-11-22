@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "./DashboardContainer.module.css";
 import { NavLink, Outlet } from "react-router-dom";
 import { PieChartOutlined, RocketOutlined, TagOutlined, TeamOutlined, ContactsOutlined } from '@ant-design/icons';
+import Logo from '../../components/UI/Molecules/Logo/Logo';
 
 
 class DashboardContainer extends React.Component {
@@ -11,6 +12,7 @@ class DashboardContainer extends React.Component {
             <div className= {styles.container}>
                 <nav className= {styles.nav}>
                     <div className= {styles.navTop}>
+                        <Logo/>
                         <NavLink to = "metrics">
                             <div className = {styles.navItem}>
                                 <PieChartOutlined />
