@@ -15,9 +15,9 @@ class TicketsContainer extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className = {styles.ticketContainer}>
                 <div style = {{
-                    height: "2rem", 
+                    height: "6vh", 
                     display: "flex", 
                     alignItems: "center", 
                     justifyContent: "flex-start",

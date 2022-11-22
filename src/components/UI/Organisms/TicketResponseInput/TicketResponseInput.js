@@ -57,16 +57,13 @@ const TicketResponseInput = () => {
     ]
 
     return (
-        <div style = {{
-            border: "1px solid #D6D6D6",
-            padding: "8px"
-        }}>
+        <div className = {styles.ticketReponseTabsContainer}>
             <Tabs
                 defaultActiveKey="1"
                 onChange={onChange}
                 items={items}
+                size = {"small"}
                 style = {{
-                    // border: "1px solid #D6D6D6",
                     minHeight: "10rem", 
                 }}
             />

@@ -26,7 +26,9 @@ const TicketDetail = ({title, subject}) => {
 
             </div>
             <TicketCreatorInfo />
-            <span>{title}</span>
+            <div style = {{
+                padding: "8px 0"
+            }}>{title}</div>
             <div className = {styles.conversations}>
                 <TicketResponse type = "note"/>
                 <TicketResponse type = "note"/>

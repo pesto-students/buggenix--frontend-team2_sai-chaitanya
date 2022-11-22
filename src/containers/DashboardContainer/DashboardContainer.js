@@ -16,7 +16,7 @@ class DashboardContainer extends React.Component {
                                 <PieChartOutlined />
                                 <span>Metrics</span>
                             </div>
-                            </NavLink>     
+                        </NavLink>     
                         <NavLink to = "projects">
                             <div className = {styles.navItem}>
                                 <RocketOutlined />
@@ -47,7 +47,9 @@ class DashboardContainer extends React.Component {
                     {/* <NavLink to = "account">Account</NavLink>     */}
                 </nav> 
                 {/* Style the above nav bar completely */}
-                <Outlet />
+                <div className = {styles.outlet}>
+                    <Outlet />
+                </div>
             </div>
         )
     }

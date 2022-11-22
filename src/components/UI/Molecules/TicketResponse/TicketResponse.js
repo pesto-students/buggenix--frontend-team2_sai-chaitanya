@@ -40,18 +40,24 @@ const TicketResponse = ({replier, ticketCreator, action, content, type}) => { //
                 </span>
             </div>
             <div style = {{
-                    margin: "1rem 0"
+                    margin: "1rem 0", 
+                    fontSize: "smaller", 
+                    fontWeight: "400"
                 }}>
                 <span>{content}</span>
             </div>
             {type == "note" ? (
                  <div className = {styles.actionBtns}>
-                 <button name = "edit" onClick={handleAction}>Edit</button>
+                 <button name = "edit" style = {{
+                    fontSize: "small", 
+                 }} onClick={handleAction}>Edit</button>
                  <Popconfirm
                        title = "Are you sure you want to delete this comment?"
                        onConfirm={confirm}
                        onCancel= {cancel}
-                 ><button name = "delete" onClick={handleAction}>Delete</button></Popconfirm>
+                 ><button style = {{
+                    fontSize: "small", 
+                 }} name = "delete" onClick={handleAction}>Delete</button></Popconfirm>
              </div>
             ) : null}
            
