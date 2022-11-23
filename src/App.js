@@ -12,6 +12,10 @@ import ProjectsContainer from "./containers/ProjectsContainer";
 import TicketsContainer from './containers/TicketsContainer';
 import PeopleContainer from './containers/PeopleContainer/PeopleContainer';
 import InputSocials from './components/InputSocials/InputSocials';
+import AuthRedirect from './components/AuthRedirect/AuthRedirect';
+import RequireAuth from './components/RequireAuth/RequireAuth';
+
+
 
 class App extends React.Component {
 
@@ -20,10 +24,9 @@ class App extends React.Component {
       <AuthProvider>
         <Routes>
           <Route path = "/" element = {<LandingPage/>} />
-          <Route path = "login" element = {<Login />} />   {/* //AuthRedirect should be added*/}
-          <Route path = "signup" element = {<Signup/>} /> {/* //AuthRedirect should be added*/}
-          {/* <Route path = "dashboard" element = {<RequireAuth><DashboardContainer/></RequireAuth>} /> */}
-          <Route path = "dashboard" element = {<DashboardContainer/>}>
+          <Route path = "login" element = {<AuthRedirect> <Login /></AuthRedirect>} />   {/* //AuthRedirect should be added*/}
+          <Route path = "signup" element = {<AuthRedirect><Signup/></AuthRedirect>} /> {/* //AuthRedirect should be added*/}
+          <Route path = "dashboard" element = {<RequireAuth><DashboardContainer/></RequireAuth>} >
               <Route path = "metrics" element = {<MetricsContainer/>}/>  
               <Route path = "projects" element = {<ProjectsContainer/>}/>  
               <Route path = "tickets" element = {<TicketsContainer/>}/>  

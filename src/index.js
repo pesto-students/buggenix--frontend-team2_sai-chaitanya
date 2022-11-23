@@ -6,6 +6,9 @@ import { BrowserTracing } from "@sentry/tracing";
 import {BrowserRouter} from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
+import { Provider } from "react-redux";
+import store from './store';
+
 
 Sentry.init({
   dsn: "https://e259215cdad64fe5bb5dcd7be16f343c@o4504157959815168.ingest.sentry.io/4504157968007168",
@@ -20,9 +23,11 @@ Sentry.init({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Provider store = {store}>
       <BrowserRouter>
           <App />
       </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

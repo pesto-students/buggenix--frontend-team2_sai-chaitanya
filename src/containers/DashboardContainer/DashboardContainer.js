@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from "./DashboardContainer.module.css";
 import { NavLink, Outlet } from "react-router-dom";
-import { PieChartOutlined, RocketOutlined, TagOutlined, TeamOutlined, ContactsOutlined } from '@ant-design/icons';
+import { PieChartOutlined, RocketOutlined, TagOutlined, TeamOutlined, ContactsOutlined, LogoutOutlined } from '@ant-design/icons';
 import Logo from '../../components/UI/Molecules/Logo/Logo';
+import LogoutBtn from '../../components/UI/Molecules/LogoutBtn';
 
 
 class DashboardContainer extends React.Component {
@@ -45,6 +46,9 @@ class DashboardContainer extends React.Component {
                                 <span>Account</span>
                             </div>
                         </NavLink>    
+                            <div className = {styles.navItem}>
+                               <LogoutBtn/>
+                            </div>
                     </div>
                     {/* <NavLink to = "account">Account</NavLink>     */}
                 </nav> 

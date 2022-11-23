@@ -5,7 +5,11 @@ import {
 } from '@ant-design/icons';
 import { axiosPrivate } from '../../api/axios';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { connect } from 'react-redux';
+import { filterUsers } from '../../utils/filterUsers';
+import { fetchUsers } from '../../actionCreators/usersActions';
 const { Button, Input, Modal } = require("antd");
+
 
 
 const PeopleContainer = (props) => {
@@ -14,14 +18,20 @@ const PeopleContainer = (props) => {
     const [emailError, setEmailError] = useState("false");
     const axiosPrivate = useAxiosPrivate();
     const [people, setPeople] = useState([]);
- 
+    const [searchStr, setSearchStr] = useState("");
+
+    const handleDeleteUser = (id) => {
+        console.log("User deleted", id);
+    } 
+
     useEffect(() => {
+
         axiosPrivate.get("users").then(res => {
             const {data} = res || {};
             const {team} = data || {};
             setPeople(team);
         })
-    }, [])
+    }, []);
 
     const openModel = () => {
         setIsModalOpen(true);
@@ -36,6 +46,12 @@ const PeopleContainer = (props) => {
         setEmail(value);
     }
 
+    const handleSearchStrChange = (e) => {
+        const {value} = e.target;
+        console.log("is it")
+        setSearchStr(value);
+    }
+ 
     
     const handleOk = () => {
         const valid = String(email)
@@ -52,9 +68,9 @@ const PeopleContainer = (props) => {
             setIsModalOpen(false);
             setEmailError("");
 
-
             axiosPrivate.post("users", {to: email}).then(res => {
                 console.log(res);
+                //addUser action dispatch
             }).catch(err => {
                 //twitter is mandatory if success 200. If handle is not there? 403
                 console.log("Socials failed");
@@ -67,26 +83,30 @@ const PeopleContainer = (props) => {
 
     }
 
-    const {memberCount = 2} = props;
+    const {memberCount = 4} = props;
+
+    const _peopleList = filterUsers(people, searchStr);
+    console.log(_peopleList, "list");
 
     return (
         <div className= {styles.container}>
             <div style = {{
-                "font-size": "15px",
-                "font-weight": "500", 
+                fontSize: "15px",
+                fontWeight: "500", 
                 padding: "12px 0",
             }}>Manage team</div>
 
             <div style = {{
-                "font-size": "10px",
-                "font-weight": "300", 
+                fontSize: "10px",
+                fontWeight: "300", 
                 padding: "12px 0"
-            }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{memberCount} / 25</span></div>
+            }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{people.length} / 25</span></div>
 
             <div className= {styles.search}>
                 <Input style = {{
-                    marginRight: "5rem"
-                }} placeholder="Search" enterButton="Search"/>
+                    marginRight: "5rem", 
+                }}  onChange = {handleSearchStrChange}
+                placeholder="Search" enterbutton ="Search"/>
                 <Button onClick = {openModel} style = {{
                     background: "#1D5BD4", 
                     color: "white", 
@@ -100,31 +120,21 @@ const PeopleContainer = (props) => {
                         <th>Email</th>
                         <th>Account role</th>
                     </thead>
-
-                    <tr>
-                        <td>Aditya</td>
-                        <td>contact@aditya.com</td>
-                        <td>Super admin</td>
-                        <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-                    </tr>
-                    <tr>
-                        <td>Tarun</td>
-                        <td>contact@tarun.com</td>
-                        <td>Admin</td>
-                        <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-                    </tr>
-                    <tr>
-                        <td>Anj</td>
-                        <td>contact@anj.com</td>
-                        <td>Admin</td>
-                        <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-                    </tr>
-                    <tr>
-                        <td>Harsha</td>
-                        <td>contact@harsha.com</td>
-                        <td>Admin</td>
-                        <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-                    </tr>
+                    <tbody>
+                        {
+                            _peopleList.length > 0 ? _peopleList.map(person => {
+                                const {username, email, role, _id: id} = person || {};
+                                return (
+                                    <tr>
+                                        <td>{username}</td>
+                                        <td>{email}</td>
+                                        <td>{role}</td>
+                                        <td><DeleteFilled onClick={() => handleDeleteUser(id)} style = {{color: "grey", cursor: 'pointer'}}/></td>
+                                    </tr>
+                                )
+                            }) : <span>No user found</span>
+                        }
+                    </tbody>
                 </table>
             </div>
             <Modal title="Invite team members" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -134,144 +144,45 @@ const PeopleContainer = (props) => {
             </Modal>
         </div>
     )
-
-
 }
 
-// class PeopleContainer extends React.Component {
 
-//     constructor(props) {
-//         super(props);
-//         this.openModel = this.openModel.bind(this);
-//         this.state = {
-//             isModalOpen: false, 
-//             email: "", 
-//             emailError: ""
-//         }
-//         // this.handleOk = this.handleOk.bind(this);
-//         this.handleCancel = this.handleCancel.bind(this);
-//         this.handleChange = this.handleChange.bind(this);
-//     }
+const mapStateToProps = (state) => {
+    return {
+        ...state
+    }
+}
 
-//     openModel() {
-//         this.setState({
-//             isModalOpen: true
-//         })
-//     }
+export default connect(mapStateToProps, {fetchUsers})(PeopleContainer);
 
-
-//     handleOk(email) {
-//         const valid = String(email)
-//         .toLowerCase()
-//         .match(
-//           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-//         );
-
-//         if(!valid) {
-//             this.setState({
-//                 emailError: "Please enter valid email"
-//             })
-//         } else {
-//             //make api call
-//             this.setState({
-//                 isModalOpen: false, 
-//                 emailError: ""
-//             }, () => {
-//                 //make the api call
-//                 // axiosPrivate()
-//             })
-//         }
-
-//     }
-
-//     handleCancel() {
-//         this.setState({
-//             isModalOpen: false
-//         })
-//     }
-
-//     handleChange(e) {
-//         const {value} = e.target;
-        
-//         this.setState({
-//             email: value
-//         })
-//     }
-
-//     render() {
-
-//         const {memberCount = 2} = this.props;
-//         const {isModalOpen, emailError, email} = this.state;
-
-//         return (
-//             <div className= {styles.container}>
-//                 <div style = {{
-//                     "font-size": "15px",
-//                     "font-weight": "500", 
-//                     padding: "12px 0",
-//                 }}>Manage team</div>
-
-//                 <div style = {{
-//                     "font-size": "10px",
-//                     "font-weight": "300", 
-//                     padding: "12px 0"
-//                 }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{memberCount} / 25</span></div>
-
-//                 <div className= {styles.search}>
-//                     <Input style = {{
-//                         marginRight: "5rem"
-//                     }} placeholder="Search" enterButton="Search"/>
-//                     <Button onClick = {this.openModel} style = {{
-//                         background: "#1D5BD4", 
-//                         color: "white", 
-//                         border: "none"
-//                         }}>Add users</Button>
-//                 </div>
-//                 <div className= {styles.userList}> 
-//                     <table className = {styles.tableContainer} >
-//                         <thead>
-//                             <th>Name</th>
-//                             <th>Email</th>
-//                             <th>Account role</th>
-//                         </thead>
-
-//                         <tr>
-//                             <td>Aditya</td>
-//                             <td>contact@aditya.com</td>
-//                             <td>Super admin</td>
-//                             <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-//                         </tr>
-//                         <tr>
-//                             <td>Tarun</td>
-//                             <td>contact@tarun.com</td>
-//                             <td>Admin</td>
-//                             <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-//                         </tr>
-//                         <tr>
-//                             <td>Anj</td>
-//                             <td>contact@anj.com</td>
-//                             <td>Admin</td>
-//                             <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-//                         </tr>
-//                         <tr>
-//                             <td>Harsha</td>
-//                             <td>contact@harsha.com</td>
-//                             <td>Admin</td>
-//                             <td><DeleteFilled style = {{color: "grey", cursor: 'pointer'}}/></td>
-//                         </tr>
-//                     </table>
-//                 </div>
-//                 <Modal title="Invite team members" open={isModalOpen} onOk={this.handleOk.bind(this, email)} onCancel={this.handleCancel}>
-//                     <div style = {{padding: "1rem 0"}}>Email address</div>
-//                     <Input onChange={this.handleChange} placeholder='Add the email of the person you want to invite'/>
-//                     {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
-//                 </Modal>
-//             </div>
-//         )
-//     }
-// }
-
-export default PeopleContainer;
+PeopleContainer.defaultProps = {
+    people: [
+        {
+            id: "1", 
+            email: "h@gmail.com", 
+            name: "Harish", 
+            role: "admin", 
+        },
+        {
+            id: "2", 
+            email: "a@gmail.com", 
+            name: "Aditya", 
+            role: "member", 
+        },
+        {
+            id: "3", 
+            email: "a@gmail.com", 
+            name: "Anjali", 
+            role: "member", 
+        },
+        {
+            id: "4", 
+            email: "r@gmail.com", 
+            name: "Raghul", 
+            role: "admin", 
+        },
+    ]
+}
 
 
 
