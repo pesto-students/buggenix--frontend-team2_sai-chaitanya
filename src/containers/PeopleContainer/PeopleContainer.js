@@ -85,16 +85,6 @@ const PeopleContainer = (props) => {
                     setEmailError("Please enter valid email");
                 }
             }); //action dispatch
-            
-            // axiosPrivate.post("users", {to: email}).then(res => {
-            //     console.log(res);
-            //     setEmail("");
-            // }).catch(err => {
-            //     //twitter is mandatory if success 200. If handle is not there? 403
-            //     console.log("Socials failed");
-            // })
-            
-            //make the api call
         }
     }
 
