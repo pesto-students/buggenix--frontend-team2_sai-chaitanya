@@ -25,7 +25,7 @@ const InputSocials = () => {
                 twitter: twitterHandle
             }
 
-            axiosPrivate.post("auth/socials", socials).then(res => {
+            axiosPrivate.post("socials", socials).then(res => {
                 console.log(res);
                 navigate("/dashboard/metrics");
             }).catch(err => {
