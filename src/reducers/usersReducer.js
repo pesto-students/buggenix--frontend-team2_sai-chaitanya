@@ -1,8 +1,8 @@
-import { ADD_USER_FAILURE, ADD_USER_REQUEST, ADD_USER_SUCCESS, FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS } from "../constants/user";
+import { ADD_USER_FAILURE, ADD_USER_REQUEST, ADD_USER_SUCCESS, DELETE_USER_FAILURE, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, FETCH_USERS_FAILURE, FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS } from "../constants/user";
 
 const initialState = {
     isLoading: false,
-    users: [], 
+    usersList: [], 
     error: ""
 }
 
@@ -22,7 +22,7 @@ export const usersReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state, 
                 isLoading: false, 
-                users: payload
+                usersList: payload
             }
         }
 
@@ -51,11 +51,36 @@ export const usersReducer = (state = initialState, {type, payload}) => {
 
         case ADD_USER_SUCCESS: {
 
-            const newList = [...state.users];
+            const newList = [...state.usersList];
             newList.push(payload)
             return {
                 ...state, 
-                users: newList
+                usersList: newList
+            }
+        }
+        
+        case DELETE_USER_REQUEST: {
+            return {
+                ...state, 
+                isLoading: true
+            }
+        }
+
+
+        case DELETE_USER_SUCCESS: {
+            const id = payload;
+            const usersList = state.usersList.filter(user => user._id !== id);
+            return {
+                ...state, 
+                usersList
+            }
+        }
+
+        case DELETE_USER_FAILURE: {
+            return {
+                ...state, 
+                isLoading: false, 
+                error: payload
             }
         }
 

@@ -3,41 +3,48 @@ import styles from "./PeopleContainer.module.css";
 import {
     DeleteFilled
 } from '@ant-design/icons';
-import { axiosPrivate } from '../../api/axios';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+// import { axiosPrivate } from '../../api/axios';
 import { connect } from 'react-redux';
 import { filterUsers } from '../../utils/filterUsers';
-import { fetchUsers } from '../../actionCreators/usersActions';
-const { Button, Input, Modal } = require("antd");
+import { addUser, deleteUser, fetchUsers } from '../../actionCreators/usersActions';
+import axiosPrivate from '../../api/axiosPrivate';
 
+import { Button, Input, Modal, Popconfirm, message } from "antd"
+import UserItem from '../../components/UI/Molecules/UserItem';
 
 
 const PeopleContainer = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("false");
-    const axiosPrivate = useAxiosPrivate();
-    const [people, setPeople] = useState([]);
     const [searchStr, setSearchStr] = useState("");
 
-    const handleDeleteUser = (id) => {
-        console.log("User deleted", id);
-    } 
+
+    const handleUserDelete = (id) => {
+
+        const {deleteUser} = props;
+
+        deleteUser(id).then(res => {
+            if(res) {
+                message.success('User deleted');
+            } else {
+                message.error("Error occured while deleting user")
+            }
+            console.log(res, "deleted?")
+        });
+
+    };
 
     useEffect(() => {
-
-        axiosPrivate.get("users").then(res => {
-            const {data} = res || {};
-            const {team} = data || {};
-            setPeople(team);
-        })
+        const {fetchUsers} = props;
+        fetchUsers();  
     }, []);
 
     const openModel = () => {
         setIsModalOpen(true);
     }
 
-    const handleCancel = ()  => {
+    const closeModal = ()  => {
         setIsModalOpen(false);
     }
 
@@ -48,12 +55,13 @@ const PeopleContainer = (props) => {
 
     const handleSearchStrChange = (e) => {
         const {value} = e.target;
-        console.log("is it")
         setSearchStr(value);
     }
  
     
     const handleOk = () => {
+
+        const {addUser} = props;
         const valid = String(email)
         .toLowerCase()
         .match(
@@ -65,28 +73,33 @@ const PeopleContainer = (props) => {
         } else {
             //make api call
 
-            setIsModalOpen(false);
             setEmailError("");
-
-            axiosPrivate.post("users", {to: email}).then(res => {
-                console.log(res);
-                //addUser action dispatch
-            }).catch(err => {
-                //twitter is mandatory if success 200. If handle is not there? 403
-                console.log("Socials failed");
-            })
-
+            
+            //add user
+            addUser(email).then(res => {
+                if(res) {
+                    
+                    setIsModalOpen(false);
+                    //success
+                } else {
+                    setEmailError("Please enter valid email");
+                }
+            }); //action dispatch
+            
+            // axiosPrivate.post("users", {to: email}).then(res => {
+            //     console.log(res);
+            //     setEmail("");
+            // }).catch(err => {
+            //     //twitter is mandatory if success 200. If handle is not there? 403
+            //     console.log("Socials failed");
+            // })
             
             //make the api call
-
         }
-
     }
 
-    const {memberCount = 4} = props;
-
+    const {people} = props;;
     const _peopleList = filterUsers(people, searchStr);
-    console.log(_peopleList, "list");
 
     return (
         <div className= {styles.container}>
@@ -123,21 +136,14 @@ const PeopleContainer = (props) => {
                     <tbody>
                         {
                             _peopleList.length > 0 ? _peopleList.map(person => {
-                                const {username, email, role, _id: id} = person || {};
-                                return (
-                                    <tr>
-                                        <td>{username}</td>
-                                        <td>{email}</td>
-                                        <td>{role}</td>
-                                        <td><DeleteFilled onClick={() => handleDeleteUser(id)} style = {{color: "grey", cursor: 'pointer'}}/></td>
-                                    </tr>
-                                )
+                                const {username, email, role, _id: id, status} = person || {};
+                                return <UserItem username={username} email = {email} role = {role} status = {status}  id = {id} onClick = {handleUserDelete}/>
                             }) : <span>No user found</span>
                         }
                     </tbody>
                 </table>
             </div>
-            <Modal title="Invite team members" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Invite team members" open={isModalOpen} onOk={handleOk} onCancel={closeModal}>
                 <div style = {{padding: "1rem 0"}}>Email address</div>
                 <Input onChange={handleChange} placeholder='Add the email of the person you want to invite'/>
                 {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
@@ -148,12 +154,14 @@ const PeopleContainer = (props) => {
 
 
 const mapStateToProps = (state) => {
+    const {users} = state;
+    const {usersList} = users  || {};
     return {
-        ...state
+        people: usersList
     }
 }
 
-export default connect(mapStateToProps, {fetchUsers})(PeopleContainer);
+export default connect(mapStateToProps, {fetchUsers, deleteUser, addUser})(PeopleContainer);
 
 PeopleContainer.defaultProps = {
     people: [

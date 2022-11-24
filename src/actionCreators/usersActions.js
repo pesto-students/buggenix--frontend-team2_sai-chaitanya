@@ -1,6 +1,56 @@
-import axios, { axiosPrivate } from "../api/axios"
-import { FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS, FETCH_USERS_REQUEST, ADD_USER_REQUEST, ADD_USER_SUCCESS, ADD_USER_FAILURE } from "../constants/user"
-import useAxiosPrivate from "../hooks/useAxiosPrivate"
+import { axiosPrivate } from "../api/axios"
+import { FETCH_USERS_FAILURE, FETCH_USERS_SUCCESS, FETCH_USERS_REQUEST, ADD_USER_REQUEST, ADD_USER_SUCCESS, ADD_USER_FAILURE, DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAILURE } from "../constants/user"
+
+
+// FETCH USERS
+
+export const fetchUsers = () => {
+    
+    return (dispatch) => {
+
+        dispatch(fetchUsersRequest());
+
+        axiosPrivate.get("users").then(res => {
+            const {team} = res.data;
+            dispatch(fetchUsersSuccess(team));
+        }).catch(err => {
+            dispatch(fetchUsersFailure(err));
+        })
+    }
+}
+
+// DELETE USER
+
+export const deleteUser = (id) => {
+    return (dispatch) => {
+
+        dispatch(deleteUserRequest(id));
+
+        return axiosPrivate.delete(`users/${id}`).then(res => {
+            dispatch(deleteUserSuccess(id));
+            return true;
+        }).catch(err => {
+            dispatch(deleteUserFailure(err));
+            return false;
+        })
+    }
+}
+
+// ADD USER 
+
+export const addUser = (email) => {
+    return dispatch => {
+        dispatch(addUserRequest());
+        return axiosPrivate.post("users", {to: email}).then(res => {
+            const {data: user} = res || {};
+            dispatch(addUserSuccess(user));
+            return true
+        }).catch(err => {
+            dispatch(addUserFailure(err));
+            return false;
+        })
+    }
+}
 
 
 const fetchUsersRequest = () => {
@@ -29,9 +79,10 @@ const addUserRequest = () => {
     }
 }
 
-const addUserSuccess = () => {
+const addUserSuccess = (payload) => {
     return {
-        type: ADD_USER_SUCCESS
+        type: ADD_USER_SUCCESS, 
+        payload
     }
 }
 const addUserFailure = () => {
@@ -40,28 +91,21 @@ const addUserFailure = () => {
     }
 }
 
-export const addUser = () => {
-    return (dispatch) => {
-        dispatch(addUserRequest());
+const deleteUserRequest = () => {
+    return {
+        type: DELETE_USER_REQUEST
+    }
+}
+const deleteUserSuccess = (id) => {
+    return {
+        type: DELETE_USER_SUCCESS, 
+        payload: id
+    }
+}
+const deleteUserFailure = () => {
+    return {
+        type: DELETE_USER_FAILURE
     }
 }
 
 
-//this is a functional component
-export const fetchUsers = () => {
-    //making the api call
-    
-    return (dispatch) => {
-
-        dispatch(fetchUsersRequest());
-        fetch("https://jsonplaceholder.typicode.com/todos").then(response => response.json())
-            .then(data => {
-                dispatch(fetchUsersSuccess(data));
-            })
-            .catch(err => {
-                dispatch(fetchUsersFailure(err));
-            })
-        
-
-    }
-}
