@@ -27,8 +27,8 @@ class App extends React.Component {
         <Suspense fallback = {<div>This is the fallback ui</div>}>
           <Routes>
             <Route path = "/" element = {<LandingPage/>} />
-            <Route path = "login" element = {<AuthRedirect> <Login /></AuthRedirect>} />   {/* //AuthRedirect should be added*/}
-            <Route path = "signup" element = {<AuthRedirect><Signup/></AuthRedirect>} /> {/* //AuthRedirect should be added*/}
+            <Route path = "login" element = {<AuthRedirect> <Login /></AuthRedirect>} />   
+            <Route path = "signup" element = {<AuthRedirect><Signup/></AuthRedirect>} /> 
             <Route path = "dashboard" element = {<RequireAuth><DashboardContainer/></RequireAuth>} >
                 <Route path = "metrics" element = {<MetricsContainer/>}/>  
                 <Route path = "projects" element = {<ProjectsContainer/>}/>  
