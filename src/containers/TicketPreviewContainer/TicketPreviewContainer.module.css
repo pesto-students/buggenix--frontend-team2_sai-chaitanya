@@ -1,0 +1,53 @@
+.ticketPreviewContainer {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ticketBox {
+    position: absolute;
+    top: 2px;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    left: 0;
+    height: 48px;
+    width: 380px;
+    padding: 10px 8px 6px 12px;
+    box-shadow: 1px 0 0 0 #eee;
+    background-color: #fff;
+    text-align: right;
+
+}
+
+.ticketBox span {
+    margin-left: 8px;
+    color: #8090a0; 
+    font-size: 12px;
+}
+
+.ticketList {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    left: 0;
+    width: 380px;
+    box-shadow: 1px 0 0 0 #eee;
+    background-color: #fff;
+}
+
+.conversations {
+    margin-left: 380px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    background-color: #f0f3f9;
+    position: relative;
+    scroll-behavior: smooth;
+}
+

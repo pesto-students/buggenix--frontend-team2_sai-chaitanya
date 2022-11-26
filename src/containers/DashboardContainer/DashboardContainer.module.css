@@ -3,42 +3,152 @@
     flex-direction: row;
 }
 
-.container .nav {
-    min-width: 13%;
-    height: 100vh;
-    background-color: #B9C9FE;
+.navContainer {
+    display: block; 
+    position: fixed;
+    z-index: 300;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 102px;
+    border-radius: 0 16px 0 0;
+    background-color: #fff;
+    box-shadow: 1px 0 1px rgb(0 0 0 / 6%), 1px 0 12px rgb(0 0 0 / 10%);
+}
+
+.navContainer .logo {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    overflow: hidden;
+    height: 72px;
+    box-shadow: 0 1px 0 0 #eee;
 }
 
-.container .outlet {
-    height: 100vh;
+.navContainer .pagemenu {
+    padding-top: 12px;
+}
+
+.navContainer .pagemenu > .navigation {
+    padding: 16px 0;
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+    text-decoration: none;
+    outline: none;
+    font-size: 18px;
+    color: #8090a0;
+    cursor: pointer;
+}
+
+.navContainer .pagemenu > .navigation .icon {
+    position: relative;
+    display: block;
+    width: 48px;
+    margin: auto;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.navContainer .pagemenu > .selected {
+    background-color: red;
+}
+
+.navContainer .navBottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}
+
+.navContainer .navBottom .account_actions {
+    padding: 16px 8px 0 8px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.account_actions button {
+    font-weight: 600;
+    width: 100%;
+}
+
+.account_actions button.tiny {
+    min-width: 0;
+    height: 24px;
+    line-height: 22px;
+    padding: 0 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.account_actions button.success {
+    background-color: #00c878;
+    box-shadow: 0 2px 6px rgb(0 200 120 / 20%);
+    position: relative;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid rgba(0,0,0,0);
+    transition: all .2s;
+}
+
+
+
+
+.navBottom .account_actions .trial_expiry_reminder {
+    margin-bottom: 10px;
+    color: #8090a0;
+}
+
+.text {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.navBotton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}
+
+.logoutBtn {
+    padding-bottom: 24px;
+}
+
+.logoutBtn .logout {
+    width: 36px;
+    height: 36px;
+    margin: 2rem auto;
+    cursor: pointer;
+}
+
+.deleteIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+.deleteIcon svg {
     min-width: 80%;
+    min-height: 80%;
+    color: #F75303;
+
 }
 
-.container nav a.active {
-    background-color: green;
+.fullScroll {
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    left: 102px;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
 }
-
-.navTop, .navBottom {
-    display: flex;
-    flex-direction: column;
-}
-
-.navTop span, .navBottom span {
-    font-size: smaller;
-}
-
-.navTop > *, .navBottom > * {
-    padding: 10px 0;
-    color: black;
-}
-
-.navItem > *{
-    padding: 0 5px;
-}
-
-

@@ -11,3 +11,29 @@
     min-width: 30%;
 }
 
+.ticket_preview_container {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    animation: fadeIn .1s linear;
+}
+
+.ticket_preview_container .ticket_preview {
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    left: 0;
+    width: 380px;
+    box-shadow: 1px 0 0 0 #eee;
+    background-color: #fff;
+    background-color: rgba(96,66,236,.04);
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    cursor: pointer;
+}
+

@@ -1,0 +1,49 @@
+.navigation {
+    padding: 16px 0;
+    position: relative;
+    display: block;
+    margin-bottom: 6px;
+    text-decoration: none;
+    outline: none;
+    font-size: 18px;
+    color: #8090a0;
+    cursor: pointer;
+}
+
+.navigation .icon {
+    position: relative;
+    display: block;
+    width: 48px;
+    margin: auto;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.navigation .text {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.selected {
+    color: blue
+}
+
+.selected:hover {
+    transition: none !important;
+    transform: none !important;
+}
+
+.selected::after, .selected:hover::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 12px;
+    right: 12px;
+    background-color: rgba(96,66,236,.04);
+    border-radius: 6px;
+    color: red; 
+}
+

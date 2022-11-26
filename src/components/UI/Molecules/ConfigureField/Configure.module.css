@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.container > * {
+    margin-right: 8px;
+}
+
+.container .title {
+    color: #8090a0;
+    font-size: 13px;
+    font-weight: 500;
+    word-break: break-all;
+    font-weight: 400;
+    text-align: right;
+}

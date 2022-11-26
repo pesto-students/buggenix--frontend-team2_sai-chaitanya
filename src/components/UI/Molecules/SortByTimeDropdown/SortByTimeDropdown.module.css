@@ -1,0 +1,30 @@
+.statusContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.statusContainer:hover {
+    background-color: #F9F8FE;
+}
+
+.icon > * {
+    color: #6041EC;
+}
+
+.statusContainer > * {
+    margin-left: 8px;
+}
+
+.name {
+    color: #8090A0; 
+    font-size: 13px;
+}
+
+.name span{
+    color: #222D39;
+    font-weight: 600;
+}

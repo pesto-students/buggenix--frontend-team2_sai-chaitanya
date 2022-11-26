@@ -1,29 +1,28 @@
-.cardContainer {
-    cursor: pointer;
-    max-width: 20rem;
-}
 
-.cardContainer .card {
+
+.cardContainer {
     display: flex;
     flex-direction: row;
-}
-
-.cardContainer .card.active {
-    background-color: #E7EBFA;
-}
-
-.cardContainer .card.selected {
-    background-color: #B9C9FE;
-}
-
-.cardContainer .card .cardContent {
+    align-items: center;
+    position: relative;
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.card .cardContent > * {
+
+.card .cardContainer > * {
     padding: 0 5px;
+}
+
+.card:hover {
+    background-color: #EFF2FB;
+}
+
+.card.selected {
+    /* background-color: red; */
+    box-shadow: 4px 0 0 0 #6042ec inset;
 }
 
 .topTextContent {
@@ -45,4 +44,38 @@
     right: 0;
     /* font-weight: bold; */
     font-size: x-small;
+}
+
+.creatorName {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.subject {
+    margin: 6px 0 6px 0;
+    font-size: 13px;
+    color: #8090a0;
+    word-break: break-word;
+}
+
+.stats > * {
+    margin-right: 4px;
+    color: #8090a0;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.createdTime span {
+    color: #8090a0;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.itemBottom {
+    display: flex;
+    flex-direction: row;
+}
+
+.itemBottom > * {
+    margin-right: 1rem;
 }

@@ -1,0 +1,42 @@
+.ticket_action_bar {
+    position: fixed;
+    z-index: 200;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    top: 0;
+    right: 0;
+    left: 102px;
+    height: 72px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 6%), 0 1px 12px rgb(0 0 0 / 10%);
+}
+
+.ticket_action_bar .search {
+    width: 356px;
+    margin: 0 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form input {
+    margin-left: 10px;
+    width: 100%;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    outline: none;
+    font-size: 16px;
+    color: #000;
+    transition: all .2s;
+}
+
+.form input::placeholder {
+    color: #BCBFC3; 
+}
+

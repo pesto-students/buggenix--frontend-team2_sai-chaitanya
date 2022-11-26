@@ -1,0 +1,110 @@
+
+.ticket_inbox_conversations {
+    position: relative;
+    max-width: 1400px;
+    margin: 0px 424px 0 0;
+    padding: 0px 48px 16px 48px;
+}
+
+.ticket_viewer_thread {
+    margin-bottom: 48px;
+}
+
+.thread_main {
+    position: relative;
+}
+
+.thread_title {
+    height: 24px;
+}
+.thread_title span{
+    float: left;
+    margin-right: 6px;
+    line-height: 24px;
+    font-weight: 500;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.userImg {
+    float: left;
+    margin-right: 6px;
+    font-size: 12px;
+}
+
+.thread_title, .thread_time {
+    float: left;
+    line-height: 24px;
+    color: #8090a0;
+    font-size: 12px;
+}
+
+
+.thread_description {
+    display: inline-block;
+    padding: 24px;
+    border-radius: 20px;
+    background-color: rgba(128,144,160,.1);
+    margin: 8px 0 0 0;
+}
+
+.thread_description.main {
+    background-color: rgb(246, 217, 163);
+    color: black;
+}
+
+.comment {
+    word-break: break-word;
+}
+
+.response {
+    display: flex;
+}
+
+.response > * {
+    margin: 10px 10px 10px 6px;
+    font-size: small;
+    cursor: pointer;
+    color: #8090A0
+}
+
+.responseBox {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    min-width: 100%;
+    min-height: 120px
+}
+
+.textArea {
+    max-width: 80%;
+    min-height: 10px;
+    border: none;
+    outline: none;
+    padding: 1rem;
+}
+
+.responseBox .button {
+    align-self: flex-end;
+    margin-right: 1rem;
+    border-radius: 3px;
+    border: none;
+    background-color: #6042ec;
+    color: white;
+    max-width: 100px;
+}
+
+.responseBox .textArea:focus {
+    outline: none;
+}
+
+.responseBox .button:hover {
+    transform: none;
+    transition: none;
+    background-color: #371cac;
+}
+
+
