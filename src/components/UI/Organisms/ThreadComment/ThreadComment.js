@@ -10,6 +10,7 @@ const ThreadComment = ({content, createdTime, creatorName, main}) => {
                 </div>
                 <span className = {styles.thread_title}>{creatorName}</span>
                 <span className = {styles.thread_time}>{createdTime}</span>
+                {main && <span className = {styles.thread_social}>Sent via <span>Twitter</span></span>}
             </div>
             <div className = {styles.thread_description + " " + (main && styles.main)}>
                 <div className = {styles.comment}>
@@ -27,6 +28,6 @@ const ThreadComment = ({content, createdTime, creatorName, main}) => {
 
 export default ThreadComment;
 
-ThreadComment.defaultProps = {
-    content: "Ryan, could you get onto this? Perhaps, you could talk to your manager, get your team acting on it ASAP?"
-}
+// ThreadComment.defaultProps = {
+//     content: "Ryan, could you get onto this? Perhaps, you could talk to your manager, get your team acting on it ASAP?"
+// }

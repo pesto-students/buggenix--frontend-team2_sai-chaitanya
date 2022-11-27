@@ -231,7 +231,7 @@ TicketsContainer.defaultProps = {
         conversations: [
             {
                 type: "note", 
-                description: "Ryan, could you get onto this? Perhaps, you could talk to your manager, get your team acting on it ASAP?", 
+                description: "Dwight, we will have to take this up. Perhaps, you could talk to your manager, get your team acting on it ASAP?", 
                 timestamp: "3 seconds ago", 
                 creatorInfo: {
                     name: "Aditya Vinayak",
@@ -239,7 +239,7 @@ TicketsContainer.defaultProps = {
                 }
             }, {
                 type: "note", 
-                description: "I will look into it. In the while, it'll be great if we could also focus on the Acme team's issue", 
+                description: "Dwight, we will have to take this up. In the while, it'll be great if we could also focus on the Acme team's issue", 
                 timestamp: "20 minutes ago", 
                 creatorInfo: {
                     name: "Aditya Vinayak",

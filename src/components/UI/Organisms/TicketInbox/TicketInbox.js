@@ -1,6 +1,7 @@
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Popconfirm, message } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { useState } from "react";
 import ConfigureField from "../../Molecules/ConfigureField/ConfigureField";
 import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
@@ -10,6 +11,29 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
 
     const { description, creatorInfo, timestamp, conversations = [] } = selectedTicket || {};
     const { name, id, type, channel  } = creatorInfo || {};
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+
+    const showPopconfirm = () => {
+        setOpen(true);
+      };
+
+    const handleCancel = () => {
+        console.log('Clicked cancel button');
+        setOpen(false);
+      };
+
+    const handleOk = () => {
+        setConfirmLoading(true);
+        setTimeout(() => {
+            setOpen(false);
+            setConfirmLoading(false);
+        }, 2000);
+    }
+
+
+
     return (
         <div className = {styles.ticket_inbox}>
             <div className = {styles.ticket_inbox_conversations}>
@@ -27,9 +51,9 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
                             <span>Conversations</span>
                         </div>
                         {conversations.map(conversation => {
-                            const {content, createdTime, creatorInfo} = conversation || {};
+                            const {description, timestamp, creatorInfo} = conversation || {};
                             const {name, id} = creatorInfo || {};
-                            return (<ThreadComment content={content} createdTime = {createdTime} creatorName = {name} />)
+                            return (<ThreadComment content={description} createdTime = {timestamp} creatorName = {name} />)
 
                         })}
                     </div>
@@ -37,7 +61,7 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
             </div>
             <div className = {styles.ticketActions}>
                 <div className = {styles.heading}>
-                    <span className = {styles.item}>Ticket attributes</span>
+                    <span className = {styles.item}>Set ticket attributes here</span>
                 </div>
                 <div className = {styles.configurations}>
                     {configurationData.map(info => {
@@ -54,7 +78,17 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
                     <TicketDetails name = "Created Time" value = "Dec, 01, 2022"/>
                 </div>
                 <div className = {styles.deleteTicketBtn}>
-                    <Button className= {styles.deleteBtn}>Delete Ticket <DeleteOutlined/></Button>
+                <Popconfirm
+                    title="Delete ticket?"
+                    open={open}
+                    onConfirm={handleOk}
+                    okButtonProps={{
+                        loading: confirmLoading,
+                    }}
+                    onCancel={handleCancel}
+                    >
+                        <Button onClick={showPopconfirm} className= {styles.deleteBtn}>Delete Ticket <DeleteOutlined/></Button>
+                    </Popconfirm>
                 </div>
 
             </div>
