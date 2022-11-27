@@ -52,7 +52,8 @@
 }
 
 .thread_description.main {
-    background-color: rgb(246, 217, 163);
+    /* background-color: rgb(246, 217, 163); */
+    background-color: white;
     color: black;
 }
 

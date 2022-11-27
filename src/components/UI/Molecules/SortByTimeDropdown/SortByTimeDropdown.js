@@ -4,30 +4,36 @@ import styles from "./SortByTimeDropdown.module.css";
 
 
 
-const SortByTimeDropdown = ({currentSelection = "Date created"}) => {
+const SortByTimeDropdown = ({value, onChange}) => {
 
-    const dropdownItem = (value) => {
-        return (<span style = {{fontSize: "small"}}>{value}</span>)
+    const dropdownItem = (label, value) => {
+        return (<div onClick={() => onChange("sortBy", value)} style = {{fontSize: "small"}}>{label}</div>)
     }
 
-    const statusList = [
+    const list = [
+        {
+            label: "All", 
+            key: "all"
+        }, 
         {
             label: "Date created", 
-            key: "1"
+            key: "created"
         }, 
         {
             label: "Date updated", 
-            key: "2"
+            key: "updated"
         }
     ]
 
-    const items = statusList.map(status => {
+    const items = list.map(status => {
         const {label, key} = status;
         return {
-            label: dropdownItem(label), 
+            label: dropdownItem(label, key), 
             key
         }
     });
+
+    const currentLabel = list.find(item => item.key == value).label;
 
     return (
         <Dropdown menu={{items}}>
@@ -36,7 +42,7 @@ const SortByTimeDropdown = ({currentSelection = "Date created"}) => {
                     <div className = {styles.icon}>
                         <HourglassOutlined/>
                     </div>
-                    <div className = {styles.name}>Sort by: <span>{currentSelection}</span></div>
+                    <div className = {styles.name}>Sort by: <span>{currentLabel}</span></div>
                     <ArrowDownOutlined/>
                 </div>
             </Space>

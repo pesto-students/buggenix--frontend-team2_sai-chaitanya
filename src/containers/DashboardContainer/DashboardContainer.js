@@ -82,7 +82,7 @@ class DashboardContainer extends React.Component {
                     <div className = {styles.pagemenu}>
                         {navList.map(navInfo => {
                             const {iconName, to, value, isSelected} = navInfo || {};
-                            return <NavItem iconName={iconName} to = {to} value = {value} isSelected = {isSelected} onClick = {this.handleNavChange}/>
+                            return <NavItem key = {value} iconName={iconName} to = {to} value = {value} isSelected = {isSelected} onClick = {this.handleNavChange}/>
                         })}
                     </div>
                     <div className = {styles.navBottom}> 

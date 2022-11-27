@@ -6,17 +6,19 @@ import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({configurationData}) => {
+const TicketInbox = ({configurationData, selectedTicket}) => {
+
+    const { description, creatorInfo, timestamp, conversations = [] } = selectedTicket || {};
+    const { name, id, type, channel  } = creatorInfo || {};
     return (
         <div className = {styles.ticket_inbox}>
             <div className = {styles.ticket_inbox_conversations}>
                 <div className = {styles.ticket_viewer_thread}>
                     <div className = {styles.thread_main}>
                         <div className = {styles.title}>
-                            <span>Ticket subject</span>
+                            <span>Ticket info</span>
                         </div>
-                       <ThreadComment main = {true} content = {"We would love to see new and improved features, and it'll be great if there were more integration available"}
-/>
+                       <ThreadComment creatorName={name} createdTime = {timestamp}  main = {true} content = {description}/>
                         <div className = {styles.responseBox}>
                             <textarea className = {styles.textArea} placeholder="Type your reply"/>
                             <Button className = {styles.button}>Submit</Button>
@@ -24,11 +26,12 @@ const TicketInbox = ({configurationData}) => {
                         <div className = {styles.title}>
                             <span>Conversations</span>
                         </div>
-                        <ThreadComment />
-                        <ThreadComment />
-                        <ThreadComment />
-                        <ThreadComment />
-                        <ThreadComment />
+                        {conversations.map(conversation => {
+                            const {content, createdTime, creatorInfo} = conversation || {};
+                            const {name, id} = creatorInfo || {};
+                            return (<ThreadComment content={content} createdTime = {createdTime} creatorName = {name} />)
+
+                        })}
                     </div>
                 </div>
             </div>
@@ -39,7 +42,7 @@ const TicketInbox = ({configurationData}) => {
                 <div className = {styles.configurations}>
                     {configurationData.map(info => {
                         const {category, options} = info || {};
-                        return (<ConfigureField category={category} options = {options}/>)
+                        return (<ConfigureField key = {category} category={category} options = {options}/>)
                     })}
                 </div>
                 <div className = {styles.heading}>

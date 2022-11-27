@@ -1,16 +1,14 @@
 import TicketItem from "../../Molecules/TicketItem/TicketItem"
 
-const TicketList = () => {
+const TicketList = ({ticketList, onCheck, checkedTicketIds, selectedTicket, onSelect}) => {
     return (
         <>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
-            <TicketItem/>
+            {ticketList.map(ticketItem => {
+                const {id} = ticketItem || {};
+                const isChecked = checkedTicketIds.includes(id);
+
+                return (<TicketItem onSelect = {onSelect} selectedTicket = {selectedTicket} isChecked = {isChecked} onCheck = {onCheck} key = {id} ticketItem = {ticketItem}/>)
+            })}
         </>
     )
 }

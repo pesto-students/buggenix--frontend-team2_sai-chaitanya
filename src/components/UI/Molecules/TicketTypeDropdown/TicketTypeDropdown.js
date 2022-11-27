@@ -3,38 +3,41 @@ import { Dropdown, Space } from "antd";
 import styles from "./TicketTypeDropdown.module.css";
 
 
-const TicketTypeDropdown = ({currentSelection = "All"}) => {
+const TicketTypeDropdown = ({value, onChange}) => {
 
-    const dropdownItem = (value) => {
-        return (<span style = {{fontSize: "small"}}>{value}</span>)
+    const dropdownItem = (label, value) => {
+        return (<div onClick={() => onChange("type", value)} style = {{fontSize: "small"}}>{label}</div>)
     }
 
-    const statusList = [
+    const list = [
         {
             label: "All", 
-            key: "0"
+            key: "all"
         }, 
         {
             label: "General Feedback", 
-            key: "1"
+            key: "feedback"
         }, 
         {
             label: "Bug Report", 
-            key: "2"
+            key: "bug"
         }, 
         {
             label: "Feature Request", 
-            key: "3"
+            key: "feature"
         }
     ]
 
-    const items = statusList.map(status => {
+    const items = list.map(status => {
         const {label, key} = status;
         return {
-            label: dropdownItem(label), 
+            label: dropdownItem(label, key), 
             key
         }
     });
+
+    const currentLabel = list.find(item => item.key == value).label;
+
 
     return (
         <Dropdown menu={{items}}>
@@ -43,7 +46,7 @@ const TicketTypeDropdown = ({currentSelection = "All"}) => {
                     <div className = {styles.icon}>
                         <FunnelPlotFilled />
                     </div>
-                    <div className = {styles.name}>Type: <span>{currentSelection}</span></div>
+                    <div className = {styles.name}>Type: <span>{currentLabel}</span></div>
                     <ArrowDownOutlined/>
                 </div>
             </Space>

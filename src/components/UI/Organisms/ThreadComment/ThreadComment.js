@@ -8,8 +8,8 @@ const ThreadComment = ({content, createdTime, creatorName, main}) => {
                 <div className = {styles.userImg}>
                     <Avatar size={"small"}>{"H"}</Avatar>
                 </div>
-                <span className = {styles.thread_title}>Harish Balasubramanian</span>
-                <span className = {styles.thread_time}>24 Nov 2022</span>
+                <span className = {styles.thread_title}>{creatorName}</span>
+                <span className = {styles.thread_time}>{createdTime}</span>
             </div>
             <div className = {styles.thread_description + " " + (main && styles.main)}>
                 <div className = {styles.comment}>

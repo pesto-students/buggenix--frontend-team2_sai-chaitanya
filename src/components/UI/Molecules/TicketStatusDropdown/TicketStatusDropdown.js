@@ -3,43 +3,46 @@ import { Dropdown, Space } from "antd";
 import styles from "./TicketStatusDropdown.module.css";
 
 
-const TicketStatusDropdown = ({currentSelection = "All"}) => {
+const TicketStatusDropdown = ({onChange, value}) => {
 
-    const dropdownItem = (value) => {
-        return (<span style = {{fontSize: "small"}}>{value}</span>)
+
+    const dropdownItem = (label, key) => {
+        return (<div onClick={() => onChange("status", key)} style = {{fontSize: "small"}}>{label}</div>)
     }
 
-    const statusList = [
+    const list = [
         {
             label: "All", 
-            key: "0"
+            key: "all"
         }, 
         {
             label: "Open", 
-            key: "1"
+            key: "open"
         }, 
         {
             label: "In Progress", 
-            key: "2"
+            key: "progress"
         }, 
         {
             label: "Under Review", 
-            key: "3"
+            key: "review"
         }, 
         {
             label: "Done", 
-            key: "4"
+            key: "done"
         }, 
     ]
 
-    const items = statusList.map(status => {
+    const items = list.map(status => {
         const {label, key} = status;
         return {
-            label: dropdownItem(label), 
+            label: dropdownItem(label, key), 
             key
         }
     });
 
+    const currentLabel = list.find(item => item.key == value).label;
+ 
     return (
         <Dropdown menu={{items}}>
             <Space>
@@ -47,7 +50,7 @@ const TicketStatusDropdown = ({currentSelection = "All"}) => {
                     <div className = {styles.icon}>
                         <TagFilled/>
                     </div>
-                    <div className = {styles.name}>Status: <span>{currentSelection}</span></div>
+                    <div className = {styles.name}>Status: <span>{currentLabel}</span></div>
                     <ArrowDownOutlined/>
                 </div>
             </Space>
