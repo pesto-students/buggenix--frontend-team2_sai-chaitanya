@@ -1,31 +1,82 @@
 .cardContainer {
-    width: 16rem; 
-    min-height: 7rem;
+    /* width: 16rem;  */
+    max-height: 17rem;
     cursor: pointer;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: white;
+    box-shadow: 0 4px 4px 0 rgba(205, 205, 205, 0.2);
+    border-radius: 2rem;
+    margin: 2rem 1rem;
+    padding: 1rem;
+    position: relative;
 }   
 
-.cardContainer .cardTop  {
-    font-size: small;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-}
-
-.cardContainer .cardTop > * {
-    margin: 0 5px;
+.cardContainer  .cardTop > * {
+    margin: 4px 0;
 }
  
+.cardContainer .title {
+    /* color: red; */
+    font-weight: 500;
+    font-size: medium;
+}
 
-.cardContainer .cardBottom {
-    font-size: small;
+.cardContainer .description {
+    font-size: smaller;
+    color: #8090A0;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    max-height: 2.5rem;
+    overflow: hidden;
+}
+
+.cardContainer .description .descIcon {
+    flex: 1
+}
+
+.cardContainer .description .descText {
+    flex: 7
+}
+
+.ticketCount {
+    font-size: smaller;
+    color: #8090A0;
+}
+
+.hrDiv {
+    margin: 4rem 0;
+    /* height: 3rem; */
+
+}
+
+.hrDiv .hr {
+    border: 0.3px solid #dcdee1;
+    margin: 1rem 0;
+
 }
 
 .circle {
     padding: 5px;
     border-radius: 100%;
     background-color: grey;
+}
+
+.cardBottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cardBottom .memberAvatars {
+    flex: 5
+}
+
+.cardBottom .progressRate {
+    flex: 3; 
+    display: flex;
+    flex-direction: column;
+}
+
+.cardBottom .progressRate div {
+    font-size: small;
+    font-weight: 500;
+    color: #8090A0;
 }

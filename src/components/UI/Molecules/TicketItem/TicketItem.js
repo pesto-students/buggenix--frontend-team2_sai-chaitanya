@@ -17,7 +17,7 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
         }
     }
     
-    const {id, commentCount, creatorInfo, description = "", timestamp} = ticketItem || {};
+    const {id, commentCount = "3", creatorInfo, description = "", timestamp} = ticketItem || {};
     const {name: creatorName = "Harish Balasubramanian", socials = "Twitter"} = creatorInfo || {};
 
     return (

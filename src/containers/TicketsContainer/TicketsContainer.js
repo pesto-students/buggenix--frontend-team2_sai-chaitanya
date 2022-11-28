@@ -141,7 +141,6 @@ class TicketsContainer extends React.Component {
         const {ticketList, isLoading, isError} = this.props;
         const {filterAttributes, checkedTicketIds, selectedTicket} = this.state;
         const _filteredTicketList = filterTickets(filterAttributes, ticketList);
-        // console.log(_filteredTicketList, "filtereedlist")
 
         return (
             <>

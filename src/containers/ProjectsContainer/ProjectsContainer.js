@@ -6,31 +6,24 @@ import SimpleButton from "../../components/UI/Atoms/SimpleButton";
 import ProjectsList from "../../components/UI/Organisms/ProjectsList";
 import CreateProjectModal from "../../components/UI/Organisms/CreateProjectModal";
 import { filterProjects } from "../../utils/filterProjects";
+import ProjectActionBar from "../../components/UI/Organisms/ProjectActionBar";
 
 class ProjectsContainer extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isModalOpen: false, 
             searchStr: ""
         }
-        this.showModal = this.showModal.bind(this);
-        this.handleOk = this.handleOk.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-
-    showModal() {
+    handleChange(searchStr) {
         this.setState({
-            isModalOpen: true
+            searchStr
         })
     }
 
-    handleOk = () => {
-        this.setState({
-            isModalOpen: false
-        })
-    };
 
     render() {
 
@@ -40,33 +33,10 @@ class ProjectsContainer extends React.Component {
         const _filteredList = filterProjects(projectsList);
 
         return (
-            <div className = {styles.container}>
-                <div style = {{
-                    margin: "6px 0"
-                }}>Projects </div>
-                <div style = {{
-                    display: "flex", 
-                    flexDirection: "row", 
-                    alignItems: "center", 
-                    justifyContent: "space-between"
-                }}>
-                    <div style = {{
-                        minWidth: "28rem",
-                    }}>
-                        <InputField placeholder={"Search and filter projects"}/>   
-                    </div>
-                    <div style = {{
-                        transform: "translateX(-100%)"
-                    }}>
-                        <SimpleButton onClick = {this.showModal} fontSize={"smaller"} txtColor={"white"} bgColor={"#2A5BED"} btnText={"Create project"}  />
-                    </div>
-                </div>
-                <Modal title="Create a project" open={isModalOpen} onOk={this.handleOk} onCancel={this.handleCancel}>
-                    <CreateProjectModal /> 
-                    {/* Ask Aditya the modal Ant code */}
-                </Modal>
+            <>
+                <ProjectActionBar onChange = {this.handleChange}/>
                 <ProjectsList projectsList = {projectsList}/>
-            </div>
+            </>
         )
     }
 }
@@ -87,7 +57,25 @@ ProjectsContainer.defaultProps = {
                 name: "Harsha", 
                 role: "admin"
             }, 
-            createdTime: "Oct 17, 2022"
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
         {
             id: 2, 
@@ -100,7 +88,26 @@ ProjectsContainer.defaultProps = {
                 id: 54, 
                 name: "Raghul", 
                 role: "admin"
-            },             createdTime: "Oct 17, 2022"
+            },  
+             createdTime: "Oct 17, 2022", 
+             members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
         {
             id: 3, 
@@ -114,7 +121,25 @@ ProjectsContainer.defaultProps = {
                 name: "Harish", 
                 role: "admin"
             },  
-            createdTime: "Oct 17, 2022"
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
         {
             id: 4, 
@@ -128,7 +153,25 @@ ProjectsContainer.defaultProps = {
                 name: "Aditya", 
                 role: "admin"
             },  
-            createdTime: "Oct 17, 2022"
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
         {
             id: 5, 
@@ -142,7 +185,25 @@ ProjectsContainer.defaultProps = {
                 name: "Anjali", 
                 role: "admin"
             },  
-            createdTime: "Oct 17, 2022"
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
         {
             id: 6, 
@@ -156,7 +217,25 @@ ProjectsContainer.defaultProps = {
                 name: "Tharun", 
                 role: "admin"
             },  
-            createdTime: "Oct 17, 2022"
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
         }, 
     ]
 }
