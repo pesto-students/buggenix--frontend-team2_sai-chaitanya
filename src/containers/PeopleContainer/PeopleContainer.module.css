@@ -1,25 +1,110 @@
-.container {
-    padding: 3rem;
+.section {
+    background-color: #F0F3F9;
+    height: 100vh;
+    padding: 5rem;
 }
 
-.search {
+.headers {
+    margin: 2rem 0;
+}
+
+.headers div {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.headers span{
+    color: #8090a0;
+}
+
+.mainSection {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 10%);
+    padding: 2rem;
+}
+
+.memberCount {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.searchForm {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.searchForm .searchInput .ant-input:first-child {
+    border: none;
+    height: 40px;
+    font-size: 14px;
+    cursor: text;
+    border-radius: 20px !important;
+}
+
+.searchForm .btn {
+    background-color: #6042ec;
+    box-shadow: 0 2px 6px rgb(96 66 236 / 20%);
+    min-width: 0;
+    height: 40px;
+    padding: 0 20px 1px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid rgba(0,0,0,0);
+    transition: all .2s;
+}
+
+.searchForm .btn:hover {
+    background-color: #4726d9;
 }
 
 .tableContainer {
     margin: 2rem 0;
-    min-width: 80%;
 }
 
-.tableContainer thead{ 
-    text-align: left;
-    font-weight:bold;
-    font-size: smaller;
-}   
-
-.tableContainer tr > * {
-    padding: 0.8rem 0;
-    font-weight: 400;
-    font-size: smaller;
+.inv {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #222d39;
+    font-weight: 600;
+    margin: 1rem 0;
 }
+
+.roleItem {
+    padding: 10px 10px 10px 25px;
+    border: 1px solid rgba(128,144,160,.5);
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.roleItem:hover {
+    border: 1px solid #6042ec;
+}
+
+.roleItem.isSelected {
+    border: 1px solid #6042ec;
+}
+
+.roleItem h4{
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.info {
+    color: #8090a0;
+}
+
+.addEmailInput::placeholder {
+    font-size: 14px;
+    color: #8090a0;
+}
+
+
+
+

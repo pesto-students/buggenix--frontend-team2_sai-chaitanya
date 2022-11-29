@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./PeopleContainer.module.css";
 import {
-    DeleteFilled
+    DeleteFilled, PlusCircleFilled
 } from '@ant-design/icons';
 // import { axiosPrivate } from '../../api/axios';
 import { connect } from 'react-redux';
@@ -9,14 +9,17 @@ import { filterUsers } from '../../utils/filterUsers';
 import { addUser, deleteUser, fetchUsers } from '../../actionCreators/usersActions';
 import axiosPrivate from '../../api/axiosPrivate';
 
-import { Button, Input, Modal, Popconfirm, message } from "antd"
+import { Button, Input, Modal, Popconfirm, message, Table } from "antd"
 import UserItem from '../../components/UI/Molecules/UserItem';
+import { rolesAndResponsibilities } from '../../data/roles';
+const { Search } = Input;
 
 
 const PeopleContainer = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [email, setEmail] = useState("");
-    const [emailError, setEmailError] = useState("false");
+    const [roleKey, setRoleKey] = useState();
+    const [emailError, setEmailError] = useState(false);
     const [searchStr, setSearchStr] = useState("");
 
 
@@ -45,10 +48,11 @@ const PeopleContainer = (props) => {
     }
 
     const closeModal = ()  => {
+        setEmailError("");
         setIsModalOpen(false);
     }
 
-    const handleChange = (e) => {
+    const handleEmailChange = (e) => {
         const {value} = e.target;
         setEmail(value);
     }
@@ -56,6 +60,10 @@ const PeopleContainer = (props) => {
     const handleSearchStrChange = (e) => {
         const {value} = e.target;
         setSearchStr(value);
+    }
+
+    const handleSelectRole = (key) => {
+        setRoleKey(key);
     }
  
     
@@ -88,58 +96,98 @@ const PeopleContainer = (props) => {
         }
     }
 
-    const {people} = props;;
+    const {people} = props;
     const _peopleList = filterUsers(people, searchStr);
+    const formattedPeopleList = _peopleList.map(people => {
+        return {
+            ...people, 
+            key: people.id
+        }
+    })
+
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
+        }, 
+        {
+            title: "Role", 
+            dataIndex: "role", 
+            key: "role"
+        }
+    ]
+
+    const data = [ 
+        {
+        key: '1',
+        name: 'Dwight Shrute',
+        email: "Dwight.shrute@outlook.com", 
+        role: "Super admin"
+      },
+      {
+        key: '2',
+        name: 'Michael Scoot',
+        email: "michael.scott@gmail.com", 
+        role: "Admin"
+      }, 
+      {
+        key: "3", 
+        name: "Pam Beesly", 
+        email: "Pam.beesly@gmail.com", 
+        role: "member"
+      }
+    ]
+
+    
+
 
     return (
-        <div className= {styles.container}>
-            <div style = {{
-                fontSize: "15px",
-                fontWeight: "500", 
-                padding: "12px 0",
-            }}>Manage team</div>
-
-            <div style = {{
-                fontSize: "10px",
-                fontWeight: "300", 
-                padding: "12px 0"
-            }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{people.length} / 25</span></div>
-
-            <div className= {styles.search}>
-                <Input style = {{
-                    marginRight: "5rem", 
-                }}  onChange = {handleSearchStrChange}
-                placeholder="Search" enterbutton ="Search"/>
-                <Button onClick = {openModel} style = {{
-                    background: "#1D5BD4", 
-                    color: "white", 
-                    border: "none"
-                    }}>Add users</Button>
-            </div>
-            <div className= {styles.userList}> 
-                <table className = {styles.tableContainer} >
-                    <thead>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Account role</th>
-                    </thead>
-                    <tbody>
-                        {
-                            _peopleList.length > 0 ? _peopleList.map(person => {
-                                const {username, email, role, _id: id, status} = person || {};
-                                return <UserItem username={username} email = {email} role = {role} status = {status}  id = {id} onClick = {handleUserDelete}/>
-                            }) : <span>No user found</span>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <Modal title="Invite team members" open={isModalOpen} onOk={handleOk} onCancel={closeModal}>
-                <div style = {{padding: "1rem 0"}}>Email address</div>
-                <Input onChange={handleChange} placeholder='Add the email of the person you want to invite'/>
-                {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
-            </Modal>
-        </div>
+        <section className = {styles.section}>
+            <main>
+                <div className = {styles.headers}>
+                    <div>Manage Team</div>
+                    <span>Manage who has access to this workspace</span>
+                </div>
+                <div className = {styles.mainSection}>
+                    <div className = {styles.memberCount}>Members {"(" + formattedPeopleList?.length + ")"}</div>
+                    <form className = {styles.searchForm}>
+                        <Search onChange={handleSearchStrChange} size = "large" className = {styles.searchInput} style = {{width: 400}} placeholder = 'Search by name or email'/>
+                        <Button onClick={openModel} className = {styles.btn}> <PlusCircleFilled/> Invite Member</Button>
+                    </form>
+                    <div className = {styles.tableContainer}>
+                        <Table columns = {columns} dataSource = {formattedPeopleList} />
+                    </div>
+                </div>
+            </main>
+                <Modal title="Invite Members" open={isModalOpen} onOk={handleOk} onCancel={closeModal}>
+                    <div className = {styles.inv}>Send invitation to: </div>
+                    <Input className = {styles.addEmailInput} size = "large" onChange={handleEmailChange} placeholder='Add the email of the person you want to invite'/>
+                    {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
+                    <div className = {styles.inv}>Member role: </div>
+                    <div className = {styles.roles}>
+                        {rolesAndResponsibilities.map(roleInfo => {
+                            const {key, role, responsibility} = roleInfo || {};
+                            const isSelected = roleKey == key;
+                            return (
+                                <div key = {key} onClick = {() => handleSelectRole(key)} className = {styles.roleItem + " " + (isSelected && styles.isSelected)}>
+                                    <h4>{role}</h4>
+                                    <div className = {styles.info}>{responsibility}</div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </Modal>
+        </section>
     )
+
+
 }
 
 
@@ -147,7 +195,7 @@ const mapStateToProps = (state) => {
     const {users} = state;
     const {usersList} = users  || {};
     return {
-        people: usersList
+        // people: usersList
     }
 }
 
@@ -157,25 +205,25 @@ PeopleContainer.defaultProps = {
     people: [
         {
             id: "1", 
-            email: "h@gmail.com", 
+            email: "harish.balasubramanian@gmail.com", 
             name: "Harish", 
             role: "admin", 
         },
         {
             id: "2", 
-            email: "a@gmail.com", 
+            email: "aditya.vinayak@gmail.com", 
             name: "Aditya", 
             role: "member", 
         },
         {
             id: "3", 
-            email: "a@gmail.com", 
+            email: "anjali.raghunathan@gmail.com", 
             name: "Anjali", 
             role: "member", 
         },
         {
             id: "4", 
-            email: "r@gmail.com", 
+            email: "tarun.shakt@gmail.com", 
             name: "Raghul", 
             role: "admin", 
         },
@@ -184,3 +232,48 @@ PeopleContainer.defaultProps = {
 
 
 
+// return (
+//     <div className= {styles.container}>
+//         <div style = {{
+//             fontSize: "15px",
+//             fontWeight: "500", 
+//             padding: "12px 0",
+//         }}>Manage team</div>
+
+//         <div style = {{
+//             fontSize: "10px",
+//             fontWeight: "300", 
+//             padding: "12px 0"
+//         }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{people.length} / 25</span></div>
+
+//         <div className= {styles.search}>
+//             <Input style = {{
+//                 marginRight: "5rem", 
+//             }}  onChange = {handleSearchStrChange}
+//             placeholder="Search" enterbutton ="Search"/>
+//             <Button onClick = {openModel} style = {{
+//                 background: "#1D5BD4", 
+//                 color: "white", 
+//                 border: "none"
+//                 }}>Add users</Button>
+//         </div>
+//         <div className= {styles.userList}> 
+//             <table className = {styles.tableContainer} >
+//                 <thead>
+//                     <th>Name</th>
+//                     <th>Email</th>
+//                     <th>Account role</th>
+//                 </thead>
+//                 <tbody>
+//                     {
+//                         _peopleList.length > 0 ? _peopleList.map(person => {
+//                             const {username, email, role, _id: id, status} = person || {};
+//                             return <UserItem username={username} email = {email} role = {role} status = {status}  id = {id} onClick = {handleUserDelete}/>
+//                         }) : <span>No user found</span>
+//                     }
+//                 </tbody>
+//             </table>
+//         </div>
+
+//     </div>
+// )

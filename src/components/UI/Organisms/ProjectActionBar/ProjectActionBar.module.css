@@ -64,3 +64,17 @@
     background-color: #3d22b6;
 }
 
+
+
+.inv {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #222d39;
+    font-weight: 600;
+    margin: 1rem 0;
+}
+
+.addEmailInput::placeholder {
+    font-size: 14px;
+    color: #8090a0;
+}
