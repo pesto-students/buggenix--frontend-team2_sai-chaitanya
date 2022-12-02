@@ -3,7 +3,7 @@ import TicketInbox from "../../components/UI/Organisms/TicketInbox";
 import TicketList from "../../components/UI/Organisms/TicketList";
 import styles from "./TicketPreviewContainer.module.css";
 
-const TicketPreviewContainer = ({ticketList, isLoading, isError, checkedTicketIds, onCheck, selectedTicket, onSelect, onCheckAll}) => {
+const TicketPreviewContainer = ({ticketList, onDelete, isLoading, isError, checkedTicketIds, onCheck, selectedTicket, onSelect, onCheckAll}) => {
 
     const handleCheckAll = (e) => {
         onCheckAll(e.target.checked);
@@ -19,7 +19,7 @@ const TicketPreviewContainer = ({ticketList, isLoading, isError, checkedTicketId
                 <TicketList onSelect = {onSelect} selectedTicket = {selectedTicket} onCheck = {onCheck} checkedTicketIds = {checkedTicketIds} ticketList = {ticketList}/>
             </div>
             <div className = {styles.conversations}>
-                <TicketInbox selectedTicket = {selectedTicket}/>
+                <TicketInbox onDelete = {onDelete} selectedTicket = {selectedTicket}/>
             </div>
         </div>
     )

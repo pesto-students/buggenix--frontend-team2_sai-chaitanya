@@ -7,7 +7,7 @@ import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({configurationData, selectedTicket, onUpdate}) => {
+const TicketInbox = ({configurationData, selectedTicket, onUpdate, onDelete}) => {
 
     const { description, creatorInfo, timestamp, conversations = [], id: ticketId } = selectedTicket || {};
     const { name, id, type, channel  } = creatorInfo || {};
@@ -26,6 +26,7 @@ const TicketInbox = ({configurationData, selectedTicket, onUpdate}) => {
       };
 
     const handleOk = () => {
+        //delete ticket
         setConfirmLoading(true);
         setTimeout(() => {
             setOpen(false);

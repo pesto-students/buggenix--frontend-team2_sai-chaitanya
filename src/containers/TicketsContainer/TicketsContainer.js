@@ -66,12 +66,13 @@ class TicketsContainer extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleTicketSelect = this.handleTicketSelect.bind(this);
         this.handleCheckAll = this.handleCheckAll.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     
 
     componentDidMount() {
-        // const { fetchTickets } = this.props;
-        // fetchTickets && fetchTickets()
+        const { fetchTickets } = this.props;
+        fetchTickets && fetchTickets()
     }
 
     componentDidUpdate() {
@@ -84,6 +85,10 @@ class TicketsContainer extends React.Component {
                 selectedTicket: id
             }) 
         }
+    }
+
+    handleDelete() {
+
     }
 
     handleTicketSelect(selectedTicket) {
@@ -148,7 +153,7 @@ class TicketsContainer extends React.Component {
         return (
             <>
                 <TicketActionBar selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
-                <TicketPreviewContainer onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} isLoading = {isLoading} isError = {isError}/>
+                <TicketPreviewContainer onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} isLoading = {isLoading} isError = {isError}/>
             </>
         )
     }
@@ -156,12 +161,13 @@ class TicketsContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     const {tickets, projects} = state || {};
-    const {isLoading, data, error} = tickets || {};
+    const {isLoading: isTicketsLoading, ticketList, error} = tickets || {};
     const {isLoading: projectsLoading, data: projectsList, error: projectsError, selectedProject}  = projects || {};
 
     return {
-        selectedProject
-        // ticketList: data, 
+        selectedProject,
+        ticketList, 
+        isTicketsLoading
         // error, 
         // isLoading
     }
@@ -438,7 +444,7 @@ TicketsContainer.defaultProps = {
             {
                 type: "note", 
                 description: "Dwight, we will have to take this up. Perhaps, you could talk to your manager, get your team acting on it ASAP?", 
-                timestamp: "3 seconds ago", 
+                timestamp: "3 seconds ago",
                 creatorInfo: {
                     name: "Aditya Vinayak",
                     id: "3256", 
@@ -461,7 +467,7 @@ TicketsContainer.defaultProps = {
                 }
             }
         ], 
-        projectId: 6
+        projectId: null
 
     }, 
     {
