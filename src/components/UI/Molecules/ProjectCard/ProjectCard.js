@@ -1,21 +1,27 @@
 import { BuildFilled, TagFilled, TagOutlined } from "@ant-design/icons";
 import { Avatar, Card, Divider, Tooltip } from "antd"
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { randomColorGenerator } from "../../../../utils/randomColorGenerator";
 import styles from "./ProjectCard.module.css";
 
 
 
-const ProjectCard = ({projectInfo}) => {
+const ProjectCard = ({projectInfo, updateProject}) => {
 
-    const {name: projectName, description, ticketCount, openTicketCount, creator, createdTime, members} = projectInfo || {};
-    
+    const {name: projectName, description, ticketCount, openTicketCount, creator, createdTime, members, id} = projectInfo || {};
+    const navigate = useNavigate();
     const completedPercent = ((ticketCount - openTicketCount)/ticketCount) * 100;
+
+    const handleClick = () => { 
+        updateProject(id);
+        navigate("/dashboard/tickets");
+    }
 
     return (
         <Card style = {{
             width: 240
-        }} bodyStyle={{padding: "1rem"}} className = {styles.cardContainer}>
+        }} bodyStyle={{padding: "1rem"}} onClick = {handleClick} className = {styles.cardContainer}>
             <div className = {styles.cardTop}>
                 <div className = {styles.title}>{projectName}</div> 
                 <div className = {styles.description}> 

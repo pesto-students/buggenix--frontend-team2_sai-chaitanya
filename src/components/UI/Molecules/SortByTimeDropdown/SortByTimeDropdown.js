@@ -1,4 +1,4 @@
-import { ArrowDownOutlined, HourglassOutlined, TagFilled } from "@ant-design/icons";
+import { ArrowDownOutlined, HourglassFilled } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
 import styles from "./SortByTimeDropdown.module.css";
 
@@ -40,7 +40,7 @@ const SortByTimeDropdown = ({value, onChange}) => {
             <Space>
                 <div className = {styles.statusContainer}>
                     <div className = {styles.icon}>
-                        <HourglassOutlined/>
+                        <HourglassFilled/>
                     </div>
                     <div className = {styles.name}>Sort by: <span>{currentLabel}</span></div>
                     <ArrowDownOutlined/>

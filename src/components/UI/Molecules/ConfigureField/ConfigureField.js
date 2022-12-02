@@ -4,7 +4,7 @@ import styles from "./Configure.module.css";
 const ConfigureField = ({category, options, onChange}) => {
 
     const handleChange = (value) => {
-        console.log(value, "changed")
+        onChange(category, value);
     }
     
     return (

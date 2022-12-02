@@ -1,4 +1,4 @@
-const filterTickets = (filterAttributes, ticketList) => {
+const filterTickets = (filterAttributes, ticketList, selectedProjectId) => {
 
     const {status, type, sortBy, search = ""} = filterAttributes || {};
 
@@ -20,6 +20,10 @@ const filterTickets = (filterAttributes, ticketList) => {
 
     if(type !== "all") {
         filteredList = filteredList.filter(ticket => ticket.type === type);
+    }
+
+    if(selectedProjectId !== "all") {
+        filteredList = filteredList.filter(ticket => ticket.projectId == selectedProjectId);
     }
 
     //filter createdTime as well here

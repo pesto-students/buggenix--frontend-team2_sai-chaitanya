@@ -4,6 +4,8 @@ import TicketActionBar from "../../components/UI/Organisms/TicketActionBar";
 import TicketPreviewContainer from "../TicketPreviewContainer";
 import {connect} from 'react-redux';
 import filterTickets from "../../utils/filterTickets";
+import { updateProject } from "../../actionCreators/projectActions";
+
 
 class TicketsContainer extends React.Component {
     constructor(props) {
@@ -65,6 +67,7 @@ class TicketsContainer extends React.Component {
         this.handleTicketSelect = this.handleTicketSelect.bind(this);
         this.handleCheckAll = this.handleCheckAll.bind(this);
     }
+    
 
     componentDidMount() {
         // const { fetchTickets } = this.props;
@@ -138,13 +141,13 @@ class TicketsContainer extends React.Component {
 
     render() {
 
-        const {ticketList, isLoading, isError} = this.props;
+        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject} = this.props;
         const {filterAttributes, checkedTicketIds, selectedTicket} = this.state;
-        const _filteredTicketList = filterTickets(filterAttributes, ticketList);
-
+        const _filteredTicketList = filterTickets(filterAttributes, ticketList, selectedProject);
+        
         return (
             <>
-                <TicketActionBar onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
+                <TicketActionBar selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
                 <TicketPreviewContainer onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} isLoading = {isLoading} isError = {isError}/>
             </>
         )
@@ -152,20 +155,222 @@ class TicketsContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const {tickets} = state || {};
+    const {tickets, projects} = state || {};
     const {isLoading, data, error} = tickets || {};
+    const {isLoading: projectsLoading, data: projectsList, error: projectsError, selectedProject}  = projects || {};
+
     return {
+        selectedProject
         // ticketList: data, 
         // error, 
         // isLoading
     }
 }
 
-export default connect(mapStateToProps, { fetchTickets })(TicketsContainer);
+export default connect(mapStateToProps, { fetchTickets, updateProject})(TicketsContainer);
 
 TicketsContainer.defaultProps = {
+    projectsList: [
+        {
+            id: 1, 
+            name: "Atonis", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Harsha", 
+                role: "admin"
+            }, 
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
+        }, 
+        {
+            id: 2, 
+            name: "Ink high", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Raghul", 
+                role: "admin"
+            },  
+             createdTime: "Oct 17, 2022", 
+             members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ], 
+        }, 
+        {
+            id: 3, 
+            name: "MedEasy", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Harish", 
+                role: "admin"
+            },  
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ], 
+        }, 
+        {
+            id: 4, 
+            name: "Pharma", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Aditya", 
+                role: "admin"
+            },  
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ], 
+
+        }, 
+        {
+            id: 5, 
+            name: "IDC", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Anjali", 
+                role: "admin"
+            },  
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ] 
+        }, 
+        {
+            id: 6, 
+            name: "IDM", 
+            description: "One-stop destination to bringing your startup dreams come true", 
+            ticketIds: ["43, 45, 64, 33"], 
+            ticketCount: "4", 
+            openTicketCount: "2", 
+            creator: {
+                id: 54, 
+                name: "Tharun", 
+                role: "admin"
+            },  
+            createdTime: "Oct 17, 2022", 
+            members: [
+                {
+                    name: "Harish", 
+                    id: "446"
+                }, 
+                {
+                    name: "Aditya", 
+                    id: "446"
+                }, 
+                {
+                    name: "Tarun", 
+                    id: "446"
+                }, 
+                {
+                    name: "Rahul", 
+                    id: "446"
+                }, 
+            ]
+        }
+    ],
     isLoading: false, 
     error: "",
+
+
+
+
     ticketList: [
         {
         id: "234342", 
@@ -209,7 +414,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: null
+
     }, 
     {
         id: "234343", 
@@ -253,7 +460,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: 6
+
     }, 
     {
         id: "234344", 
@@ -297,7 +506,8 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ],
+        projectId: 5
     }, 
     {
         id: "234345", 
@@ -341,7 +551,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: 4
+
     }, 
     {
         id: "234346", 
@@ -385,7 +597,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: 3
+
     }, 
     {
         id: "234347", 
@@ -429,7 +643,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: 2
+
     }, 
     {
         id: "234348", 
@@ -473,7 +689,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
+        ], 
+        projectId: 1
+
     }, 
     {
         id: "234349", 
@@ -561,9 +779,9 @@ TicketsContainer.defaultProps = {
                     id: "3256", 
                 }
             }
-        ]
-    }, 
-
+        ], 
+        projectId: 5
+    }
 ] 
 }
 

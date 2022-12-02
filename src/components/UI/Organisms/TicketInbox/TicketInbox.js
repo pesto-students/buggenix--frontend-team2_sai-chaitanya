@@ -7,12 +7,13 @@ import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({configurationData, selectedTicket}) => {
+const TicketInbox = ({configurationData, selectedTicket, onUpdate}) => {
 
-    const { description, creatorInfo, timestamp, conversations = [] } = selectedTicket || {};
+    const { description, creatorInfo, timestamp, conversations = [], id: ticketId } = selectedTicket || {};
     const { name, id, type, channel  } = creatorInfo || {};
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [open, setOpen] = useState(false);
+    const [reply, setReply] = useState("");
 
 
     const showPopconfirm = () => {
@@ -32,6 +33,22 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
         }, 2000);
     }
 
+    const handleAttributeChange = (category, value) => {
+        console.log(category, "category")
+        console.log(value, "value");
+        onUpdate(category, value, ticketId)
+    }
+
+    const handleSubmitReply = () => {
+        handleAttributeChange("reply", reply);
+    
+    }
+
+    const handleChange = (e) => {
+        const {value} = e.target;
+        setReply(value);
+    }
+
 
 
     return (
@@ -43,17 +60,17 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
                             <span>Ticket info</span>
                         </div>
                        <ThreadComment creatorName={name} createdTime = {timestamp}  main = {true} content = {description}/>
-                        <div className = {styles.responseBox}>
-                            <textarea className = {styles.textArea} placeholder="Type your reply"/>
+                        <form onSubmit={handleSubmitReply} className = {styles.responseBox}>
+                            <textarea className = {styles.textArea} value = {reply} onChange = {handleChange} placeholder="Type your reply"/>
                             <Button className = {styles.button}>Submit</Button>
-                        </div>
+                        </form>
                         <div className = {styles.title}>
                             <span>Conversations</span>
                         </div>
                         {conversations.map(conversation => {
-                            const {description, timestamp, creatorInfo} = conversation || {};
-                            const {name, id} = creatorInfo || {};
-                            return (<ThreadComment content={description} createdTime = {timestamp} creatorName = {name} />)
+                            const {description, timestamp, creatorInfo, id } = conversation || {};
+                            const {name, id: creatorId} = creatorInfo || {};
+                            return (<ThreadComment key = {id} content={description} createdTime = {timestamp} creatorName = {name} />)
 
                         })}
                     </div>
@@ -65,8 +82,8 @@ const TicketInbox = ({configurationData, selectedTicket}) => {
                 </div>
                 <div className = {styles.configurations}>
                     {configurationData.map(info => {
-                        const {category, options} = info || {};
-                        return (<ConfigureField key = {category} category={category} options = {options}/>)
+                        const {category, options, id} = info || {};
+                        return (<ConfigureField  onChange = {handleAttributeChange} key = {category} category={category} options = {options}/>)
                     })}
                 </div>
                 <div className = {styles.heading}>

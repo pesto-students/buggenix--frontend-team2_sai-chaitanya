@@ -3,7 +3,7 @@ import { Button, Input, Modal, message } from 'antd';
 import { useState } from "react";
 import styles from "./ProjectActionBar.module.css";
 
-const ProjectActionBar = ({onChange, searchStr}) => {
+const ProjectActionBar = ({onChange, searchStr, addProject}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [projectName, setProjectName] = useState("");
@@ -31,11 +31,16 @@ const ProjectActionBar = ({onChange, searchStr}) => {
     };
 
     const handleOk = () => {
+        console.log("ok");
         if(!projectName || !projectDescription) {
             setProjectErr("Enter valid name and description");
         } else {
             success();
-           
+            addProject({
+                name: projectName, 
+                description: projectDescription
+            });
+           //create project api
         
         }
     };

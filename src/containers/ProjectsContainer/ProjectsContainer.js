@@ -7,6 +7,9 @@ import ProjectsList from "../../components/UI/Organisms/ProjectsList";
 import CreateProjectModal from "../../components/UI/Organisms/CreateProjectModal";
 import { filterProjects } from "../../utils/filterProjects";
 import ProjectActionBar from "../../components/UI/Organisms/ProjectActionBar";
+import { addProject, fetchProjects, updateProject } from "../../actionCreators/projectActions";
+import {connect} from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 class ProjectsContainer extends React.Component {
 
@@ -24,24 +27,38 @@ class ProjectsContainer extends React.Component {
         })
     }
 
+    componentDidMount() {
+        const {fetchProjects} = this.props;
+        fetchProjects && fetchProjects();
+    }
+
 
     render() {
 
-        const {projectsList} = this.props;
-        const {isModalOpen, searchStr} = this.state;
-
-        const _filteredList = filterProjects(projectsList);
+        const {projectsList, addProject, updateProject} = this.props;
+        const {searchStr} = this.state;
+        
+        const _filteredList = filterProjects(projectsList, searchStr);
 
         return (
             <>
-                <ProjectActionBar onChange = {this.handleChange}/>
-                <ProjectsList projectsList = {projectsList}/>
+                <ProjectActionBar addProject = {addProject} onChange = {this.handleChange}/>
+                <ProjectsList updateProject = {updateProject} projectsList = {_filteredList}/>
             </>
         )
     }
 }
 
-export default ProjectsContainer;
+
+const mapStateToProps = (state) => {
+    const projectsList = state?.projects?.projectsList || [];
+
+    return {
+        // projectsList
+    }
+}
+
+export default connect(mapStateToProps, {fetchProjects, addProject, updateProject})(ProjectsContainer);
 
 ProjectsContainer.defaultProps = {
     projectsList: [
