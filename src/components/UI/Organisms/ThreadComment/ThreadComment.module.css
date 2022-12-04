@@ -6,6 +6,11 @@
     padding: 0px 48px 16px 48px;
 }
 
+.thread_comment {
+    display: flex;
+    flex-direction: column;
+}
+
 .ticket_viewer_thread {
     margin-bottom: 48px;
 }

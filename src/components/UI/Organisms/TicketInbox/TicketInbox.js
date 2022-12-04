@@ -1,21 +1,127 @@
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, message } from "antd";
+import { Button, Popconfirm, message, Spin } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../../context/authContext";
 import ConfigureField from "../../Molecules/ConfigureField/ConfigureField";
 import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({configurationData, selectedTicket, onUpdate, onDelete}) => {
+const TicketInbox = ({usersList, projectsList, configurationData = [], selectedTicket, onUpdate, onDelete, isLoading, ticketList, updateTicket, addConversation}) => {
 
-    const { description, creatorInfo, timestamp, conversations = [], id: ticketId } = selectedTicket || {};
-    const { name, id, type, channel  } = creatorInfo || {};
-    const [confirmLoading, setConfirmLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [reply, setReply] = useState("");
+    const [replyError, setReplyError] = useState("");
+    const [confirmLoading, setConfirmLoading] = useState(false);
+    const [configData, setConfigData] = useState(configurationData);
+    const {user} = useAuth();
+
+    useEffect(() => {
+        const isPresent = configData.findIndex(config => config.name === "projectId");
+        
+        if(isPresent === -1) {
+            const projectObj = {
+                category: "Move to a project", 
+                name: "projectId", 
+                options: projectsList.map(project => {
+                    const {id, name} = project;
+                    return {
+                        value: id, 
+                        label: name
+                    }
+                })
+            }
+
+            const newConfigData = [...configData, projectObj];
+            setConfigData(newConfigData);
+
+        } else {
+            let newConfigData = [...configData]
+
+            newConfigData  = newConfigData.map(config => {
+                if(config.name === "projectId") {
+                    return {
+                        ...config, 
+                        options: projectsList.map(project => {
+                            const {id, name} = project;
+                            return {
+                                value: id, 
+                                label: name
+                            }
+                        })
+                    }
+                } else {
+                    return config;
+                }
+            })
+
+            setConfigData(newConfigData);
+        }
+    }, [projectsList]);
+
+    useEffect(() => {
+        const isPresent = configData.findIndex(config => config.name === "assigneeId");
+        if(isPresent === -1) {
+            const assigneeObj = {
+                category: "Choose assignee", 
+                name: "assigneeId", 
+                options: usersList.map(user => {
+                    const {id, name} = user;
+                    return {
+                        value: id, 
+                        label: name
+                    }
+                })
+            }
+
+            const newConfigData = [...configData, assigneeObj];
+            setConfigData(newConfigData);
+
+        } else {
+            let newConfigData = [...configData]
+
+            newConfigData  = newConfigData.map(config => {
+                if(config.name === "assigneeId") {
+                    return {
+                        ...config, 
+                        options: usersList.map(user => {
+                            const {id, name} = user;
+                            return {
+                                value: id, 
+                                label: name
+                            }
+                        })
+                    }
+                } else {
+                    return config;
+                }
+            })
+
+            setConfigData(newConfigData);
+        }
+    }, [usersList]);
 
 
+    if(isLoading || !selectedTicket) {
+        return (
+            <div>
+                <Spin/>
+            </div>
+        )
+    } 
+
+    if(ticketList.length == 0) {
+        return (
+            <div>
+                No ticket selected
+            </div>
+        )
+    } 
+
+    const { description, creatorInfo, timestamp, conversations = [], id: ticketId, type: ticketType } = selectedTicket || {};
+    const { name, id, type, channel  } = creatorInfo || {};
+ 
     const showPopconfirm = () => {
         setOpen(true);
       };
@@ -35,21 +141,33 @@ const TicketInbox = ({configurationData, selectedTicket, onUpdate, onDelete}) =>
     }
 
     const handleAttributeChange = (category, value) => {
-        console.log(category, "category")
-        console.log(value, "value");
-        onUpdate(category, value, ticketId)
+        
+        const options = {
+            ticketId: ticketId, 
+            [category]: value 
+        }
+        updateTicket(options);
     }
 
+
     const handleSubmitReply = () => {
-        handleAttributeChange("reply", reply);
+        if(!reply) {
+            setReplyError("Response shouldn't be empty");
+        } else {
+            setReplyError("");
+            addConversation({ 
+                ticketId,
+                description: reply //
+            });
+            setReply("")
+        }
     
     }
 
-    const handleChange = (e) => {
+    const handleReply = (e) => {
         const {value} = e.target;
         setReply(value);
     }
-
 
 
     return (
@@ -61,9 +179,9 @@ const TicketInbox = ({configurationData, selectedTicket, onUpdate, onDelete}) =>
                             <span>Ticket info</span>
                         </div>
                        <ThreadComment creatorName={name} createdTime = {timestamp}  main = {true} content = {description}/>
-                        <form onSubmit={handleSubmitReply} className = {styles.responseBox}>
-                            <textarea className = {styles.textArea} value = {reply} onChange = {handleChange} placeholder="Type your reply"/>
-                            <Button className = {styles.button}>Submit</Button>
+                        <form className = {styles.responseBox}>
+                            <textarea className = {styles.textArea} value = {reply} onChange = {handleReply} placeholder="Type your reply"/>
+                            <Button onClick={handleSubmitReply} className = {styles.button}>Submit</Button>
                         </form>
                         <div className = {styles.title}>
                             <span>Conversations</span>
@@ -82,9 +200,9 @@ const TicketInbox = ({configurationData, selectedTicket, onUpdate, onDelete}) =>
                     <span className = {styles.item}>Set ticket attributes here</span>
                 </div>
                 <div className = {styles.configurations}>
-                    {configurationData.map(info => {
-                        const {category, options, id} = info || {};
-                        return (<ConfigureField  onChange = {handleAttributeChange} key = {category} category={category} options = {options}/>)
+                    {configData.map(info => {
+                        const {category, options, id, name} = info || {};
+                        return (<ConfigureField name = {name} selectedTicket = {selectedTicket} onChange = {handleAttributeChange} key = {category} category={category} options = {options}/>)
                     })}
                 </div>
                 <div className = {styles.heading}>
@@ -119,7 +237,8 @@ export default TicketInbox;
 TicketInbox.defaultProps = {
     configurationData: [
         {
-            category: "Type", 
+            category: "Type",
+            name: "type", 
             options: [
                 {
                     value: "general_feedback" , 
@@ -131,13 +250,15 @@ TicketInbox.defaultProps = {
                 }, 
                 {
                     value: "feature_request",
-                    label: "Featuer request"
-                }
+                    label: "Feature request"
+                },             
             ], 
         }, 
         {
             category: "Priority", 
+            name: "priority",
             options: [
+              
                 {
                     value: "urgent" , 
                     label: "Urgent"
@@ -156,42 +277,28 @@ TicketInbox.defaultProps = {
                 }, 
             ], 
         }, 
-        {
-            category: "Move to project", 
-            options: [
-                {
-                    value: "atonis" , 
-                    label: "Atonis"
-                }, 
-                {
-                    value: "Medeasy", 
-                    label: "MedEasy"
-                }, 
-                {
-                    value: "Buggenix",
-                    label: "Buggenix"
-                }
-            ], 
-        }, 
-        {
-            category: "Choose assignee", 
-            options: [
-                {
-                    value: "1" , 
-                    label: "Harish Balasubramanian"
-                }, 
-                {
-                    value: "2", 
-                    label: "Aditya Vinayak"
-                }, 
-                {
-                    value: "3",
-                    label: "Harshavardhan"
-                }
-            ], 
-        }, 
+        // {
+        //     category: "Move to project", 
+        //     name: "projectId",
+        //     options: [
+               
+        //         {
+        //             value: "atonis" , 
+        //             label: "Atonis"
+        //         }, 
+        //         {
+        //             value: "Medeasy", 
+        //             label: "MedEasy"
+        //         }, 
+        //         {
+        //             value: "Buggenix",
+        //             label: "Buggenix"
+        //         }, 
+        //     ], 
+        // },
         {
             category: "Status", 
+            name: "status",
             options: [
                 {
                     value: "1" , 

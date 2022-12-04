@@ -22,8 +22,8 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
 
     return (
         <div onClick={handleClick} className = {styles.cardContainer}>
-            <Card className= {styles.card + " " + (selectedTicket?.id == id && styles.selected)} > 
-                <div className= {styles.cardContainer}>
+            <Card style={{height: '100%', width: '100%'}}  className= {styles.card + " " + (selectedTicket?.id == id && styles.selected)} >  
+                <div style={{height: '100%', width: '100%'}} className= {styles.cardContainer}>
                     <div className = {styles.checkbox}>
                         <Checkbox checked={isChecked} style = {{
                             padding: "0 0"
@@ -37,7 +37,7 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
                     </div>
                     <div className= {styles.itemTextContent}>
                         <div className = {styles.topTextContent}>
-                            <div name = "id"> {"#"+ id} </div>   
+                            <div name = "id"> {"#"+ id.slice(0, 6)} </div>   
                             <div className = {styles.creatorName} name = "creatorName"> {creatorName} </div>
                         </div>
                         <div>

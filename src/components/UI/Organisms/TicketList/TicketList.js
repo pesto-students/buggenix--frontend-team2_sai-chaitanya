@@ -1,14 +1,35 @@
+import { Spin } from "antd";
 import TicketItem from "../../Molecules/TicketItem/TicketItem"
 
-const TicketList = ({ticketList, onCheck, checkedTicketIds, selectedTicket, onSelect}) => {
-    return (
-        <>
-            {ticketList.map(ticketItem => {
-                const {id} = ticketItem || {};
-                const isChecked = checkedTicketIds.includes(id);
+const TicketList = ({ticketList = [], onCheck, checkedTicketIds, selectedTicket, onSelect, isLoading}) => {
 
-                return (<TicketItem onSelect = {onSelect} selectedTicket = {selectedTicket} isChecked = {isChecked} onCheck = {onCheck} key = {id} ticketItem = {ticketItem}/>)
-            })}
+    if(isLoading || !selectedTicket) {
+        return (
+            <div>
+                <Spin/>
+            </div>
+        )
+    }
+
+    if(ticketList.length === 0) {
+        return (
+            <div>
+                <span>No ticket found</span>
+                <span>Try adjusting your search to find what you're looking for</span>
+            </div>
+        )
+    }
+
+    return (
+        <>  
+            <div>
+                {ticketList.map(ticketItem => {
+                    const {id} = ticketItem || {};
+                    const isChecked = checkedTicketIds.includes(id);
+    
+                    return (<TicketItem onSelect = {onSelect} selectedTicket = {selectedTicket} isChecked = {isChecked} onCheck = {onCheck} key = {id} ticketItem = {ticketItem}/>)
+                })}
+            </div>
         </>
     )
 }

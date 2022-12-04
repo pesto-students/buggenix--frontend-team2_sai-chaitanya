@@ -1,10 +1,11 @@
 import React from "react";
-import { fetchTickets } from "../../actionCreators/ticketActions";
+import { addConversation, createTicket, fetchTickets, updateTicket } from "../../actionCreators/ticketActions";
 import TicketActionBar from "../../components/UI/Organisms/TicketActionBar";
 import TicketPreviewContainer from "../TicketPreviewContainer";
 import {connect} from 'react-redux';
 import filterTickets from "../../utils/filterTickets";
-import { updateProject } from "../../actionCreators/projectActions";
+import { fetchProjects, updateProject } from "../../actionCreators/projectActions";
+import { fetchUsers } from "../../actionCreators/usersActions";
 
 
 class TicketsContainer extends React.Component {
@@ -18,49 +19,7 @@ class TicketsContainer extends React.Component {
                 search: ""
             }, 
             checkedTicketIds: [], 
-            selectedTicket: {
-                id: "234342", 
-                timestamp: "21 Jan, 2022", 
-                creatorInfo: {
-                    name: "Harish Balasubramanian", 
-                    id: "56739", 
-                    type: "customer", 
-                    channel: "twitter"
-                }, 
-                status: "open", 
-                conversationCount: "3", 
-                assigneeId: null, 
-                label: null, 
-                description: "We would love to see new and improved features", 
-                subject: null, 
-                conversations: [
-                    {
-                        type: "note", 
-                        description: "Ryan, could you get onto this? Perhaps, you could talk to your manager, get your team acting on it ASAP?", 
-                        timestamp: "3 seconds ago", 
-                        creatorInfo: {
-                            name: "Aditya Vinayak",
-                            id: "3256", 
-                        }
-                    }, {
-                        type: "note", 
-                        description: "I will look into it. In the while, it'll be great if we could also focus on the Acme team's issue", 
-                        timestamp: "20 minutes ago", 
-                        creatorInfo: {
-                            name: "Aditya Vinayak",
-                            id: "3256", 
-                        }
-                    }, {
-                        type: "note", 
-                        description: "I will look into it. In the while, it'll be great if we could also focus on the Acme team's issue", 
-                        timestamp: "20 minutes ago", 
-                        creatorInfo: {
-                            name: "Aditya Vinayak",
-                            id: "3256", 
-                        }
-                    }
-                ]
-            }, 
+            selectedTicket: null
         }
         this.handleTicketCheck = this.handleTicketCheck.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
@@ -71,19 +30,33 @@ class TicketsContainer extends React.Component {
     
 
     componentDidMount() {
-        const { fetchTickets } = this.props;
-        fetchTickets && fetchTickets()
+        const { fetchTickets, fetchProjects, fetchUsers } = this.props;
+        fetchTickets && fetchTickets();
+        fetchProjects && fetchProjects();
+        fetchUsers && fetchUsers();
+        console.log("is it mounting?")
     }
 
-    componentDidUpdate() {
-        if(!this.state.selectedTicket) {
+    componentDidUpdate(prevProps, prevState) {
 
-            const {ticketList} = this.props;
-            const {id} = ticketList || {};
+        const {ticketList} = this.props;
+        const {selectedTicket} = this.state;
+        const {id} = selectedTicket || {};
 
+        // if(prevProps.ticketList !== ticketList && prevProps.ticketList.length == 0) {
+        if(!selectedTicket && ticketList && ticketList.length > 0) {
             this.setState({
-                selectedTicket: id
-            }) 
+                selectedTicket: ticketList[0]
+            })
+        } else if(prevProps.ticketList !== ticketList) {
+            const newSelectedTicket = ticketList.find(ticket => {
+                if(ticket.id === id) {
+                    return true
+                }
+            })
+            this.setState({
+                selectedTicket: newSelectedTicket
+            })
         }
     }
 
@@ -146,39 +119,71 @@ class TicketsContainer extends React.Component {
 
     render() {
 
-        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject} = this.props;
+        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject, usersList, createTicket, isTicketsLoading, updateTicket, addConversation} = this.props;
         const {filterAttributes, checkedTicketIds, selectedTicket} = this.state;
         const _filteredTicketList = filterTickets(filterAttributes, ticketList, selectedProject);
-        
+
         return (
             <>
-                <TicketActionBar selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
-                <TicketPreviewContainer onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} isLoading = {isLoading} isError = {isError}/>
+                <TicketActionBar createTicket = {createTicket} usersList = {usersList} selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
+                <TicketPreviewContainer addConversation = {addConversation} updateTicket = {updateTicket} isLoading = {isTicketsLoading} usersList ={usersList} onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} projectsList = {projectsList} isError = {isError}/>
             </>
         )
     }
 }
 
+
 const mapStateToProps = (state) => {
-    const {tickets, projects} = state || {};
-    const {isLoading: isTicketsLoading, ticketList, error} = tickets || {};
-    const {isLoading: projectsLoading, data: projectsList, error: projectsError, selectedProject}  = projects || {};
+    const {tickets, projects, users } = state || {};
+    const {usersList} = users || {};
+    const {isLoading: isTicketsLoading, data:ticketList, error} = tickets || {};
+    const {isLoading: projectsLoading, projectsList, error: projectsError, selectedProject}  = projects || {};
 
     return {
         selectedProject,
         ticketList, 
-        isTicketsLoading
+        isTicketsLoading, 
+        usersList,
+        projectsList
         // error, 
         // isLoading
     }
 }
 
-export default connect(mapStateToProps, { fetchTickets, updateProject})(TicketsContainer);
+
+
+export default connect(mapStateToProps, { fetchTickets, updateProject, fetchProjects, fetchUsers, createTicket, updateTicket, addConversation })(TicketsContainer);
 
 TicketsContainer.defaultProps = {
+    // usersList: [ 
+    //     {
+    //         id: "1", 
+    //         email: "harish.balasubramanian@gmail.com", 
+    //         name: "Harish", 
+    //         role: "admin", 
+    //     },
+    //     {
+    //         id: "2", 
+    //         email: "aditya.vinayak@gmail.com", 
+    //         name: "Aditya", 
+    //         role: "member", 
+    //     },
+    //     {
+    //         id: "3", 
+    //         email: "anjali.raghunathan@gmail.com", 
+    //         name: "Anjali", 
+    //         role: "member", 
+    //     },
+    //     {
+    //         id: "4", 
+    //         email: "tarun.shakt@gmail.com", 
+    //         name: "Raghul", 
+    //         role: "admin", 
+    //     }
+    // ],
     projectsList: [
         {
-            id: 1, 
+            id: 1,  //
             name: "Atonis", 
             description: "One-stop destination to bringing your startup dreams come true", 
             ticketIds: ["43, 45, 64, 33"], 
@@ -303,7 +308,7 @@ TicketsContainer.defaultProps = {
                     name: "Rahul", 
                     id: "446"
                 }, 
-            ], 
+            ]
 
         }, 
         {
@@ -388,7 +393,8 @@ TicketsContainer.defaultProps = {
             channel: "twitter"
         }, 
         status: "open", 
-        type: "feedback",
+        type: null,
+        priority: null, 
         conversationCount: "3", 
         assigneeId: null, 
         label: null, 

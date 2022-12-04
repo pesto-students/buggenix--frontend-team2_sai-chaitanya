@@ -2,7 +2,7 @@ import axios, { axiosPrivate } from "./axios";
 
 
 const refresh = async () => {
-    const response = await axios.get('api/auth/refresh', {
+    const response = await axios.get('auth/refresh', {
         withCredentials: true
     });
     return response.data.accessToken;

@@ -63,7 +63,7 @@ const ProjectListDropdown = ({onChange, value, projectsList = []}) => {
                     <div className = {styles.icon}>
                         <RocketFilled/>
                     </div>
-                    <div className = {styles.name}>Status: <span>{currentLabel }</span></div>
+                    <div className = {styles.name}>Projects: <span>{currentLabel }</span></div>
                     <ArrowDownOutlined/>
                 </div>
             </Space>
