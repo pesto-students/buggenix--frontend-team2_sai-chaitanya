@@ -59,28 +59,41 @@ const TicketActionBar = ({createTicket, onChange, filterAttributes, projectsList
     };
   
     const onClose = () => {
-      setOpen(false);
+        setDescription("");
+        setPriority(null);
+        setAssigneeId(null);
+        setTicketType(null);
+        setTicketStatus(null);
+        setProjectId(null);
+        setOpen(false);
     };
 
     const handleTicketCreateChange = (type, value) => {
+        
         switch(type) {
             case "description": {
                 setDescription(value);
+                break;
             }
             case "priority": {
                 setPriority(value);
+                break;
             }
             case "assigneeId": {
                 setAssigneeId(value)
+                break;
             }
             case "projectId": {
                 setProjectId(value);
+                break;
             }
             case "status": {
                 setTicketStatus(value);
+                break;
             }
             case "type": {
                 setTicketType(value);
+                break;
             }
         }
     }
@@ -115,12 +128,6 @@ const TicketActionBar = ({createTicket, onChange, filterAttributes, projectsList
         createTicket(payload).then(res => {
             ticketCreationSuccess();
             onClose();
-            setDescription("");
-            setPriority(null);
-            setAssigneeId(null);
-            setTicketType(null);
-            setTicketStatus(null);
-            setProjectId(null);
         }).catch(err => {
             ticketCreationError();
         }) //action dispatch
@@ -167,7 +174,7 @@ const TicketActionBar = ({createTicket, onChange, filterAttributes, projectsList
                 </Space>
                 }
             >
-                <Form onChange = {(e) => handleTicketCreateChange("description", e.target.value)} layout="vertical" hideRequiredMark>
+                <Form  layout="vertical" hideRequiredMark>
                     <Row gutter={16}>
                         <Col span={24}>
                             <Form.Item
@@ -180,7 +187,7 @@ const TicketActionBar = ({createTicket, onChange, filterAttributes, projectsList
                                     },
                                 ]}
                             >
-                                <Input.TextArea rows={2} placeholder="Please type the ticket subject" />
+                                <Input.TextArea  onChange = {(e) => handleTicketCreateChange("description", e.target.value)} rows={2} placeholder="Please type the ticket subject" />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -238,7 +245,7 @@ const TicketActionBar = ({createTicket, onChange, filterAttributes, projectsList
                                 },
                                 ]}
                             >
-                                <Select onSelect={(value) => handleTicketCreateChange("projectId", value)} name = "projectId" placeholder="Please choose the type">
+                                <Select onSelect={(value) => handleTicketCreateChange("projectId", value)} name = "projectId" placeholder="Please choose the project">
                                     {projectsList.map(project => {
                                         const {id, name} = project || {};
                                         return <Option value = {id}>{name}</Option>

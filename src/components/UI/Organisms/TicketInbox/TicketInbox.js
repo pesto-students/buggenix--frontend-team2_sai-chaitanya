@@ -301,19 +301,19 @@ TicketInbox.defaultProps = {
             name: "status",
             options: [
                 {
-                    value: "1" , 
+                    value: "open" , 
                     label: "Open"
                 }, 
                 {
-                    value: "2", 
+                    value: "progress", 
                     label: "In Progress"
                 }, 
                 {
-                    value: "3",
+                    value: "review",
                     label: "Under Review"
                 }, 
                 {
-                    value: "4",
+                    value: "done",
                     label: "Done"
                 }, 
             ], 

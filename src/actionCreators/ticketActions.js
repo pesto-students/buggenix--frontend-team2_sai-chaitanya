@@ -24,16 +24,21 @@ export const fetchTickets = () => {
 export const createTicket = (payload) => {
     return function(dispatch) {
         dispatch(createTicketRequest());
-        return axiosPrivate.post("tickets", payload)
+        return new Promise((resolve, reject) => {
+            axiosPrivate.post("tickets", payload)
             .then(res => {
                 const {data} = res || {};
                 dispatch(createTicketSuccess(data));
-                return true;
+                resolve()
+                // return true;
             })
             .catch(err => {
                 dispatch(createTicketFailure(err));
-                return false;
+                reject();
+                // return false;
             })
+
+        })
     }
 }
 
