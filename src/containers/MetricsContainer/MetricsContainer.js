@@ -29,7 +29,7 @@ const MetricsContainer = () => {
         const label = ["Bug", "Feature", "Feedback"];
         const chartData = [
           bugsCount || 0,
-          featuresCount || 0,
+          featuresCount || 1,
           feedbacksCount || 0,
         ];
         setData({
