@@ -61,6 +61,28 @@ export const updateTicket = (payload) => {
     }
 }
 
+// DELETE TICKET
+
+export const deleteTicket = (id) => {
+    return function(dispatch) {
+        return new Promise((resolve, reject) => {
+            axiosPrivate.delete("tickets/" + id).then(res => {
+                dispatch(deleteTicketSuccess(id));
+                resolve();
+            }).catch(err => {
+                reject();
+            })
+        })
+    }
+}
+
+export const deleteTicketSuccess = (id) => {
+    return {
+        type: DELETE_TICKET_SUCCESS, 
+        payload: id
+    }
+}
+
 export const addConversation = (payload) => {
     return function(dispatch) {
         return axiosPrivate.post("notes", payload)
@@ -114,39 +136,6 @@ const createTicketFailure = (err) => {
     }
 }
 
-// Delete
-
-// export const deleteTicket = (ticketId) => {
-//     return function(dispatch) {
-//         dispatch(deleteTicketRequest());
-//         axiosPrivate.delete("ticket/" + ticketId).then(res => {
-            
-//             console.log(res)
-//             return true;
-//         }).catch(err => {
-
-//         })
-//     }
-// }
-
-
-const deleteTicketRequest = () => {
-    return {
-        type: DELETE_TICKET_REQUEST
-    }
-}
-
-const deleteTicketSuccess = () => {
-    return {
-        type: DELETE_TICKET_SUCCESS
-    }
-}
-
-const deleteTicketFailure = () => {
-    return {
-        type: DELETE_TICKET_FAILURE
-    }
-}
 
 const fetchTicketsRequest = () => {
     return {

@@ -1,5 +1,5 @@
 import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
-import { Button, Popconfirm, message, Spin } from "antd";
+import { Button, Popconfirm, message, Spin, Space } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../context/authContext";
@@ -8,7 +8,7 @@ import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({usersList, projectsList, configurationData = [], selectedTicket, onUpdate, onDelete, isLoading, ticketList, updateTicket, addConversation}) => {
+const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData = [], selectedTicket, onUpdate, onDelete, isLoading, ticketList, updateTicket, addConversation}) => {
 
     const [open, setOpen] = useState(false);
     const [reply, setReply] = useState("");
@@ -16,6 +16,8 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
     const [confirmLoading, setConfirmLoading] = useState(false);
     const [configData, setConfigData] = useState(configurationData);
     const {user} = useAuth();
+    const [messageApi, contextHolder] = message.useMessage();
+
 
     useEffect(() => {
         const isPresent = configData.findIndex(config => config.name === "projectId");
@@ -103,6 +105,21 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
     }, [usersList]);
 
 
+    
+    const ticketDeleteSuccess = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Ticket deleted',
+        });
+    };
+    
+    const ticketDeleteFailure = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Ticket deletion failed',
+        });
+    };
+    
     if(isLoading || !selectedTicket) {
         return (
             <div>
@@ -110,7 +127,7 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
             </div>
         )
     } 
-
+    
     if(ticketList.length == 0) {
         return (
             <div>
@@ -131,13 +148,17 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
         setOpen(false);
       };
 
-    const handleOk = () => {
-        //delete ticket
+    const handleDelete = () => {
         setConfirmLoading(true);
-        setTimeout(() => {
-            setOpen(false);
+        deleteTicket(ticketId).then(res => {
             setConfirmLoading(false);
-        }, 2000);
+            ticketDeleteSuccess();
+            setOpen(false);
+        }).catch(err => {
+            setConfirmLoading(false);
+            ticketDeleteFailure();
+            setOpen(false);
+        })
     }
 
     const handleAttributeChange = (category, value) => {
@@ -172,6 +193,7 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
 
     return (
         <div className = {styles.ticket_inbox}>
+            {contextHolder} 
             <div className = {styles.ticket_inbox_conversations}>
                 <div className = {styles.ticket_viewer_thread}>
                     <div className = {styles.thread_main}>
@@ -217,7 +239,7 @@ const TicketInbox = ({usersList, projectsList, configurationData = [], selectedT
                 <Popconfirm
                     title="Delete ticket?"
                     open={open}
-                    onConfirm={handleOk}
+                    onConfirm={handleDelete}
                     okButtonProps={{
                         loading: confirmLoading,
                     }}
@@ -241,7 +263,7 @@ TicketInbox.defaultProps = {
             name: "type", 
             options: [
                 {
-                    value: "general_feedback" , 
+                    value: "feedback" , 
                     label: "General Feedback"
                 }, 
                 {
@@ -249,7 +271,7 @@ TicketInbox.defaultProps = {
                     label: "Bug Report"
                 }, 
                 {
-                    value: "feature_request",
+                    value: "feature",
                     label: "Feature request"
                 },             
             ], 

@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from "./DashboardContainer.module.css";
-import { NavLink, Outlet } from "react-router-dom";
-import { PieChartOutlined, RocketOutlined, TagOutlined, TeamOutlined, ContactsOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Outlet } from "react-router-dom";
+import { LogoutOutlined } from '@ant-design/icons';
 import Logo from '../../components/UI/Molecules/Logo/Logo';
-import LogoutBtn from '../../components/UI/Molecules/LogoutBtn';
 import NavItem from '../../components/UI/Molecules/NavItem';
+import { message, Popconfirm } from 'antd';
+import { authContext } from '../../context/authContext';
+
 
 
 class DashboardContainer extends React.Component {
@@ -47,7 +49,14 @@ class DashboardContainer extends React.Component {
         }
 
         this.handleNavChange = this.handleNavChange.bind(this);
+        this.confirm = this.confirm.bind(this);
     }
+
+    confirm = (e) => {
+        let {logout} = this.context;
+        logout();
+        message.success('Successfully logged out');
+      };
 
     handleNavChange(to) {
         const {navList:prevList} = this.state;
@@ -95,7 +104,15 @@ class DashboardContainer extends React.Component {
                             </button>
                             <div className = {styles.logoutBtn}>  
                                 <div className = {styles.logout}>
-                                    <LogoutOutlined size= "large" className = {styles.deleteIcon}/>
+                                <Popconfirm
+                                    title="Are you sure to delete this task?"
+                                    onConfirm={this.confirm}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    {/* <a href="#">Delete</a> */}
+                                    <LogoutOutlined  size= "large" className = {styles.deleteIcon}/>
+                                </Popconfirm>
                                 </div>
                             </div>
                         </div>
@@ -110,3 +127,5 @@ class DashboardContainer extends React.Component {
 }
 
 export default DashboardContainer;
+
+DashboardContainer.contextType = authContext;

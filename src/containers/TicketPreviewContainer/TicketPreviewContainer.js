@@ -9,7 +9,7 @@ const TicketPreviewContainer = (props) => {
         onCheckAll(e.target.checked);
     }
 
-    const {updateTicket, projectsList, usersList, ticketList, onDelete, isLoading, isError, checkedTicketIds, onCheck, selectedTicket, onSelect, onCheckAll, addConversation} = props;
+    const {updateTicket, projectsList, usersList, deleteTicket, ticketList, onDelete, isLoading, isError, checkedTicketIds, onCheck, selectedTicket, onSelect, onCheckAll, addConversation} = props;
     
     return (
         <div className = {styles.ticketPreviewContainer}>
@@ -21,7 +21,7 @@ const TicketPreviewContainer = (props) => {
                 <TicketList isLoading = {isLoading} onSelect = {onSelect} selectedTicket = {selectedTicket} onCheck = {onCheck} checkedTicketIds = {checkedTicketIds} ticketList = {ticketList}/>
             </div>
             <div className = {styles.conversations}>
-                <TicketInbox addConversation = {addConversation} updateTicket = {updateTicket}  projectsList = {projectsList} ticketList = {ticketList} isLoading = {isLoading} usersList = {usersList} onDelete = {onDelete} selectedTicket = {selectedTicket}/>
+                <TicketInbox deleteTicket = {deleteTicket} addConversation = {addConversation} updateTicket = {updateTicket}  projectsList = {projectsList} ticketList = {ticketList} isLoading = {isLoading} usersList = {usersList} onDelete = {onDelete} selectedTicket = {selectedTicket}/>
             </div>
         </div>
     )

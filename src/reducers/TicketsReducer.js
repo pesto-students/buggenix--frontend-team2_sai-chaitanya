@@ -1,4 +1,4 @@
-import { ADD_CONVERSATION_SUCCESS, CREATE_TICKET_FAILURE, CREATE_TICKET_REQUEST, CREATE_TICKET_SUCCESS, FETCH_TICKETS_FAILURE, FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS, UPDATE_TICKET_SUCCESS } from "../constants/tickets";
+import { ADD_CONVERSATION_SUCCESS, CREATE_TICKET_FAILURE, CREATE_TICKET_REQUEST, CREATE_TICKET_SUCCESS, DELETE_TICKET_SUCCESS, FETCH_TICKETS_FAILURE, FETCH_TICKETS_REQUEST, FETCH_TICKETS_SUCCESS, UPDATE_TICKET_SUCCESS } from "../constants/tickets";
 
 
 const initialState = {
@@ -92,6 +92,16 @@ const TicketsReducer = (state = initialState, {type, payload}) => {
                 }
             })
 
+            return {
+                ...state, 
+                data: updatedData
+            }
+        }
+
+        case DELETE_TICKET_SUCCESS: {
+            const id = payload;
+            let updatedData = [...state.data];
+            updatedData = updatedData.filter(ticket => ticket.id !== id);
             return {
                 ...state, 
                 data: updatedData

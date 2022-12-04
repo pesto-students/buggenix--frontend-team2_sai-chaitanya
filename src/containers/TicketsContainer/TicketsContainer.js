@@ -1,5 +1,5 @@
 import React from "react";
-import { addConversation, createTicket, fetchTickets, updateTicket } from "../../actionCreators/ticketActions";
+import { addConversation, createTicket, deleteTicket, fetchTickets, updateTicket } from "../../actionCreators/ticketActions";
 import TicketActionBar from "../../components/UI/Organisms/TicketActionBar";
 import TicketPreviewContainer from "../TicketPreviewContainer";
 import {connect} from 'react-redux';
@@ -119,14 +119,14 @@ class TicketsContainer extends React.Component {
 
     render() {
 
-        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject, usersList, createTicket, isTicketsLoading, updateTicket, addConversation} = this.props;
+        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject, usersList, createTicket, isTicketsLoading, updateTicket, addConversation, deleteTicket} = this.props;
         const {filterAttributes, checkedTicketIds, selectedTicket} = this.state;
         const _filteredTicketList = filterTickets(filterAttributes, ticketList, selectedProject);
 
         return (
             <>
                 <TicketActionBar createTicket = {createTicket} usersList = {usersList} selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
-                <TicketPreviewContainer addConversation = {addConversation} updateTicket = {updateTicket} isLoading = {isTicketsLoading} usersList ={usersList} onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} projectsList = {projectsList} isError = {isError}/>
+                <TicketPreviewContainer deleteTicket = {deleteTicket} addConversation = {addConversation} updateTicket = {updateTicket} isLoading = {isTicketsLoading} usersList ={usersList} onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} projectsList = {projectsList} isError = {isError}/>
             </>
         )
     }
@@ -152,7 +152,7 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { fetchTickets, updateProject, fetchProjects, fetchUsers, createTicket, updateTicket, addConversation })(TicketsContainer);
+export default connect(mapStateToProps, { fetchTickets, updateProject, fetchProjects, fetchUsers, createTicket, updateTicket, deleteTicket, addConversation })(TicketsContainer);
 
 TicketsContainer.defaultProps = {
     // usersList: [ 
