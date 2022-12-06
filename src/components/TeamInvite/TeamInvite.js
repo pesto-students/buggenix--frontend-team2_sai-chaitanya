@@ -6,21 +6,28 @@ import { Link, useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 
-const TeamInvite = ({invitor = "harish"}) => {
+const TeamInvite = () => {
 
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
     const [email, setEmail] = useState("");
+    const [invitor, setInvitor] = useState("");
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
     useEffect(() => {
+        // https://buggenix.netlify.app/team-invite?email=adivinayak.av4@gmail.com&invitor=harish
         const href = window.location.href;
         console.log(href, "href");
-        const result = href.split("?")[1];
-        const email = result.split("=")[1];
+        const string = href.split("?")[1]; //email=adivinayak.av4@gmail.com&invitor=harish
+        const email = string.split("=")[1].split("&")
+        const invitor = string.split("=")[2].split("&")
+
+
+        
         setEmail(email);
+        setInvitor(invitor)
     }, [])
 
 

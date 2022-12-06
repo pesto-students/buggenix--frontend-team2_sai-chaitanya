@@ -105,7 +105,7 @@ class DashboardContainer extends React.Component {
                             <div className = {styles.logoutBtn}>  
                                 <div className = {styles.logout}>
                                 <Popconfirm
-                                    title="Are you sure to delete this task?"
+                                    title="Sure you want to logout?"
                                     onConfirm={this.confirm}
                                     okText="Yes"
                                     cancelText="No"

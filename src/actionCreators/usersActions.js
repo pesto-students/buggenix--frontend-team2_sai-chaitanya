@@ -38,10 +38,10 @@ export const deleteUser = (id) => {
 
 // ADD USER 
 
-export const addUser = (email) => {
+export const addUser = (payload) => {
     return dispatch => {
         dispatch(addUserRequest());
-        return axiosPrivate.post("users", {to: email}).then(res => {
+        return axiosPrivate.post("users", payload).then(res => {
             const {data: user} = res || {};
             dispatch(addUserSuccess(user));
             return true

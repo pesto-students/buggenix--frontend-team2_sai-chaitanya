@@ -67,7 +67,7 @@ const PeopleContainer = (props) => {
     }
  
     
-    const handleOk = () => {
+    const handleSubmitInviteeEmail = () => {
 
         const {addUser} = props;
         const valid = String(email)
@@ -84,7 +84,7 @@ const PeopleContainer = (props) => {
             setEmailError("");
             
             //add user
-            addUser(email).then(res => {
+            addUser({to: email, role: roleKey}).then(res => {
                 if(res) {
                     
                     setIsModalOpen(false);
@@ -110,7 +110,7 @@ const PeopleContainer = (props) => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            render: (text) => <a>{text}</a>,
+            render: (value) => <a>{!value ? <span style = {{color: "grey"}}>Invite pending</span> : value}</a>,
         },
         {
             title: 'Email',
@@ -123,30 +123,6 @@ const PeopleContainer = (props) => {
             key: "role"
         }
     ]
-
-    const data = [ 
-        {
-        key: '1',
-        name: 'Dwight Shrute',
-        email: "Dwight.shrute@outlook.com", 
-        role: "Super admin"
-      },
-      {
-        key: '2',
-        name: 'Michael Scoot',
-        email: "michael.scott@gmail.com", 
-        role: "Admin"
-      }, 
-      {
-        key: "3", 
-        name: "Pam Beesly", 
-        email: "Pam.beesly@gmail.com", 
-        role: "member"
-      }
-    ]
-
-    
-
 
     return (
         <section className = {styles.section}>
@@ -166,12 +142,16 @@ const PeopleContainer = (props) => {
                     </div>
                 </div>
             </main>
-                <Modal title="Invite Members" open={isModalOpen} onOk={handleOk} onCancel={closeModal}>
+                <Modal title="Invite Members" open={isModalOpen} onOk={handleSubmitInviteeEmail} onCancel={closeModal}>
                     <div className = {styles.inv}>Send invitation to: </div>
                     <Input className = {styles.addEmailInput} size = "large" onChange={handleEmailChange} placeholder='Add the email of the person you want to invite'/>
                     {emailError && <div style = {{color: "red", fontSize: "smaller"}}>{emailError}</div>}
                     <div className = {styles.inv}>Member role: </div>
                     <div className = {styles.roles}>
+                        <div onClick = {() => handleSelectRole("superAdmin")} className = {styles.roleItem + " " + styles.unselect}>
+                            <h4>{"Super admin"}</h4>
+                            <div className = {styles.info}>{"Manage hiring, people including and take ownership of the org"}</div>
+                        </div>
                         {rolesAndResponsibilities.map(roleInfo => {
                             const {key, role, responsibility} = roleInfo || {};
                             const isSelected = roleKey == key;
@@ -186,8 +166,6 @@ const PeopleContainer = (props) => {
                 </Modal>
         </section>
     )
-
-
 }
 
 
@@ -195,7 +173,7 @@ const mapStateToProps = (state) => {
     const {users} = state;
     const {usersList} = users  || {};
     return {
-        // people: usersList
+        people: usersList
     }
 }
 

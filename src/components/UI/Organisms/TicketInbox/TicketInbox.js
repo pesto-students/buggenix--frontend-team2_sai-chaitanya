@@ -231,9 +231,9 @@ const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData =
                     <span className = {styles.item}>Ticket details</span>
                 </div>
                 <div className = {styles.details}>
-                    <TicketDetails name = "Creator Name" value = "Aditya Vinayak"/>
-                    <TicketDetails name = "Social channel" value = "Twitter" />
-                    <TicketDetails name = "Created Time" value = "Dec, 01, 2022"/>
+                    <TicketDetails name = "Creator Name" value = {name}/>
+                    <TicketDetails name = "Channel" value = {channel || "Buggenix"} />
+                    <TicketDetails name = "Created Time" value = {timestamp}/>
                 </div>
                 <div className = {styles.deleteTicketBtn}>
                 <Popconfirm
