@@ -115,6 +115,9 @@
     color: #8090a0;
 }
 
+.btn.disableBtn {
+    cursor: not-allowed;
+}
 
 
 

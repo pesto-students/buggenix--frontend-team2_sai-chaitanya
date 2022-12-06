@@ -215,4 +215,8 @@
     color: white;
 }
  
+.deleteTicketBtn .deleteBtn.deleteBtnDisable {
+    /* background-color: #F5F5F5; */
+    cursor: not-allowed;
+}
 

@@ -27,7 +27,7 @@ export const addProject = (data) => {
     return function(dispatch) {
         
         dispatch(addProjectRequest());
-        axiosPrivate.post("project", data).then(res => {
+        axiosPrivate.post("projects", data).then(res => {
             const { data } = res || {};
             
             dispatch(addProjectSuccess(data));

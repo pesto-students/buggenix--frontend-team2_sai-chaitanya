@@ -81,11 +81,12 @@ const Signup = () => {
               password
             })
             .then((response) => {
-                const {_id, username, email, accessToken} = response.data || {};
+                const {_id, username, email, accessToken, role} = response.data || {};
                 const user = {
                     username, 
                     email, 
-                    id: _id
+                    id: _id, 
+                    role
                 }
                 localStorage.setItem("access_token", accessToken);
                 login(user);

@@ -14,7 +14,7 @@ export const AuthProvider = (props) => {
         setUser(JSON.parse(localStorage.getItem("user")));
     }, [])
 
-    const login = (user) => {
+    const login = (user) => { 
         setUser(user);
         localStorage.setItem("user", JSON.stringify(user));
     }

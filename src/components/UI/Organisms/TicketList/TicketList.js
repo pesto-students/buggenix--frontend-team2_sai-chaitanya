@@ -3,7 +3,7 @@ import TicketItem from "../../Molecules/TicketItem/TicketItem"
 
 const TicketList = ({ticketList = [], onCheck, checkedTicketIds, selectedTicket, onSelect, isLoading}) => {
 
-    if(isLoading || !selectedTicket) {
+    if(isLoading) {
         return (
             <div>
                 <Spin/>

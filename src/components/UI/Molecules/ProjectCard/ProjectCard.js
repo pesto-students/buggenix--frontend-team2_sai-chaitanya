@@ -11,7 +11,7 @@ const ProjectCard = ({projectInfo, updateProject}) => {
 
     const {name: projectName, description, ticketCount, openTicketCount, creator, createdTime, members, id} = projectInfo || {};
     const navigate = useNavigate();
-    const completedPercent = ((ticketCount - openTicketCount)/ticketCount) * 100;
+    const completedPercent = ticketCount == 0 ? 100 : ((ticketCount - openTicketCount)/ticketCount) * 100;
 
     const handleClick = () => { 
         updateProject(id);

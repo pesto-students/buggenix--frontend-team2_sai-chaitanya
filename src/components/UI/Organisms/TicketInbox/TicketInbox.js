@@ -8,7 +8,7 @@ import TicketDetails from "../../Molecules/TicketDetails/TicketDetails";
 import ThreadComment from "../ThreadComment";
 import styles from "./TicketInbox.module.css";
 
-const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData = [], selectedTicket, onUpdate, onDelete, isLoading, ticketList, updateTicket, addConversation}) => {
+const TicketInbox = ({usersList, userRole, deleteTicket, projectsList, configurationData = [], selectedTicket, onUpdate, onDelete, isLoading, ticketList, updateTicket, addConversation}) => {
 
     const [open, setOpen] = useState(false);
     const [reply, setReply] = useState("");
@@ -120,7 +120,7 @@ const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData =
         });
     };
     
-    if(isLoading || !selectedTicket) {
+    if(isLoading) {
         return (
             <div>
                 <Spin/>
@@ -128,7 +128,7 @@ const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData =
         )
     } 
     
-    if(ticketList.length == 0) {
+    if(ticketList.length == 0 || !selectedTicket) {
         return (
             <div>
                 No ticket selected
@@ -140,7 +140,9 @@ const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData =
     const { name, id, type, channel  } = creatorInfo || {};
  
     const showPopconfirm = () => {
-        setOpen(true);
+        if( userRole!== "member") {
+            setOpen(true);
+        }
       };
 
     const handleCancel = () => {
@@ -245,7 +247,7 @@ const TicketInbox = ({usersList, deleteTicket, projectsList, configurationData =
                     }}
                     onCancel={handleCancel}
                     >
-                        <Button onClick={showPopconfirm} className= {styles.deleteBtn}>Delete Ticket <DeleteOutlined/></Button>
+                        <Button onClick={showPopconfirm} className= {styles.deleteBtn + " " + (userRole === "member"  && styles.deleteBtnDisable)}>Delete Ticket <DeleteOutlined/></Button>
                     </Popconfirm>
                 </div>
 
@@ -267,7 +269,7 @@ TicketInbox.defaultProps = {
                     label: "General Feedback"
                 }, 
                 {
-                    value: "bug_report", 
+                    value: "bug", 
                     label: "Bug Report"
                 }, 
                 {

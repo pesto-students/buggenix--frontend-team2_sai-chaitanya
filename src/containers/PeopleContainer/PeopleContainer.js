@@ -7,11 +7,10 @@ import {
 import { connect } from 'react-redux';
 import { filterUsers } from '../../utils/filterUsers';
 import { addUser, deleteUser, fetchUsers } from '../../actionCreators/usersActions';
-import axiosPrivate from '../../api/axiosPrivate';
-
 import { Button, Input, Modal, Popconfirm, message, Table } from "antd"
-import UserItem from '../../components/UI/Molecules/UserItem';
 import { rolesAndResponsibilities } from '../../data/roles';
+import { authContext, useAuth } from '../../context/authContext';
+
 const { Search } = Input;
 
 
@@ -21,6 +20,9 @@ const PeopleContainer = (props) => {
     const [roleKey, setRoleKey] = useState();
     const [emailError, setEmailError] = useState(false);
     const [searchStr, setSearchStr] = useState("");
+    const {user} = useAuth();
+
+    const {role: userRole} = user || {};
 
 
     const handleUserDelete = (id) => {
@@ -44,7 +46,9 @@ const PeopleContainer = (props) => {
     }, []);
 
     const openModel = () => {
-        setIsModalOpen(true);
+        if(userRole !== "member") {
+            setIsModalOpen(true);
+        }
     }
 
     const closeModal = ()  => {
@@ -135,7 +139,7 @@ const PeopleContainer = (props) => {
                     <div className = {styles.memberCount}>Members {"(" + formattedPeopleList?.length + ")"}</div>
                     <form className = {styles.searchForm}>
                         <Search onChange={handleSearchStrChange} size = "large" className = {styles.searchInput} style = {{width: 400}} placeholder = 'Search by name or email'/>
-                        <Button onClick={openModel} className = {styles.btn}> <PlusCircleFilled/> Invite Member</Button>
+                        <Button onClick={openModel} className = {styles.btn + " " + (userRole === "member" && styles.disableBtn)}> <PlusCircleFilled/> Invite Member</Button>
                     </form>
                     <div className = {styles.tableContainer}>
                         <Table columns = {columns} dataSource = {formattedPeopleList} />
@@ -179,6 +183,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {fetchUsers, deleteUser, addUser})(PeopleContainer);
 
+
 PeopleContainer.defaultProps = {
     people: [
         {
@@ -208,50 +213,3 @@ PeopleContainer.defaultProps = {
     ]
 }
 
-
-
-// return (
-//     <div className= {styles.container}>
-//         <div style = {{
-//             fontSize: "15px",
-//             fontWeight: "500", 
-//             padding: "12px 0",
-//         }}>Manage team</div>
-
-//         <div style = {{
-//             fontSize: "10px",
-//             fontWeight: "300", 
-//             padding: "12px 0"
-//         }}> Team members <span style = {{fontSize: "12px", fontWeight: "bold"}}>{people.length} / 25</span></div>
-
-//         <div className= {styles.search}>
-//             <Input style = {{
-//                 marginRight: "5rem", 
-//             }}  onChange = {handleSearchStrChange}
-//             placeholder="Search" enterbutton ="Search"/>
-//             <Button onClick = {openModel} style = {{
-//                 background: "#1D5BD4", 
-//                 color: "white", 
-//                 border: "none"
-//                 }}>Add users</Button>
-//         </div>
-//         <div className= {styles.userList}> 
-//             <table className = {styles.tableContainer} >
-//                 <thead>
-//                     <th>Name</th>
-//                     <th>Email</th>
-//                     <th>Account role</th>
-//                 </thead>
-//                 <tbody>
-//                     {
-//                         _peopleList.length > 0 ? _peopleList.map(person => {
-//                             const {username, email, role, _id: id, status} = person || {};
-//                             return <UserItem username={username} email = {email} role = {role} status = {status}  id = {id} onClick = {handleUserDelete}/>
-//                         }) : <span>No user found</span>
-//                     }
-//                 </tbody>
-//             </table>
-//         </div>
-
-//     </div>
-// )

@@ -2,10 +2,10 @@ import { Button, Input, message } from "antd";
 import { Header } from "antd/lib/layout/layout";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import Logo from "../UI/Molecules/Logo";
 import Footer from "../Footer/Footer";
 import styles from "./InputSocials.module.css";
+import axiosPrivate from "../../api/axiosPrivate";
 
 
 const InputSocials = () => {
@@ -13,7 +13,6 @@ const InputSocials = () => {
     const [facebookUsername, setFacebookusername] = useState("");
     const [twitterHandle, setTwitterHandle] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
     const handleSubmit = () => {
@@ -25,7 +24,7 @@ const InputSocials = () => {
                 twitter: twitterHandle
             }
 
-            axiosPrivate.post("socials", socials).then(res => {
+            axiosPrivate.post("social", socials).then(res => {
                 console.log(res);
                 navigate("/dashboard/metrics");
             }).catch(err => {

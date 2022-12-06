@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import filterTickets from "../../utils/filterTickets";
 import { fetchProjects, updateProject } from "../../actionCreators/projectActions";
 import { fetchUsers } from "../../actionCreators/usersActions";
-
+import {authContext} from "../../context/authContext";
 
 class TicketsContainer extends React.Component {
     constructor(props) {
@@ -25,7 +25,6 @@ class TicketsContainer extends React.Component {
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleTicketSelect = this.handleTicketSelect.bind(this);
         this.handleCheckAll = this.handleCheckAll.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
     }
     
 
@@ -34,7 +33,6 @@ class TicketsContainer extends React.Component {
         fetchTickets && fetchTickets();
         fetchProjects && fetchProjects();
         fetchUsers && fetchUsers();
-        console.log("is it mounting?")
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -43,25 +41,27 @@ class TicketsContainer extends React.Component {
         const {selectedTicket} = this.state;
         const {id} = selectedTicket || {};
 
-        // if(prevProps.ticketList !== ticketList && prevProps.ticketList.length == 0) {
-        if(!selectedTicket && ticketList && ticketList.length > 0) {
+        if(prevProps.ticketList !== ticketList) {
             this.setState({
                 selectedTicket: ticketList[0]
             })
-        } else if(prevProps.ticketList !== ticketList) {
-            const newSelectedTicket = ticketList.find(ticket => {
-                if(ticket.id === id) {
-                    return true
-                }
-            })
-            this.setState({
-                selectedTicket: newSelectedTicket
-            })
         }
-    }
 
-    handleDelete() {
 
+        // if(!selectedTicket && ticketList && ticketList.length > 0) {
+        //     this.setState({
+        //         selectedTicket: ticketList[0]
+        //     })
+        // } else if(prevProps.ticketList !== ticketList) {
+        //     const newSelectedTicket = ticketList.find(ticket => {
+        //         if(ticket.id === id) {
+        //             return true
+        //         }
+        //     })
+        //     this.setState({
+        //         selectedTicket: newSelectedTicket
+        //     })
+        // }
     }
 
     handleTicketSelect(selectedTicket) {
@@ -119,14 +119,15 @@ class TicketsContainer extends React.Component {
 
     render() {
 
-        const {ticketList, isLoading, isError, projectsList, selectedProject, updateProject, usersList, createTicket, isTicketsLoading, updateTicket, addConversation, deleteTicket} = this.props;
+        const {ticketList, isError, projectsList, selectedProject, updateProject, usersList, createTicket, isTicketsLoading, updateTicket, addConversation, deleteTicket} = this.props;
         const {filterAttributes, checkedTicketIds, selectedTicket} = this.state;
         const _filteredTicketList = filterTickets(filterAttributes, ticketList, selectedProject);
+        const userRole = this.context?.user?.role;
 
         return (
             <>
                 <TicketActionBar createTicket = {createTicket} usersList = {usersList} selectedProject = {selectedProject} updateProject = {updateProject} projectsList = {projectsList} onChange = {this.handleFilterChange} filterAttributes = {filterAttributes}/>
-                <TicketPreviewContainer deleteTicket = {deleteTicket} addConversation = {addConversation} updateTicket = {updateTicket} isLoading = {isTicketsLoading} usersList ={usersList} onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} projectsList = {projectsList} isError = {isError}/>
+                <TicketPreviewContainer userRole = {userRole} deleteTicket = {deleteTicket} addConversation = {addConversation} updateTicket = {updateTicket} isLoading = {isTicketsLoading} usersList ={usersList} onDelete = {this.handleDelete} onCheckAll = {this.handleCheckAll} onSelect = {this.handleTicketSelect} selectedTicket = {selectedTicket} onCheck = {this.handleTicketCheck} checkedTicketIds = {checkedTicketIds} ticketList = {_filteredTicketList} projectsList = {projectsList} isError = {isError}/>
             </>
         )
     }
@@ -145,14 +146,14 @@ const mapStateToProps = (state) => {
         isTicketsLoading, 
         usersList,
         projectsList
-        // error, 
-        // isLoading
     }
 }
 
 
 
 export default connect(mapStateToProps, { fetchTickets, updateProject, fetchProjects, fetchUsers, createTicket, updateTicket, deleteTicket, addConversation })(TicketsContainer);
+
+TicketsContainer.contextType = authContext;
 
 TicketsContainer.defaultProps = {
     // usersList: [ 
@@ -183,7 +184,7 @@ TicketsContainer.defaultProps = {
     // ],
     projectsList: [
         {
-            id: 1,  //
+            id: 1,  
             name: "Atonis", 
             description: "One-stop destination to bringing your startup dreams come true", 
             ticketIds: ["43, 45, 64, 33"], 

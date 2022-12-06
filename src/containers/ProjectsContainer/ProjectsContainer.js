@@ -54,7 +54,7 @@ const mapStateToProps = (state) => {
     const projectsList = state?.projects?.projectsList || [];
 
     return {
-        // projectsList
+        projectsList
     }
 }
 
