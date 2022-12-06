@@ -3,7 +3,7 @@ name: "ci-cd pipeline"
 
 on: 
   push:
-    branches: [netlify-deploy,master,Harish_auth]
+    branches: [ticketUI,netlify-deploy,master,Harish_auth]
 
 jobs:
   build:
