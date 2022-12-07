@@ -1,7 +1,6 @@
 import { AlertOutlined, BugOutlined, PartitionOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import styles from "./MetricsContainer.module.css";
-import { ResponsivePie } from '@nivo/pie'
 
 
 
