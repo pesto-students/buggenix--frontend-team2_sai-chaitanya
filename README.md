@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# Buggenix
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Buggenix is a one-stop software tool that scrapes any issues/bugs/feature requests reported by your fellow customers from any social media/communication channel that you could have your presence in, ranging from LinkedIn, Twitter, Facebook, email, Instagram to your everyday. Our proprietary algorithm efficiently separates the wheat from the chaff, meaning, it efficiently filters out grievances and bugs from neutral, everyday messages/tweets that you might receive on your socials, effectively helping you stay on top of customer grievances, getting your developers working on it ASAP and keeping your product's UX the best that it can be!
 
-## Available Scripts
+Apart from being the extremely adept bug scouter, it also makes your life convenient by converting those bugs into tickets automatically that your team can get started on resolving with just a few clicks. As a Buggenix admin, you can set priorities for created tickets, create your own tickets, add them to a project, assign them to developers, view metrics and more such features with our beautifully crafted UI.
 
-In the project directory, you can run:
+## Table of contents
 
-### `npm start`
+1. Demo
+2. Installation
+3. Technology Stack
+4. Authors
+5. License
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Demo
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+[Live Demo](https://buggenix.netlify.app)
 
-### `npm test`
+Please Note:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. We recommend using this app in Google Chrome.
+2. Use the app on Laptop/desktop only as of now.
 
-### `npm run build`
+Test Credentials:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ - For Admin
+    - Email: testuser@atonis.com
+    - Password: test-user@pass
+    
+## Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  - Fork or directly clone this repository to your local machine
+  - Use the `npm install` command to install dependencies
+  - Once the dependencies are finished installing, use the `npm start` command inside the root directory to open the app in your local browser of choice
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technology stack
 
-### `npm run eject`
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before. This resulted in a fast, performant, and easily-extensible web app that should be fairly future-proof for the coming next several years. We used:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  - React
+  - Redux
+  - NodeJs
+  - ExpressJs
+  - MongoDB
+  - Okta
+  - Redux toolkit
+  
+ ## Authors
+ 
+  - [Harish Balasubramanian](https://www.linkedin.com/in/harish-balasubramanian-78528a1a2/)
+  - Aditya Vinayak
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ ## License
+ 
+ [MIT](https://opensource.org/licenses/MIT)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
