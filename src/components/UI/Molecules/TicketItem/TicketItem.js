@@ -41,7 +41,7 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
                             <div className = {styles.creatorName} name = "creatorName"> {creatorName} </div>
                         </div>
                         <div>
-                            <div className = {styles.subject} name = "title">{ description.split("").splice(0, 60).join("")}</div>
+                            <div className = {styles.subject} name = "title">{ description.split("").splice(0, 75).join("")}</div>
                         </div>
                         <div className= {styles.itemBottom}>
                             <div className = {styles.stats}>
