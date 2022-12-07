@@ -1,11 +1,13 @@
+import { FileSearchOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import TicketItem from "../../Molecules/TicketItem/TicketItem"
+import TicketItem from "../../Molecules/TicketItem/TicketItem";
+import styles from "./TicketList.module.css";
 
 const TicketList = ({ticketList = [], onCheck, checkedTicketIds, selectedTicket, onSelect, isLoading}) => {
 
     if(isLoading) {
         return (
-            <div>
+            <div className = {styles.spin}>
                 <Spin/>
             </div>
         )
@@ -13,9 +15,10 @@ const TicketList = ({ticketList = [], onCheck, checkedTicketIds, selectedTicket,
 
     if(ticketList.length === 0) {
         return (
-            <div>
-                <span>No ticket found</span>
-                <span>Try adjusting your search to find what you're looking for</span>
+            <div className = {styles.noTicketFound}>
+                <FileSearchOutlined className = {styles.icon} />
+                <span className = {styles.span1}>No ticket found</span>
+                <span className = {styles.span2}>Try adjusting your search to find what you're looking for</span>
             </div>
         )
     }

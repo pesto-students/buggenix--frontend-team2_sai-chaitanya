@@ -1,6 +1,7 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Modal, message } from 'antd';
 import { useState } from "react";
+import { useAuth } from "../../../../context/authContext";
 import styles from "./ProjectActionBar.module.css";
 
 const ProjectActionBar = ({onChange, searchStr, addProject}) => {
@@ -10,9 +11,13 @@ const ProjectActionBar = ({onChange, searchStr, addProject}) => {
     const [projectDescription, setProjectDescription] = useState("");
     const [projectError, setProjectErr] = useState("");
     const [messageApi, contextHolder] = message.useMessage();
+    const {user} = useAuth();
+    const userRole = user?.role;
 
     const showModal = () => {
-      setIsModalOpen(true);
+        if(userRole !== "member") {
+            setIsModalOpen(true);
+        }
     };
 
     const success = () => {
@@ -31,7 +36,6 @@ const ProjectActionBar = ({onChange, searchStr, addProject}) => {
     };
 
     const handleOk = () => {
-        console.log("ok");
         if(!projectName || !projectDescription) {
             setProjectErr("Enter valid name and description");
         } else {
@@ -72,7 +76,7 @@ const ProjectActionBar = ({onChange, searchStr, addProject}) => {
                 </form>
             </div>
             <div className = {styles.actions}>
-                <Button onClick={showModal} className = {styles.btn}><PlusOutlined/>Create project</Button>
+                <Button onClick={showModal} className = {styles.btn + " " + (userRole === "member" && styles.disabledBtn)}><PlusOutlined/>Create project</Button>
             </div>
             <Modal title="Create project" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <form onChange={handleChange}>

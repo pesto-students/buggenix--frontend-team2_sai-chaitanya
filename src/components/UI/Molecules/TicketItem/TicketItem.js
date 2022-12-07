@@ -1,4 +1,4 @@
-import { CommentOutlined, TwitterOutlined } from "@ant-design/icons";
+import { BugOutlined, CommentOutlined, TwitterOutlined } from "@ant-design/icons";
 import { Avatar, Card, Checkbox } from "antd";
 import React, { useState } from "react";
 import styles from "./TicketItem.module.css";
@@ -17,8 +17,8 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
         }
     }
     
-    const {id, commentCount = "3", creatorInfo, description = "", timestamp} = ticketItem || {};
-    const {name: creatorName = "Harish Balasubramanian", socials = "Twitter"} = creatorInfo || {};
+    const {id, conversationCount = "3", creatorInfo, description = "", timestamp} = ticketItem || {};
+    const {name: creatorName = "Harish Balasubramanian", channel} = creatorInfo || {};
 
     return (
         <div onClick={handleClick} className = {styles.cardContainer}>
@@ -33,7 +33,7 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
                         <Avatar style = {{
                             backgroundColor: "#5F40EC", 
                             color: "black",
-                        }} icon = {<TwitterOutlined style = {{color: "white"}}/>}/>
+                        }} icon = {!channel ? <BugOutlined size={"small"} style = {{color: "white"}}/> : <TwitterOutlined style = {{color: "white"}}/>}/>
                     </div>
                     <div className= {styles.itemTextContent}>
                         <div className = {styles.topTextContent}>
@@ -46,7 +46,7 @@ const TicketItem = ({ticketItem, onCheck, onSelect, selectedTicket, isChecked}) 
                         <div className= {styles.itemBottom}>
                             <div className = {styles.stats}>
                                 <CommentOutlined /> 
-                                <span>{commentCount}</span>
+                                <span>{conversationCount}</span>
                             </div>
                             <div className = {styles.createdTime}>
                                 <span>{timestamp}</span>

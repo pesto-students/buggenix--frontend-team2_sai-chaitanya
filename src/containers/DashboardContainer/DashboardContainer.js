@@ -39,12 +39,12 @@ class DashboardContainer extends React.Component {
                     value: "People", 
                     isSelected: false
                 }, 
-                {
-                    iconName: "ContactsOutlined", 
-                    to: "account", 
-                    value: "Account", 
-                    isSelected: false
-                }
+                // {
+                //     iconName: "ContactsOutlined", 
+                //     to: "account", 
+                //     value: "Account", 
+                //     isSelected: false
+                // }
             ] 
         }
 

@@ -1,4 +1,4 @@
-import { DeleteFilled, DeleteOutlined } from "@ant-design/icons";
+import { DeleteFilled, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Popconfirm, message, Spin, Space } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useEffect, useState } from "react";
@@ -122,7 +122,7 @@ const TicketInbox = ({usersList, userRole, deleteTicket, projectsList, configura
     
     if(isLoading) {
         return (
-            <div>
+            <div className = {styles.spin}>
                 <Spin/>
             </div>
         )
@@ -130,9 +130,7 @@ const TicketInbox = ({usersList, userRole, deleteTicket, projectsList, configura
     
     if(ticketList.length == 0 || !selectedTicket) {
         return (
-            <div>
-                No ticket selected
-            </div>
+            <div className = {styles.ticketNotFound}></div>
         )
     } 
 

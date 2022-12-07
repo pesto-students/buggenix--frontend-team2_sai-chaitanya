@@ -1,0 +1,40 @@
+.noTicketFound {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.noTicketFound .icon {
+    margin: auto auto 16px auto;
+    font-size: 34px;
+    color: rgba(128,144,160,.6);
+
+}
+
+.noTicketFound .span1{ 
+    font-size: 18px;
+    margin-top: 0;
+    font-weight: 400;
+    text-align: center;
+    color: #222d39;
+}
+
+.noTicketFound .span2 {
+    color: #8090a0;
+    line-height: 20px;
+    margin: 15px 0;
+    font-size: 13px;
+
+}
+
+.spin {
+    position: absolute;
+    top: 30%;
+    left: 0;
+    right: 0;
+    margin-top: 120px;
+    text-align: center;
+    font-size: 22px;
+}

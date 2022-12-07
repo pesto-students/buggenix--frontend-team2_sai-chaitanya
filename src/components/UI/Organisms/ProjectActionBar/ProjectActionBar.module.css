@@ -60,6 +60,12 @@
     user-select: none;
 }
 
+.actions .btn.disabledBtn {
+    cursor: not-allowed;
+}
+
+
+
 .actions .btn:hover {
     background-color: #3d22b6;
 }

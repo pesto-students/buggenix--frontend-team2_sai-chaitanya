@@ -85,7 +85,8 @@ const TicketsReducer = (state = initialState, {type, payload}) => {
                 if(id === ticketId) {
                     return {
                         ...ticket, 
-                        conversations: payload
+                        conversations: payload, 
+                        conversationCount: ticket.conversationCount + 1
                     }
                 } else {
                     return ticket;
