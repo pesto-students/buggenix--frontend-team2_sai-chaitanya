@@ -3,7 +3,7 @@ import Logo from "../UI/Molecules/Logo"
 import { Button, Input, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import axiosPrivate from '../../api/axiosPrivate';
 
 
 const TeamInvite = () => {
@@ -13,14 +13,12 @@ const TeamInvite = () => {
     const [messageApi, contextHolder] = message.useMessage();
     const [email, setEmail] = useState("");
     const [invitor, setInvitor] = useState("");
-    const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
 
     useEffect(() => {
-        // https://buggenix.netlify.app/team-invite?email=adivinayak.av4@gmail.com&invitor=harish
         const href = window.location.href;
         console.log(href, "href");
-        const string = href.split("?")[1]; //email=adivinayak.av4@gmail.com&invitor=harish
+        const string = href.split("?")[1]; 
         const email = string.split("=")[1].split("&")
         const invitor = string.split("=")[2].split("&")
 
@@ -81,7 +79,7 @@ const TeamInvite = () => {
                 <h3 style = {{margin: "1rem 0"}}>You've been invited to join {invitor}'s team</h3>
                 <Input className= {styles.input} value = {email} disabled />
                 <Input className= {styles.input} placeholder = {"Full name"} name = "fullname" value = {fullName} onChange = {handleChange}/>
-                <Input className= {styles.input} placeholder= {"Password (min. 8 char)"} name = "password" value = {password} onChange = {handleChange} />
+                <Input className= {styles.input} type = "password" placeholder= {"Password (min. 8 char)"} name = "password" value = {password} onChange = {handleChange} />
                 <h3 style = {{margin: "1rem 0", fontSize: "small", lineHeight: "1rem"}}>By signing up, you're agreeing to our <Link style = {{textDecoration:"underline", fontStyle: "italic" }}>Terms of service</Link> and to our <Link style = {{textDecoration:"underline", fontStyle: "italic" }}>Privacy policy</Link></h3>
                 <Button onClick ={handleSubmit} className= {styles.btn}>Join the team</Button>
             </form>
