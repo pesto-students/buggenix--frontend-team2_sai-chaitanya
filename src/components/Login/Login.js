@@ -117,7 +117,6 @@ const Login = () => {
                 {authError ? <div className= {styles.loginError}>
                         {authError}
                     </div>: null}
-                {/* <button className= {styles.btn} onClick={logOut}>logout</button> */}
             </div>
         </div>
         <Footer/>

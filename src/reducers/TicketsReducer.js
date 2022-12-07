@@ -61,37 +61,66 @@ const TicketsReducer = (state = initialState, {type, payload}) => {
             const {ticketId} = payload;
 
             const prevData = [...state.data];
-            const updatedData = prevData.map(ticket => {
-                if(ticket.id === ticketId) {
-                    const updatedTicket = {...ticket, ...payload};
-                    delete updatedTicket.ticketId
-                    return updatedTicket
-                } else {
-                    return ticket;
-                }
-            })
+
+            const ticketIndex = prevData.findIndex(ticket => ticket.id === ticketId);
+            const updatedTicket = {
+                ...prevData[ticketIndex], 
+                ...payload
+            }
+            delete updatedTicket.ticketId;
+
+            prevData.splice(ticketIndex, 1);
+            prevData.unshift(updatedTicket);
+
+            // const updatedData = prevData.map(ticket => {
+            //     if(ticket.id === ticketId) {
+            //         const updatedTicket = {...ticket, ...payload};
+            //         delete updatedTicket.ticketId
+            //         return updatedTicket
+            //     } else {
+            //         return ticket;
+            //     }
+            // })
             
             return {
-                ...state,
-                data: updatedData
+            ...state,
+                data: prevData
             }
         }
 
         case ADD_CONVERSATION_SUCCESS: {
             let updatedData = [...state.data];
             const {ticketId} = payload[0]; 
-            updatedData = updatedData.map(ticket => {
-                const {id} = ticket;
-                if(id === ticketId) {
-                    return {
-                        ...ticket, 
-                        conversations: payload, 
-                        conversationCount: ticket.conversationCount + 1
-                    }
-                } else {
-                    return ticket;
-                }
-            })
+
+            //find the index of the ticket id
+            // extract it, change it
+            //remove existing
+            //unshift the new
+
+            const ticketIndex = updatedData.findIndex(ticket => ticket.id === ticketId);
+            const updatedTicket = {
+                ...updatedData[ticketIndex], 
+                conversations: payload, 
+                conversationCount: updatedData[ticketIndex].conversationCount + 1
+            }
+
+            updatedData.splice(ticketIndex, 1);
+            updatedData.unshift(updatedTicket);
+
+
+
+            // updatedData = updatedData.map(ticket => {
+            //     const {id} = ticket;
+            //     if(id === ticketId) {
+            //         return {
+            //             ...ticket, 
+            //             conversations: payload, 
+            //             conversationCount: ticket.conversationCount + 1
+            //         }
+            //     } else {
+            //         return ticket;
+            //     }
+            // })
 
             return {
                 ...state, 
