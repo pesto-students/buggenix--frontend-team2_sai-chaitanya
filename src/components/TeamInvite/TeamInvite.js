@@ -19,10 +19,8 @@ const TeamInvite = () => {
         const href = window.location.href;
         console.log(href, "href");
         const string = href.split("?")[1]; 
-        const email = string.split("=")[1].split("&")
-        const invitor = string.split("=")[2].split("&")
-
-
+        const email = string.split("=")[1].split("&")[0];
+        const invitor = decodeURI(string.split("=")[2].split("&")[0]); 
         
         setEmail(email);
         setInvitor(invitor)
@@ -67,6 +65,7 @@ const TeamInvite = () => {
             })
         }
     }
+    
 
     return (
         <div style = {{
