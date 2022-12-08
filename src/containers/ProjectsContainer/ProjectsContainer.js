@@ -1,15 +1,10 @@
-import { Modal } from "antd";
 import React from "react";
-import styles from "./ProjectsContainer.module.css";
-import InputField from "../../components/UI/Atoms/Input";
-import SimpleButton from "../../components/UI/Atoms/SimpleButton";
+
 import ProjectsList from "../../components/UI/Organisms/ProjectsList";
-import CreateProjectModal from "../../components/UI/Organisms/CreateProjectModal";
 import { filterProjects } from "../../utils/filterProjects";
 import ProjectActionBar from "../../components/UI/Organisms/ProjectActionBar";
 import { addProject, fetchProjects, updateProject } from "../../actionCreators/projectActions";
 import {connect} from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
 
 class ProjectsContainer extends React.Component {
 
