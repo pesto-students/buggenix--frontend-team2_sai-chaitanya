@@ -4,7 +4,7 @@ import { useAuth } from "../../context/authContext"
 const AuthRedirect = (props) => {
     const {user} = useAuth();
     if(user) {
-        return <Navigate to = "/dashboard/metrics"/>
+        return <Navigate to = "/dashboard/projects"/>
     }
 
     return props.children
