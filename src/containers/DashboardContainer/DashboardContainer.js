@@ -15,12 +15,12 @@ class DashboardContainer extends React.Component {
         super(props);
         this.state = {
             navList: [
-                {
-                    iconName: "PieChartOutlined", 
-                    to: "metrics", 
-                    value: "Metrics", 
-                    isSelected: true
-                }, 
+                // {
+                //     iconName: "PieChartOutlined", 
+                //     to: "metrics", 
+                //     value: "Metrics", 
+                //     isSelected: true
+                // }, 
                 {
                     iconName: "RocketOutlined", 
                     to: "projects", 
