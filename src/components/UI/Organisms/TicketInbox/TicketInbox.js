@@ -89,11 +89,15 @@ const TicketInbox = ({usersList, userRole, deleteTicket, projectsList, configura
                         ...config, 
                         options: usersList.map(user => {
                             const {id, name} = user;
+
+                            if(!name) {
+                                return null
+                            }
                             return {
                                 value: id, 
                                 label: name
                             }
-                        })
+                        }).filter(item => item)
                     }
                 } else {
                     return config;
