@@ -1,0 +1,13 @@
+.container {
+    display: flex;   
+    min-height: 94vh;
+}
+
+.ticketContainer {
+    min-height: 100vh;
+}
+
+.container .listView {
+    min-width: 30%;
+}
+

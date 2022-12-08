@@ -1,0 +1,25 @@
+.container {
+    padding: 3rem;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+}
+
+.tableContainer {
+    margin: 2rem 0;
+    min-width: 80%;
+}
+
+.tableContainer thead{ 
+    text-align: left;
+    font-weight:bold;
+    font-size: smaller;
+}   
+
+.tableContainer tr > * {
+    padding: 0.8rem 0;
+    font-weight: 400;
+    font-size: smaller;
+}

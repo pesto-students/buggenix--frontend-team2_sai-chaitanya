@@ -1,0 +1,44 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.container .nav {
+    min-width: 13%;
+    height: 100vh;
+    background-color: #B9C9FE;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.container .outlet {
+    height: 100vh;
+    min-width: 80%;
+}
+
+.container nav a.active {
+    background-color: green;
+}
+
+.navTop, .navBottom {
+    display: flex;
+    flex-direction: column;
+}
+
+.navTop span, .navBottom span {
+    font-size: smaller;
+}
+
+.navTop > *, .navBottom > * {
+    padding: 10px 0;
+    color: black;
+}
+
+.navItem > *{
+    padding: 0 5px;
+}
+
+
