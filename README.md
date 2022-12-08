@@ -37,7 +37,7 @@ Test Credentials:
     
 ## Installation
 
-  - Fork or directly clone the branch ticketUI to your local machine. 
+  - Fork or directly clone the branch `ticketUI` to your local machine.  
   - Use the `npm install` command to install dependencies
   - Once the dependencies are finished installing, use the `npm start` command inside the root directory to open the app in your local browser of choice
 
