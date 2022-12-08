@@ -29,6 +29,11 @@ Test Credentials:
  - For member
     - Email: atonis.member@gmail.com
     - Password: testatonismember
+ 
+ Social Media handles: 
+ 
+ - Facebook: atonis_tech
+ - Twitter: atonis_tech
     
 ## Installation
 
