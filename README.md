@@ -23,9 +23,12 @@ Please Note:
 
 Test Credentials:
 
- - For Admin
+ - For Admin/super admin
     - Email: testuser@atonis.com
     - Password: test-user@pass
+ - For member
+    - Email: atonis.member@gmail.com
+    - Password: testatonismember
     
 ## Installation
 
