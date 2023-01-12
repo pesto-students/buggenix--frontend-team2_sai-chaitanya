@@ -2,11 +2,12 @@ import { Layout, Button, Input} from 'antd';
 import styles from "./LandingPage.module.css";
 import { Link } from 'react-router-dom';
 import Logo from '../UI/Molecules/Logo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import betterDecisionsImg from "../../assets/landingPage/better-decisions.png";
 import iterations from "../../assets/landingPage/iterations.png";
 import peopleImg from "../../assets/landingPage/people.png";
 import Footer from '../Footer/Footer';
+import { message } from "antd";
 
 const {Header}  = Layout;
 
@@ -32,6 +33,9 @@ const LandingPage = () => {
       label: "Bug Scraper", 
       description: "Our state-of-the-art algorithm efficiently scouts all of your social media handles and brings back actionable info from your users in the form of tickets right into your inbox as tickets!"
     });
+
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [tabsList, setTabsList] = useState([
     {
       value: "bug-scraper", 
@@ -50,6 +54,15 @@ const LandingPage = () => {
     }, 
   ])
 
+  const success = () => {
+    messageApi.info('Test credentials pre-populated. Just click the "Login" button that you see here 👉');
+  };
+
+
+  useEffect(() => {
+    success();
+  }, [])
+
 
   const TabSwitch = (tab) => {
     setSelectedTab(tab);
@@ -57,6 +70,7 @@ const LandingPage = () => {
   
   return (
     <>
+        {contextHolder}
         <HeaderComponent showBtns = {true}/>
         <div className= {styles.container}>
           <div className={styles.content}>
