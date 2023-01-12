@@ -21,9 +21,9 @@ const Login = () => {
     
     
     const success = () => {
-        messageApi.info('Test credentials pre-populated. Just click the "Sign in" button');
+        messageApi.info('Test credentials pre-populated. Just click the "Sign in" button 👇');
     };
-    
+
     useEffect(() => {
         success();
     }, [])
