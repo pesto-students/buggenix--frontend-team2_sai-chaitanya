@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import Logo from "../UI/Molecules/Logo"
 import styles from "./Login.module.css";
@@ -6,16 +6,29 @@ import Footer from "../Footer/Footer";
 import { HeaderComponent } from "../LandingPage/LandingPage";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext";
+import { message } from "antd";
 
 
 const Login = () => {
 
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("testuser@atonis.com");
     const [emailError, setEmailError] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("test-user@pass");
     const [passwordError, setPasswordError] = useState("");
     const [authError, setAuthError] = useState("");
     const {login}  = useAuth();
+    const [messageApi, contextHolder] = message.useMessage();
+    
+    
+    const success = () => {
+        messageApi.open({
+            type: 'success',
+            content: 'Test credentials pre-populated. Just click the "Sign in" button',
+        });
+    };
+    useEffect(() => {
+        success();
+    }, [])
 
     const navigate = useNavigate();
 
@@ -95,6 +108,7 @@ const Login = () => {
 
     return (
     <>
+        {contextHolder}
         <div className= {styles.container}>
             <HeaderComponent showBtns = {true}/>
             <div className= {styles.formContainer}>
