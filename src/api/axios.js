@@ -1,6 +1,6 @@
 import axios from 'axios';
 // const BASE_URL = 'https://buggenix-gitapp.herokuapp.com/api/';
-const BASE_URL = "https://buggenix-backend-team2-sai-chaitanya.vercel.app/api/";
+const BASE_URL = "https://buggenix-backend-team2-sai-chaitanya-1.onrender.com/api/";
 // const BASE_URL = 'http://localhost:8800/api/';
 
 export default axios.create({
